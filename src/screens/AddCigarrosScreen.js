@@ -3,10 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import Colors from '../constants/Colors';
 
-const LifeAndMoneyScreen = props => {
+const AddCigarrosScreen = props => {
     return (
         <View style={styles.centered}>
-            <Text>Life and Money Screen</Text>
+            <Text>Add Cigarros Screen</Text>
         </View>
     );
 };
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LifeAndMoneyScreen;
+export default AddCigarrosScreen;
