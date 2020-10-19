@@ -8,10 +8,12 @@ const LoginScreen = props => {
         <View style={styles.background}>
             <Text style={styles.title}>VIVA SEM TABACO</Text>
             <View style={styles.logoContainer}>
-                <Image style={styles.logoImg} source={require('../../assets/images/logo-vst.png')} />
+                <Image style={styles.logoImg} source={require('../../assets/images/logo-vst-1.png')} />
             </View>
             <View style={styles.formContainer}>
+                <View style={{margin: 10}}>
                 <Text style={styles.labelAuth}>Informe seus dados</Text>
+                </View>
                 <View style={styles.inputContainer}>
                     <TextInput
                     style={styles.input}
@@ -62,16 +64,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(265, 265, 265, 0.3)'
     },
     logoContainer: {
-        alignItems: 'center'
+        alignItems: 'center',
+        marginVertical: 15
     },
     logoImg: {
         width: Dimensions.get('window').width * 0.8,
-		height: Dimensions.get('window').width * 0.8,
+		height: Dimensions.get('window').width * 0.5,
 		resizeMode: 'contain'
     },
     title: {
         fontFamily: 'montserrat',
-        color: '#163f75',
+        color: 'white',
         fontSize: 35
     },
     inputContainer: {

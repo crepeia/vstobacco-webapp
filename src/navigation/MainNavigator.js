@@ -203,8 +203,8 @@ const MenuNavigator = () => {
 const MainNavigator = props => {
     return (
         <NavigationContainer>
-            {/* <LoginNavigator /> */}
-            <MenuNavigator /> 
+            <LoginNavigator />
+            {/* <MenuNavigator />  */}
         </NavigationContainer>
     );
 };
