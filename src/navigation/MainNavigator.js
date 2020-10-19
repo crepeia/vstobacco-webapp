@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -16,8 +17,6 @@ import PerfilScreen from '../screens/PerfilScreen';
 import RankingScreen from '../screens/RankingScreen';
 import SignUpScreen from '../screens/SignUpScreen'; // estará relacionada à tela Login futuramente
 
-// tela Login e Cadastro ainda não estão corretamente manuseadas
-
 //constante
 import Colors from '../constants/Colors';
 
@@ -27,24 +26,24 @@ const defaultNavOptionsStack = {
     },
     headerTitleStyle: {
         // fontFamily: ,
-        color: Colors.accent,
-        fontSize: 24
+        color: 'white',
+        fontSize: 20
     },
-    headerTintColor: Colors.primaryColor
+    headerTintColor: 'white'
 };
 
-const SignUpStackNavigator = createStackNavigator();
+// const SignUpStackNavigator = createStackNavigator();
 
-const SignUpNavigator = () => {
-    return (
-        <SignUpStackNavigator.Navigator screenOptions={defaultNavOptionsStack}>
-            <SignUpStackNavigator.Screen
-                name='SignUp'
-                component={SignUpScreen}
-            />
-        </SignUpStackNavigator.Navigator>
-    )
-}
+// const SignUpNavigator = () => {
+//     return (
+//         <SignUpStackNavigator.Navigator screenOptions={defaultNavOptionsStack}>
+//             <SignUpStackNavigator.Screen
+//                 name='SignUp'
+//                 component={SignUpScreen}
+//             />
+//         </SignUpStackNavigator.Navigator>
+//     )
+// }
 
 const LoginStackNavigator = createStackNavigator();
 
@@ -54,6 +53,13 @@ const LoginNavigator = () => {
             <LoginStackNavigator.Screen
                 name='Login'
                 component={LoginScreen}
+                options={{
+                    headerShown: false
+                }}
+            />
+            <LoginStackNavigator.Screen
+                name='Cadastro'
+                component={SignUpScreen}
             />
         </LoginStackNavigator.Navigator>
     )
@@ -91,7 +97,7 @@ const AddCigarrosNavigator = () => {
     return (
         <AddCigarrosStackNavigator.Navigator screenOptions={defaultNavOptionsStack}>
             <AddCigarrosStackNavigator.Screen
-                name='AddCigarros'
+                name='Cigarros Fumados'
                 component={AddCigarrosScreen}
             />
         </AddCigarrosStackNavigator.Navigator>
