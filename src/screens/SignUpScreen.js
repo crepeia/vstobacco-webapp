@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -52,14 +52,14 @@ const validationSchema = yup.object({
 });
 
 const handlePhoneError = (phone) => {
-    let phoneRegex = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))/g
+    let phoneRegex = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))/g;
 
     if (phone === '') {
         return false;
     }
 
     return !phoneRegex.test(phone)
-}
+};
 
 const SignUpScreen = props => {
 
@@ -90,7 +90,7 @@ const SignUpScreen = props => {
 
     const onSubmit = (values, actions) => {
         Alert.alert('Cadastrado com sucesso');
-    }
+    };
 
     return (
         <ScrollView>
@@ -165,7 +165,9 @@ const SignUpScreen = props => {
                                 onChangeText={formikProps.handleChange('phone')}
                                 onBlur={formikProps.handleBlur('phone')}
                                 value={formikProps.values.phone}
-                                handlePhoneError={setErrorPhone(handlePhoneError(formikProps.values.phone))}
+                                onChange={() => {
+                                    setErrorPhone(handlePhoneError(formikProps.values.phone));
+                                }}
                                 error={errorPhone ? 'Número de telefone inválido' : false}
                                 touched={formikProps.touched.phone}
                                 keyboardType='number-pad'
