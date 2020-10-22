@@ -15,7 +15,9 @@ import LoginScreen from '../screens/LoginScreen'; // não consta no drawer
 import OptionsScreen from '../screens/OptionsScreen';
 import PerfilScreen from '../screens/PerfilScreen';
 import RankingScreen from '../screens/RankingScreen';
-import SignUpScreen from '../screens/SignUpScreen'; // estará relacionada à tela Login futuramente
+import SignUpScreen from '../screens/SignUpScreen'; 
+import TermosUso from '../screens/TermosUso';
+import TermoConsentimento from '../screens/TermoConsetimento';
 
 //constante
 import Colors from '../constants/Colors';
@@ -60,6 +62,20 @@ const LoginNavigator = () => {
             <LoginStackNavigator.Screen
                 name='Cadastro'
                 component={SignUpScreen}
+            />
+            <LoginStackNavigator.Screen
+                name='TermosUso'
+                component={TermosUso}
+                options={{
+                    title: 'Termos de Uso',
+                }}
+            />
+            <LoginStackNavigator.Screen
+                name='TermoConsentimento'
+                component={TermoConsentimento}
+                options={{
+                    title: 'Termo de Consentimento',
+                }}
             />
         </LoginStackNavigator.Navigator>
     )

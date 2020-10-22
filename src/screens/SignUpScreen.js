@@ -9,6 +9,8 @@ import FormData from '../components/Form/FormData';
 import FormCheck from '../components/Form/FormCheck';
 import FormPicker from '../components/Form/FormPicker';
 import FormTipFrequency from '../components/Form/FormTipFrequency';
+import FormTerms from '../components/Form/FormTerms';
+import FormButton from '../components/Form/FormButton';
 
 import Colors from '../constants/Colors';
 
@@ -40,6 +42,8 @@ const validationSchema = yup.object({
     password: yup.string()
         .required('Digite uma senha')
         .min(6, 'A senha deve conter no mínimo 6 caracteres'),
+    termsUse: yup.boolean()
+        .oneOf([true], 'Você precisa aceitar os termos de uso para criar uma conta'),
     tipsFrequency: yup.number()
         .min(0, 'Escolha uma opção de frequência'),
     receiveEmails: yup.boolean()
@@ -60,6 +64,8 @@ const handlePhoneError = (phone) => {
 const SignUpScreen = props => {
 
     const [errorPhone, setErrorPhone] = useState(false);
+    // const [loading, setLoading] = useState(false);
+
     const [date, setDate] = useState('');
 
     const initialValues = {
@@ -88,6 +94,7 @@ const SignUpScreen = props => {
 
     return (
         <ScrollView>
+            <View style={styles.background}>
             <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss} >
                 <Formik
                     initialValues={initialValues}
@@ -101,7 +108,7 @@ const SignUpScreen = props => {
                             <FormTextInput 
                                 placeholder={'Digite seu nome'}
                                 title={'Nome completo'}
-                                titleColor={Colors.secondaryColor}
+                                titleColor={'white'}
                                 onChangeText={formikProps.handleChange('name')}
                                 onBlur={formikProps.handleBlur('name')}
                                 value={formikProps.values.name}
@@ -154,7 +161,7 @@ const SignUpScreen = props => {
                             <FormTextInput
                                 placeholder={'Digite seu número'}
                                 title={'Telefone (opcional)'}
-                                titleColor={Colors.secondaryColor}
+                                titleColor={'white'}
                                 onChangeText={formikProps.handleChange('phone')}
                                 onBlur={formikProps.handleBlur('phone')}
                                 value={formikProps.values.phone}
@@ -169,7 +176,7 @@ const SignUpScreen = props => {
                             <FormTextInput
                                 placeholder={'Digite seu e-mail'}
                                 title={'E-mail'}
-                                titleColor={Colors.secondaryColor}
+                                titleColor={'white'}
                                 onChangeText={formikProps.handleChange('email')}
                                 onBlur={formikProps.handleBlur('email')}
                                 value={formikProps.values.email}
@@ -183,7 +190,7 @@ const SignUpScreen = props => {
                             <FormTextInput
                                 placeholder={'Digite uma senha'}
                                 title={'Senha'}
-                                titleColor={Colors.secondaryColor}
+                                titleColor={'white'}
                                 onChangeText={formikProps.handleChange('password')}
                                 onBlur={formikProps.handleBlur('password')}
                                 value={formikProps.values.password}
@@ -225,15 +232,50 @@ const SignUpScreen = props => {
                                 />
                             }
 
+                            <FormTerms 
+                                title={'Ufa! Agora acabou :)'}
+                                value={formikProps.values.termsUse}
+                                valueC={formikProps.values.authorizeData}
+                                onChangeTerms={(itemValue) => {
+                                    formikProps.setFieldValue('termsUse', itemValue)
+                                }}
+                                onChangeAuthorize={(itemValue) => {
+                                    formikProps.setFieldValue('authorizeData', itemValue)
+                                }}
+                                navTermoConsentimento={() => props.navigation.navigate('TermoConsentimento')}
+                                navTermosUso={() => props.navigation.navigate('TermosUso')}
+                                touched={formikProps.errors.termsUse}
+                                error={formikProps.errors.termsUse}
+                            />
+
+                            <FormButton 
+                                title={'Criar Conta'}
+                                onPress={() => {
+                                    if (errorPhone) {
+                                        Alert.alert('Erro no formulário', 'Há um erro no formulário, corrija para poder criar sua conta :)');
+                                        return;
+                                    }
+                                    formikProps.handleSubmit()
+                                }}    
+                                backColor={'white'}
+                                borderColor={'white'}
+                                textColor={Colors.primaryColor}
+                                // loading={loading}
+                            />
                         </View>
                     )}
                 </Formik>
             </TouchableWithoutFeedback>
+            </View>
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: Colors.primaryColor,
+    },
     container: {
         flex: 1,
         alignItems: 'center',

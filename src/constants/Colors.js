@@ -1,6 +1,7 @@
 export default {
     primaryColor: '#4375b4',
-    accentColor: '#fbaf3ed9',
-    greenColor: '#89e234d9',
-    grayColor: '#a3a5a1ff'
+    accentColor: '#fbaf3e',
+    greenColor: '#89e234',
+    grayColor: '#a3a5a1',
+    errorColor: '#BF0603'
 }

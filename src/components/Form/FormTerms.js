@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Checkbox from '@react-native-community/checkbox'
 
 import DefaultText from '../DefaultText';
 import Colors from '../../constants/Colors';
 
-const FormCheck = props => {
-
-    const [isTrue, setIsTrue] = useState(false)
-    const [isFalse, setIsFalse] = useState(false)
+const FormTerms = props => {
 
     return (
         <View style={styles.container}>
@@ -18,39 +15,37 @@ const FormCheck = props => {
                 <View style={styles.checkBox}>
                     <Checkbox
                         tintColors={{ true: 'white', false: 'white' }}
-                        value={isTrue}
+                        value={props.valueC}
                         onValueChange={() => {
-                            if (isTrue) {
-                                setIsTrue(false)
-                                setIsFalse(false)
-                                props.onChange('')
-                            } else {
-                                setIsTrue(true)
-                                setIsFalse(false)
-                                props.onChange(true)
+                            if (!props.valueC) {
+                                props.onChangeAuthorize(true)
+                            }
+                            else {
+                                props.onChangeAuthorize(false)
                             }
                         }}
                     />
-                    <DefaultText style={styles.text}>{'Sim'}</DefaultText>
+                    <TouchableOpacity style={{width: '100%'}} onPress={props.navTermoConsentimento}>
+                        <DefaultText style={styles.text}>{'Li e concordo com o '}<DefaultText style={styles.attentionText}>{'termo de consentimento'}</DefaultText></DefaultText>
+                    </TouchableOpacity>
                 </View>
 
-                <View style={{...styles.checkBox, marginLeft: 20}}>
+                <View style={styles.checkBox}>
                     <Checkbox
                         tintColors={{ true: 'white', false: 'white' }}
-                        value={isFalse}
+                        value={props.value}
                         onValueChange={() => {
-                            if (isFalse) {
-                                setIsFalse(false)
-                                setIsTrue(false)
-                                props.onChange('')
-                            } else {
-                                setIsFalse(true)
-                                setIsTrue(false)
-                                props.onChange(false)
+                            if (!props.value) {
+                                props.onChangeTerms(true)
+                            }
+                            else {
+                                props.onChangeTerms(false)
                             }
                         }}
                     />
-                    <DefaultText style={styles.text}>{'Não'}</DefaultText>
+                    <TouchableOpacity style={{width: '100%'}} onPress={props.navTermosUso}>
+                        <DefaultText style={styles.text}>{'Li e concordo com os '}<DefaultText style={styles.attentionText}>{'termos de uso'}</DefaultText></DefaultText>
+                    </TouchableOpacity>
                 </View>
 
             </View>
@@ -80,12 +75,19 @@ const styles = StyleSheet.create({
     },
     text:
     {
-        color:'white'
+        width: '90%',
+        color: 'white',
+    },
+    attentionText:
+    {
+        fontWeight: 'bold',
+        textDecorationLine: 'underline'
     },
     checkBoxContainer:
     {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
         width: '100%',
     },
     checkBox:
@@ -101,6 +103,7 @@ const styles = StyleSheet.create({
         paddingBottom: 2,
         borderWidth: 1,
         borderRadius: 12,
+        borderColor: Colors.errorColor,
         backgroundColor: Colors.errorColor,
         elevation: 1
     },
@@ -112,4 +115,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default FormCheck;
+export default FormTerms;

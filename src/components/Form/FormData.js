@@ -64,30 +64,31 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginLeft: 4,
         marginBottom: 2,
-        color: Colors.secondaryColor,
+        color: 'white',
         fontWeight: 'bold'
     },
     dateInput:
     {
         justifyContent: 'center',
         height: 40,
-        backgroundColor: Colors.secondaryColor,
+        backgroundColor: 'white',
         paddingHorizontal: 10,
         borderWidth: StyleSheet.hairlineWidth,
         borderRadius: 5,
+        borderColor: 'white',
         elevation: 2,
     },
     error:
     {
         justifyContent: 'center',
         height: 40,
-        backgroundColor: Colors.secondaryColor,
+        backgroundColor: 'white',
         paddingHorizontal: 10,
         borderBottomWidth: 2,
         borderTopWidth: 2,
         borderLeftWidth: 2,
         borderRightWidth: 2,
-        borderColor: Colors.redError,
+        borderColor: Colors.errorColor,
         borderRadius: 5,
     },
     errorContainer:
@@ -99,13 +100,14 @@ const styles = StyleSheet.create({
         borderRightWidth: 1,
         borderBottomStartRadius: 12,
         borderBottomEndRadius: 12,
-        backgroundColor: Colors.redError,
+        backgroundColor: Colors.errorColor,
+        borderColor: Colors.errorColor,
         elevation: 1
     },
     errorText:
     {
         fontSize: 12,
-        color: Colors.secondaryColor,
+        color: 'white',
         textAlign: 'center',
     },
 });

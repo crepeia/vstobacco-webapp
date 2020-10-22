@@ -28,12 +28,12 @@ const styles = StyleSheet.create({
     {
         width: 80,
         borderBottomWidth: 2,
-        borderColor: Colors.secondaryColor
+        borderColor: 'white'
     },
     title: 
     {
         textAlign: 'center',
-        color: Colors.secondaryColor,
+        color: 'white',
         fontSize: 22,
     }
 });

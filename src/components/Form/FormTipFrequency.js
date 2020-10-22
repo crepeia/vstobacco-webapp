@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 import DefaultText from '../DefaultText';
 import Colors from '../../constants/Colors';
-import Traducao from '../Traducao/Traducao';
 
 const TipButton = props => {
     
@@ -123,18 +122,19 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginLeft: 4,
         marginBottom: 2,
-        color: Colors.secondaryColor,
+        color: 'white',
         fontWeight: 'bold'
     },
     picker:
     {
         justifyContent: 'center',
         minHeight: 40,
-        backgroundColor: Colors.secondaryColor,
+        backgroundColor: 'white',
         paddingHorizontal: 10,
         borderWidth: StyleSheet.hairlineWidth,
         borderRadius: 5,
-        elevation: 2,
+        borderColor: 'white',
+        elevation: 4,
     },
     pickerContent:
     {
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     {
         justifyContent: 'center',
         minHeight: 40,
-        backgroundColor: Colors.secondaryColor,
+        backgroundColor: 'white',
         paddingHorizontal: 10,
         borderBottomWidth: 2,
         borderTopWidth: 2,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     errorText:
     {
         fontSize: 12,
-        color: Colors.secondaryColor,
+        color: 'white',
         textAlign: 'center',
     },
 });
