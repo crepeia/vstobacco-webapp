@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+
+import HeaderButton from '../components/UI/HeaderButton';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
@@ -209,5 +212,22 @@ const styles = StyleSheet.create({
         fontFamily: 'open-sans-bold'
     }
 });
+
+export const screenOptions = navData => {
+    return {
+      headerTitle: 'Cigarros fumados',
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item 
+            title='Menu'
+            iconName={'md-menu'}
+            onPress={() => {
+              navData.navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      )
+    }
+};
 
 export default AddCigarrosScreen;

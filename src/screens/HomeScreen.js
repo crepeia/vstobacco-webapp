@@ -1,5 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+
+import HeaderButton from '../components/UI/HeaderButton';
 
 import Colors from '../constants/Colors';
 
@@ -18,5 +21,22 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+export const screenOptions = navData => {
+    return {
+      headerTitle: 'Home',
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item 
+            title='Menu'
+            iconName={'md-menu'}
+            onPress={() => {
+              navData.navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      )
+    }
+};
 
 export default HomeScreen;

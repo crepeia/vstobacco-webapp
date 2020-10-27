@@ -78,6 +78,9 @@ const SignUpScreen = props => {
         birthDate: '',
         gender: null,
         pregnant: null,
+        cigarrosPorDia: 0,
+        macoValor: 0,
+        qtdCigarrosMaco: 0,
         authorizeData: false,
         termsUse: false,
         signUpDate: '', //automatico
@@ -170,6 +173,44 @@ const SignUpScreen = props => {
                                 }}
                                 error={errorPhone ? 'Número de telefone inválido' : false}
                                 touched={formikProps.touched.phone}
+                                keyboardType='number-pad'
+                            />
+
+                            <LineSeparator title={'Dados de consumo'} />
+
+                            <FormTextInput 
+                                placeholder={'Digite a quantidade'}
+                                title={'Cigarros fumados por dia'}
+                                titleColor={'white'}
+                                onChangeText={formikProps.handleChange('cigarrosPorDia')}
+                                onBlur={formikProps.handleBlur('cigarrosPorDia')}
+                                value={formikProps.values.cigarrosPorDia}
+                                error={formikProps.errors.cigarrosPorDia}
+                                touched={formikProps.touched.cigarrosPorDia}
+                                keyboardType='number-pad'
+                            />
+
+                            <FormTextInput 
+                                placeholder={'Digite o valor do maço'}
+                                title={'Preço do maço de cigarros'}
+                                titleColor={'white'}
+                                onChangeText={formikProps.handleChange('macoValor')}
+                                onBlur={formikProps.handleBlur('macoValor')}
+                                value={formikProps.values.macoValor}
+                                error={formikProps.errors.macoValor}
+                                touched={formikProps.touched.macoValor}
+                                keyboardType='number-pad'
+                            />
+
+                            <FormTextInput 
+                                placeholder={'Digite a quantidade'}
+                                title={'Quantidade de cigarros no maço'}
+                                titleColor={'white'}
+                                onChangeText={formikProps.handleChange('qtdCigarrosMaco')}
+                                onBlur={formikProps.handleBlur('qtdCigarrosMaco')}
+                                value={formikProps.values.qtdCigarrosMaco}
+                                error={formikProps.errors.qtdCigarrosMaco}
+                                touched={formikProps.touched.qtdCigarrosMaco}
                                 keyboardType='number-pad'
                             />
 

@@ -1,20 +1,24 @@
 import * as React from 'react';
-import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
+
 //telas
-import AboutScreen from '../screens/AboutScreen';
-import AddCigarrosScreen from '../screens/AddCigarrosScreen';
-import DesafiosScreen from '../screens/DesafiosScreen';
-import DicasScreen from '../screens/DicasScreen';
-import HomeScreen from '../screens/HomeScreen';
-import LifeAndMoneyScreen from '../screens/LifeAndMoneyScreen';
+import AboutScreen, { screenOptions as aboutOptions } from '../screens/AboutScreen';
+import AddCigarrosScreen, { screenOptions as addCigarrosOptions } from '../screens/AddCigarrosScreen';
+import DesafiosScreen, { screenOptions as desafiosOptions } from '../screens/DesafiosScreen';
+import DicasScreen, { screenOptions as dicasOptions } from '../screens/DicasScreen';
+import HomeScreen, { screenOptions as homeOptions } from '../screens/HomeScreen';
+import LifeAndMoneyScreen, { screenOptions as conquistasOptions } from '../screens/LifeAndMoneyScreen';
 import LoginScreen from '../screens/LoginScreen'; // não consta no drawer
-import OptionsScreen from '../screens/OptionsScreen';
-import PerfilScreen from '../screens/PerfilScreen';
-import RankingScreen from '../screens/RankingScreen';
+import OptionsScreen, { screenOptions as configOptions } from '../screens/OptionsScreen';
+import PerfilScreen, { screenOptions as perfilOptions } from '../screens/PerfilScreen';
+import RankingScreen, { screenOptions as rankingOptions } from '../screens/RankingScreen';
 import SignUpScreen from '../screens/SignUpScreen'; 
 import TermosUso from '../screens/TermosUso';
 import TermoConsentimento from '../screens/TermoConsetimento';
@@ -89,6 +93,7 @@ const PerfilNavigator = () => {
             <PerfilStackNavigator.Screen
                 name='Perfil'
                 component={PerfilScreen}
+                options={perfilOptions}
             />
         </PerfilStackNavigator.Navigator>
     )
@@ -102,6 +107,7 @@ const HomeNavigator = () => {
             <HomeStackNavigator.Screen
                 name='Home'
                 component={HomeScreen}
+                options={homeOptions}
             />
         </HomeStackNavigator.Navigator>
     )
@@ -115,6 +121,7 @@ const AddCigarrosNavigator = () => {
             <AddCigarrosStackNavigator.Screen
                 name='Cigarros Fumados'
                 component={AddCigarrosScreen}
+                options={addCigarrosOptions}
             />
         </AddCigarrosStackNavigator.Navigator>
     )
@@ -128,6 +135,7 @@ const DesafiosNavigator = () => {
             <DesafiosStackNavigator.Screen
                 name='Desafios'
                 component={DesafiosScreen}
+                options={desafiosOptions}
             />
         </DesafiosStackNavigator.Navigator>
     )
@@ -141,6 +149,7 @@ const DicasNavigator = () => {
             <DicasStackNavigator.Screen
                 name='Dicas'
                 component={DicasScreen}
+                options={dicasOptions}
             />
         </DicasStackNavigator.Navigator>
     )
@@ -154,6 +163,7 @@ const AboutNavigator = () => {
             <AboutStackNavigator.Screen
                 name='About'
                 component={AboutScreen}
+                options={aboutOptions}
             />
         </AboutStackNavigator.Navigator>
     )
@@ -167,6 +177,7 @@ const RankingNavigator = () => {
             <RankingStackNavigator.Screen
                 name='Ranking'
                 component={RankingScreen}
+                options={rankingOptions}
             />
         </RankingStackNavigator.Navigator>
     )
@@ -180,6 +191,7 @@ const LifeAndMoneyNavigator = () => {
             <LifeAndMoneyStackNavigator.Screen
                 name='Life and Money'
                 component={LifeAndMoneyScreen}
+                options={conquistasOptions}
             />
         </LifeAndMoneyStackNavigator.Navigator>
     )
@@ -193,6 +205,7 @@ const OptionsNavigator = () => {
             <OptionsStackNavigator.Screen
                 name='Options'
                 component={OptionsScreen}
+                options={configOptions}
             />
         </OptionsStackNavigator.Navigator>
     )
@@ -202,16 +215,126 @@ const MenuDrawerNavigator = createDrawerNavigator();
 
 const MenuNavigator = () => {
     return (
-        <MenuDrawerNavigator.Navigator initialRouteName='Home'>
-            <MenuDrawerNavigator.Screen name='Home' component={HomeNavigator}/>
-            <MenuDrawerNavigator.Screen name='Cigarros fumados' component={AddCigarrosNavigator}/>
-            <MenuDrawerNavigator.Screen name='Desafios' component={DesafiosNavigator}/>
-            <MenuDrawerNavigator.Screen name='Dicas' component={DicasNavigator}/>
-            <MenuDrawerNavigator.Screen name='Ranking' component={RankingNavigator}/>
-            <MenuDrawerNavigator.Screen name='Conquistas' component={LifeAndMoneyNavigator}/>
-            <MenuDrawerNavigator.Screen name='Perfil' component={PerfilNavigator}/>
-            <MenuDrawerNavigator.Screen name='Sobre' component={AboutNavigator}/>
-            <MenuDrawerNavigator.Screen name='Opções' component={OptionsNavigator}/>
+        <MenuDrawerNavigator.Navigator initialRouteName='Home' drawerContentOptions={{
+            activeTintColor: Colors.primaryColor
+        }}>
+            <MenuDrawerNavigator.Screen 
+                name='Home' 
+                component={HomeNavigator}
+                options={{
+                    drawerIcon: props => (
+                        <SimpleLineIcons 
+                        name={'graph'}
+                        size={24}
+                        color={Colors.primaryColor}
+                        />
+                    )
+                }}
+            />
+            <MenuDrawerNavigator.Screen 
+                name='Cigarros fumados' 
+                component={AddCigarrosNavigator}
+                options={{
+                    drawerIcon: props => (
+                        <MaterialIcons 
+                        name={'smoking-rooms'}
+                        size={24}
+                        color={Colors.primaryColor}
+                        />
+                    )
+                }}
+            />
+            <MenuDrawerNavigator.Screen 
+                name='Desafios' 
+                component={DesafiosNavigator}
+                options={{
+                    drawerIcon: props => (
+                        <SimpleLineIcons 
+                        name={'trophy'}
+                        size={24}
+                        color={Colors.primaryColor}
+                        />
+                    )
+                }}
+            />
+            <MenuDrawerNavigator.Screen 
+                name='Dicas' 
+                component={DicasNavigator}
+                options={{
+                    drawerIcon: props => (
+                        <MaterialCommunityIcons 
+                        name={'lightbulb-on-outline'}
+                        size={24}
+                        color={Colors.primaryColor}
+                        />
+                    )
+                }}
+            />
+            <MenuDrawerNavigator.Screen 
+                name=' Ranking' 
+                component={RankingNavigator}
+                options={{
+                    drawerIcon: props => (
+                        <Ionicons 
+                        name={'md-medal'}
+                        size={24}
+                        color={Colors.primaryColor}
+                        />
+                    )
+                }}
+            />
+            <MenuDrawerNavigator.Screen 
+                name=' Conquistas' 
+                component={LifeAndMoneyNavigator}
+                options={{
+                    drawerIcon: props => (
+                        <Ionicons 
+                        name={'md-heart-empty'}
+                        size={24}
+                        color={Colors.primaryColor}
+                        />
+                    )
+                }}
+            />
+            <MenuDrawerNavigator.Screen 
+                name='Perfil' 
+                component={PerfilNavigator}
+                options={{
+                    drawerIcon: props => (
+                        <MaterialIcons 
+                        name={'person-outline'}
+                        size={24}
+                        color={Colors.primaryColor}
+                        />
+                    )
+                }}
+            />
+            <MenuDrawerNavigator.Screen 
+                name=' Sobre' 
+                component={AboutNavigator}
+                options={{
+                    drawerIcon: props => (
+                        <Ionicons 
+                        name={'md-information-circle-outline'}
+                        size={24}
+                        color={Colors.primaryColor}
+                        />
+                    )
+                }}
+            />
+            <MenuDrawerNavigator.Screen 
+                name='Opções' 
+                component={OptionsNavigator}
+                options={{
+                    drawerIcon: props => (
+                        <Ionicons 
+                        name={'md-options'}
+                        size={24}
+                        color={Colors.primaryColor}
+                        />
+                    )
+                }}
+            />
         </MenuDrawerNavigator.Navigator>
     );
 };
@@ -219,8 +342,8 @@ const MenuNavigator = () => {
 const MainNavigator = props => {
     return (
         <NavigationContainer>
-            <LoginNavigator />
-            {/* <MenuNavigator />  */}
+            {/* <LoginNavigator /> */}
+            <MenuNavigator /> 
         </NavigationContainer>
     );
 };
