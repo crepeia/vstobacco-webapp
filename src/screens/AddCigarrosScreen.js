@@ -35,7 +35,7 @@ const AddCigarrosScreen = props => {
     }
 
     return (
-        <View style={styles.screen}>
+        <View style={styles.background}>
             <View style={styles.numeroCigarrosContainer}>
                 <View style={styles.titleContainer}>
                     <TouchableOpacity activeOpacity={0.4} style={styles.calendarButtonContainer} onPress={() => setShowDatePicker(true)}>
@@ -105,8 +105,10 @@ const AddCigarrosScreen = props => {
 };
 
 const styles = StyleSheet.create({
-    screen: {
+    background: {
         flex: 1,
+        alignItems: 'center',
+        backgroundColor: 'white'
     },
     dataContainer: {
         width: '100%',

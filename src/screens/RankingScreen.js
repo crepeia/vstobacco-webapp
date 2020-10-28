@@ -8,18 +8,19 @@ import Colors from '../constants/Colors';
 
 const RankingScreen = props => {
     return (
-        <View style={styles.centered}>
+        <View style={styles.background}>
             <Text>Ranking Screen</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    centered: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+    background: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'white'
+    },
 });
 
 export const screenOptions = navData => {

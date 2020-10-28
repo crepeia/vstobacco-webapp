@@ -8,18 +8,19 @@ import Colors from '../constants/Colors';
 
 const DicasScreen = props => {
     return (
-        <View style={styles.centered}>
+        <View style={styles.background}>
             <Text>Dicas Screen</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    centered: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+  background: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white'
+  },
 });
 
 export const screenOptions = navData => {

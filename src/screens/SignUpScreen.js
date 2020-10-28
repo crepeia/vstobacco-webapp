@@ -78,9 +78,9 @@ const SignUpScreen = props => {
         birthDate: '',
         gender: null,
         pregnant: null,
-        cigarrosPorDia: 0,
-        macoValor: 0,
-        qtdCigarrosMaco: 0,
+        cigarrosPorDia: '',
+        macoValor: '',
+        qtdCigarrosMaco: '',
         authorizeData: false,
         termsUse: false,
         signUpDate: '', //automatico

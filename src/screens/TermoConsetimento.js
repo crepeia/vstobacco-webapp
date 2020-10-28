@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: 10,
         alignItems: 'center',
+        backgroundColor: 'white'
     },
     textContainer:
     {

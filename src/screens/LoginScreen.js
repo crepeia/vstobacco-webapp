@@ -2,17 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, TextInput, TouchableOpacity } from 'react-native';
 
 import Colors from '../constants/Colors';
+import DefaultText from '../components/DefaultText';
 
 const LoginScreen = props => {
     return (
         <View style={styles.background}>
-            <Text style={styles.title}>VIVA SEM TABACO</Text>
+            <DefaultText style={styles.title}>VIVA SEM TABACO</DefaultText>
             <View style={styles.logoContainer}>
                 <Image style={styles.logoImg} source={require('../../assets/images/logo-vst-1.png')} />
             </View>
             <View style={styles.formContainer}>
-                <View style={{margin: 10}}>
-                <Text style={styles.labelAuth}>Informe seus dados</Text>
+                <View style={{marginVertical: 15}}>
+                <DefaultText style={styles.labelForm}>Informe seus dados</DefaultText>
                 </View>
                 <View style={styles.inputContainer}>
                     <TextInput
@@ -28,21 +29,23 @@ const LoginScreen = props => {
                 </View>
                 <TouchableOpacity 
                     style={styles.buttonSignIn}
-                    onPress={() => {}}
+                    onPress={() => { }}
                 >
                     <View>
-                        <Text style={styles.labelAuth}>
+                        <DefaultText style={styles.labelAuth}>
                             Entrar
-                        </Text>
+                        </DefaultText>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity 
-                    activeOpacity={0.4}
-                    style={styles.buttonSignUp}
-                    onPress={() => props.navigation.navigate('Cadastro')}
-                >
-                    <Text style={styles.labelAuth}>Não possui conta?</Text>
-                </TouchableOpacity>
+                <View>
+                    <TouchableOpacity 
+                        activeOpacity={0.4}
+                        style={styles.buttonSignUp}
+                        onPress={() => props.navigation.navigate('Cadastro')}
+                    >
+                        <DefaultText style={styles.labelForm}>Não possui conta?</DefaultText>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         width: Dimensions.get('window').width * 0.85,
-        height: Dimensions.get('window').width * 0.85,
+        height: Dimensions.get('window').width * 0.75,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
 		resizeMode: 'contain'
     },
     title: {
-        fontFamily: 'montserrat',
+        fontFamily: 'open-sans',
         color: 'white',
         fontSize: 35
     },
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
     },
     input: {
         marginLeft: 15,
-        width: '70%'
+        width: '90%'
     },
     buttonSignIn: {
         width: '90%',
@@ -100,11 +103,18 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primaryColor
     },
     buttonSignUp: {
-        marginTop: 30
+        marginVertical: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     labelAuth: {
-        fontFamily: 'montserrat',
+        fontFamily: 'open-sans',
         fontSize: 16,
+        color: 'white',
+    },
+    labelForm: {
+        fontSize: 18,
+        textAlign: 'center',
         color: 'white'
     }
 });
