@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Linking } from 'expo'
 
 import HeaderButton from '../components/UI/HeaderButton';
 import Card from '../components/UI/Card';
@@ -17,7 +18,9 @@ const AboutScreen = props => {
           <Card style={styles.card}>
               <DefaultText style={styles.text}>Programa gratuito feito por especialistas em tabagismo, fumantes e ex-fumantes.</DefaultText>
               <DefaultText style={styles.text}>O Viva sem Tabaco cumpre o Código de Ética da Health on the Net Foundation.</DefaultText>
-              <DefaultText style={{...styles.text, ...styles.textBold, fontSize: 16}}>Visite o site clicando aqui</DefaultText>
+              <TouchableOpacity activeOpacity={0.4} onPress={() => Linking.openURL('http://www.vivasemtabaco.com.br/wati/index.xhtml')}>
+                <DefaultText style={{...styles.text, ...styles.textBold, fontSize: 16}}>Visite o site clicando aqui</DefaultText>
+              </TouchableOpacity>
               <DefaultText style={styles.text}>Todo o conteúdo foi criado a partir de pesquisas científicas e protocolos para o tratamento do tabagismo do Ministério da Saúde e do Instituto Nacional do Câncer - INCA.</DefaultText>
           </Card>
           <View style={styles.logoContainer}>

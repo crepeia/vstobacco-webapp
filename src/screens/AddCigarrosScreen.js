@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         paddingBottom: 20,
+        paddingHorizontal: 28
     },
     botaoCigarro: {
         justifyContent: 'center',
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     },
     button:
     {
-        width: 200,
+        width: 300,
         padding: 10,
         marginTop: 40,
         backgroundColor: Colors.primaryColor,
@@ -205,7 +206,8 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline'
     },
     informeCigarrosContainer: {
-        padding: 20
+        padding: 20,
+        marginTop: 20
     },
     informeCigarrosTxt: {
         color: Colors.primaryColor,
