@@ -10,9 +10,6 @@ import moment from 'moment';
 
 import Colors from '../constants/Colors';
 
-const yesterday = moment().add(-1, 'days').format("YYYY-MM-DD")
-const today = moment().format("YYYY-MM-DD");
-
 const AddCigarrosScreen = props => {
     const [cigarros, setCigarros] = useState(0);
 

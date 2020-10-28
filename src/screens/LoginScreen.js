@@ -12,19 +12,23 @@ const LoginScreen = props => {
                 <Image style={styles.logoImg} source={require('../../assets/images/logo-vst-1.png')} />
             </View>
             <View style={styles.formContainer}>
-                <View style={{marginVertical: 15}}>
-                <DefaultText style={styles.labelForm}>Informe seus dados</DefaultText>
+                <View style={{marginTop: 20, marginBottom: 10}}>
+                    <DefaultText style={styles.labelForm}>Informe seus dados</DefaultText>
                 </View>
+                <DefaultText style={styles.inputTitle}>E-mail</DefaultText>
                 <View style={styles.inputContainer}>
                     <TextInput
                     style={styles.input}
-                    placeholder='E-mail'
+                    placeholder='email@dominio.com'
+                    placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
                     />
                 </View>
+                <DefaultText style={styles.inputTitle}>Senha</DefaultText>
                 <View style={styles.inputContainer}>
                     <TextInput
                     style={styles.input}
-                    placeholder='Senha'
+                    placeholder='Sua senha no Viva sem Tabaco'
+                    placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
                     />
                 </View>
                 <TouchableOpacity 
@@ -60,11 +64,12 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         width: Dimensions.get('window').width * 0.85,
-        height: Dimensions.get('window').width * 0.75,
+        minHeight: Dimensions.get('window').width * 0.75,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 30,
-        backgroundColor: 'rgba(265, 265, 265, 0.3)'
+        borderRadius: 10,
+        backgroundColor: 'rgba(265, 265, 265, 0.3)',
+        paddingHorizontal: 20
     },
     logoContainer: {
         alignItems: 'center',
@@ -80,26 +85,32 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 35
     },
+    inputTitle: {
+        alignSelf: 'flex-start',
+        marginLeft: 5,
+        color: 'white',
+        marginBottom: 2
+    },
     inputContainer: {
-        width: '90%',
+        width: '100%',
         height: 40,
         backgroundColor: 'rgba(265, 265, 265, 0.5)',
         borderRadius: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10
+        marginBottom: 10
     },
     input: {
         marginLeft: 15,
-        width: '90%'
+        width: '100%'
     },
     buttonSignIn: {
-        width: '90%',
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
         padding: 8,
-        marginTop: 10,
+        marginTop: 5,
         backgroundColor: Colors.primaryColor
     },
     buttonSignUp: {
@@ -115,7 +126,7 @@ const styles = StyleSheet.create({
     labelForm: {
         fontSize: 18,
         textAlign: 'center',
-        color: 'white'
+        color: 'white',
     }
 });
 
