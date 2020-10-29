@@ -19,6 +19,7 @@ import LoginScreen from '../screens/LoginScreen'; // não consta no drawer
 import OptionsScreen, { screenOptions as configOptions } from '../screens/OptionsScreen';
 import PerfilScreen, { screenOptions as perfilOptions } from '../screens/PerfilScreen';
 import RankingScreen, { screenOptions as rankingOptions } from '../screens/RankingScreen';
+import RankingJoinScreen, { screenOptions as rankingJoinOptions } from '../screens/RankingJoinScreen';
 import SignUpScreen from '../screens/SignUpScreen'; 
 import TermosUso from '../screens/TermosUso';
 import TermoConsentimento from '../screens/TermoConsetimento';
@@ -174,6 +175,11 @@ const RankingStackNavigator = createStackNavigator();
 const RankingNavigator = () => {
     return (
         <RankingStackNavigator.Navigator screenOptions={defaultNavOptionsStack}>
+            <RankingStackNavigator.Screen
+                name='RankingJoin'
+                component={RankingJoinScreen}
+                options={rankingJoinOptions}
+            />
             <RankingStackNavigator.Screen
                 name='Ranking'
                 component={RankingScreen}
@@ -342,8 +348,8 @@ const MenuNavigator = () => {
 const MainNavigator = props => {
     return (
         <NavigationContainer>
-            <LoginNavigator />
-            {/* <MenuNavigator />  */}
+            {/* <LoginNavigator /> */}
+            <MenuNavigator /> 
         </NavigationContainer>
     );
 };
