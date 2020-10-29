@@ -2,8 +2,11 @@ import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
+import { enableScreens } from 'react-native-screens';
 
 import MainNavigator from './src/navigation/MainNavigator';
+
+enableScreens();
 
 const fetchFonts = () => {
 	return Font.loadAsync({
