@@ -13,6 +13,7 @@ import AboutScreen, { screenOptions as aboutOptions } from '../screens/AboutScre
 import AddCigarrosScreen, { screenOptions as addCigarrosOptions } from '../screens/AddCigarrosScreen';
 import DesafiosScreen, { screenOptions as desafiosOptions } from '../screens/DesafiosScreen';
 import DicasScreen, { screenOptions as dicasOptions } from '../screens/DicasScreen';
+import DicasDetalheScreen, { screenOptions as dicasDetalheOptions } from '../screens/DicasDetalheScreen';
 import HomeScreen, { screenOptions as homeOptions } from '../screens/HomeScreen';
 import LifeAndMoneyScreen, { screenOptions as conquistasOptions } from '../screens/LifeAndMoneyScreen';
 import LoginScreen from '../screens/LoginScreen'; // não consta no drawer
@@ -151,6 +152,11 @@ const DicasNavigator = () => {
                 name='Dicas'
                 component={DicasScreen}
                 options={dicasOptions}
+            />
+            <DicasStackNavigator.Screen
+                name='DicasDetalhe'
+                component={DicasDetalheScreen}
+                options={dicasDetalheOptions}
             />
         </DicasStackNavigator.Navigator>
     )

@@ -3,13 +3,13 @@ import { Text, StyleSheet } from 'react-native';
 
 
 const DefaultText = props => {
-    return <Text  {...props} style={{ ...styles.text, ...props.style }}>{props.children}</Text>
+    return <Text {...props} style={{ ...styles.text, ...props.style }}>{props.children}</Text>
 }
 
 const styles = StyleSheet.create({
     text: {
         fontFamily: 'open-sans',
-        textAlign: 'justify'
+        textAlign: 'justify',
     }
 });
 
