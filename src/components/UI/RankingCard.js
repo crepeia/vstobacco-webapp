@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
         paddingVertical: 14,
         paddingHorizontal: 25,
-        width: Dimensions.get('window').width * 0.8,
+        width: Dimensions.get('window').width * 0.9,
         shadowColor: 'gray',
         shadowOpacity: 0.26,
         shadowOffset: {width: 0, height: 2},

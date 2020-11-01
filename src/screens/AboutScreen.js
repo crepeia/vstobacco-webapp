@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { Linking } from 'expo'
+import * as Linking from 'expo-linking';
 
 import HeaderButton from '../components/UI/HeaderButton';
 import Card from '../components/UI/Card';

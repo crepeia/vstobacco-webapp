@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     },
     line:
     {
-        width: 80,
+        width: 70,
         borderBottomWidth: 2,
         borderColor: 'white'
     },

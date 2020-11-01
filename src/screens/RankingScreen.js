@@ -65,7 +65,7 @@ const RankingScreen = props => {
                 renderItem={itemData => {
                     return (
                         <View style={{
-                          marginHorizontal: Dimensions.get('window').width * 0.1,
+                          marginHorizontal: Dimensions.get('window').width * 0.05,
                           marginVertical: 4
                         }}>
                             <RankingCard 

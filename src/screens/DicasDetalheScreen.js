@@ -27,7 +27,7 @@ const DicasDetalheScreen = props => {
                     <DefaultText style={styles.likeText}>Você gostou dessa dica?</DefaultText>
                     <View style={styles.iconsContainer}>
                         <TouchableOpacity onPress={() => setLikedTip(false)}>
-                            <FontAwesome name={likedTip === false ? "thumbs-down" : "thumbs-o-down"} size={38} color={Colors.accentColor} />
+                            <FontAwesome name={likedTip === false ? "thumbs-down" : "thumbs-o-down"} size={38} color={'#aaa'} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setLikedTip(true)}>
                             <FontAwesome name={likedTip === true ? "thumbs-up" : "thumbs-o-up"} size={38} color={Colors.primaryColor} />

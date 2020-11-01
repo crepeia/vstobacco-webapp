@@ -21,17 +21,17 @@ const LifeAndMoneyScreen = props => {
           <Card style={styles.conquistaContainer}>
             <DefaultText style={styles.conquistaTitle}>Cigarros não fumados</DefaultText>
             <DefaultText style={styles.conquistaTxt}>1400</DefaultText>
-            <SimpleLineIcons name="emotsmile" size={24} color={Colors.primaryColor} />
+            <SimpleLineIcons name="emotsmile" size={24} color='#fca311' />
           </Card>
           <Card style={styles.conquistaContainer}>
             <DefaultText style={styles.conquistaTitle}>Tempo de vida salvo</DefaultText>
             <DefaultText style={styles.conquistaTxt} numberOfLines={2}>0 meses, 3 dias, 16 horas e 44 minutos</DefaultText>
-            <FontAwesome name="heartbeat" size={24} color={Colors.primaryColor} />
+            <FontAwesome name="heartbeat" size={24} color='#BF0603' />
           </Card>
           <Card style={styles.conquistaContainer}>
             <DefaultText style={styles.conquistaTitle}>Dinheiro economizado</DefaultText>
             <DefaultText style={styles.conquistaTxt}>R$479.09</DefaultText>
-            <MaterialIcons name="attach-money" size={24} color={Colors.primaryColor} />
+            <MaterialIcons name="attach-money" size={24} color='#40916C' />
           </Card>
         </View>
     );
