@@ -56,7 +56,7 @@ const PerfilScreen = (props) => {
         {/* Caso a pessoa tenha plano preenchido: */}
 				{evaluation && (
 					<Card style={styles.plano}>
-						<DefaultTitle style={styles.tituloPlano}>Seu plano para diminuir o consumo</DefaultTitle>
+						<DefaultTitle style={styles.tituloPlano}>Seu plano de parada</DefaultTitle>
 
 						<DefaultText style={styles.labelPlano}>Data de parada:</DefaultText>
 						<DefaultText style={styles.textoPlano}>2020-10-15</DefaultText>
