@@ -63,9 +63,9 @@ const PerfilScreen = (props) => {
 
 						<DefaultText style={styles.labelPlano}>Técnicas para a fissura:</DefaultText>
 						<DefaultText style={styles.textoPlano}>Fazer exercício de relaxamento em áudio mp3.</DefaultText>
-            <TouchableOpacity activeOpacity={0.4} onPress={() => Linking.openURL('http://vivasemtabaco.com.br/wati/download/surfandoafissura.mp3')}>
-                <DefaultText style={{color: Colors.primaryColor, fontSize: 12, paddingBottom: 10}}>DOWNLOAD</DefaultText>
-              </TouchableOpacity>
+						<TouchableOpacity activeOpacity={0.4} onPress={() => Linking.openURL('http://vivasemtabaco.com.br/wati/download/surfandoafissura.mp3')}>
+							<DefaultText style={{color: Colors.primaryColor, fontSize: 12, paddingBottom: 10}}>DOWNLOAD</DefaultText>
+						</TouchableOpacity>
 						<DefaultText style={styles.textoPlano}>Beber um copo de água pausadamente.</DefaultText>
 						<DefaultText style={styles.textoPlano}>Comer alimentos com baixa quantidade de calorias como frutas cristalizadas (uva passas), balas dietéticas e chicletes dietéticos.</DefaultText>
 						<DefaultText style={styles.textoPlano}>Ler um cartão com suas razões para ter parado de fumar.</DefaultText>
@@ -101,13 +101,13 @@ export const screenOptions = navData => {
 };
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
+	background: {
+		flex: 1,
+		backgroundColor: 'white',
+	},
 	container: {
 		flex: 1,
-    alignItems: 'center',
+    	alignItems: 'center',
 	},
 	containerEval: {
 		alignItems: 'center',
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 	},
 	nickname: {
 		marginTop: 30,
-		fontSize: 25,
+		fontSize: 22,
 		fontWeight: 'bold',
 	},
 	email: {
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
 	plano: {
 		marginVertical: 25,
 		padding: 20,
+		elevation: 0
 	},
 	tituloPlano: {
 		color: Colors.primaryColor,
