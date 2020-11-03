@@ -59,13 +59,13 @@ const ChallengeCard = props => {
                     <View style={styles.scoreContainer}>
                         {isComplete &&
                             <Ionicons 
-                                style={{marginRight: 12}}
-                                name='md-medal'
-                                size={34}
-                                color={Colors.primaryColor}
+                            name="md-checkmark-circle-outline" 
+                            size={30}
+                            color={Colors.primaryColor}
+                            style={{marginRight: 12}}
                             />
                         }
-                        <DefaultTitle numberOfLines={1} style={{...styles.score, fontSize: 24}}>{(streak * props.modifier) + props.score}</DefaultTitle>
+                        <DefaultTitle numberOfLines={1} style={{...styles.score, fontSize: 20}}>{(streak * props.modifier) + props.score}</DefaultTitle>
                     </View>
                 </View>
                 

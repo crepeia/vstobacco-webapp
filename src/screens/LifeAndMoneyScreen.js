@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
       height: 150,
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 24,
+      marginBottom: 10,
       padding: 10
     },
     conquistaTitle: {

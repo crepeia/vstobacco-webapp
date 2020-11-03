@@ -3,7 +3,8 @@ import {
     StyleSheet,
     View,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    Dimensions
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
@@ -14,7 +15,7 @@ import DefaultTitle from '../components/DefaultTitle';
 import DefaultText from '../components/DefaultText';
 import HeaderButton from '../components/UI/HeaderButton';
 import ChallengeCard from '../components/UI/ChallengeCard';
-import { Dimensions } from 'react-native';
+import { LineChart } from 'react-native-chart-kit';
 
 // dados fictícios
 import { availableChallengesArray } from '../dummyData/availableChallenges';
@@ -154,6 +155,33 @@ const DesafiosScreen = props => {
                     <DefaultTitle style={styles.scoreText}>Pontos: {points}</DefaultTitle>
                     <DefaultTitle style={styles.scoreText}>Pontos na última semana</DefaultTitle>
                 </View>
+                {
+                    <LineChart
+							data={{
+								labels: labels,
+								datasets: [
+									{
+										data: data,
+									},
+								],
+							}}
+							width={Dimensions.get("window").width * 0.9} // from react-native
+							height={270}
+							verticalLabelRotation={-90}
+							xLabelsOffset={20}
+							//segments={data.reduce((a, b) => Math.max(a, b)) - data.reduce((a, b) => Math.min(a, b)) + 1}
+							chartConfig={{
+								backgroundColor: "#0052cc",
+								backgroundGradientFrom: "white",
+                                backgroundGradientTo: "white",
+                                strokeWidth: 2,
+								decimalPlaces: 1, // optional, defaults to 2dp
+								color: (opacity = 1) => `rgba(50, 50, 50, ${opacity})`,
+							}}
+                            fromZero={true}
+                            style={{borderWidth: 1, borderColor: '#ccc', borderRadius: 10, padding: 5, marginVertical: 5}}
+						/>
+                        }
             </View>
         );
     }
