@@ -1,14 +1,7 @@
 import React from 'react';
-import 
-{ 
-    View,
-    StyleSheet, 
-    TouchableOpacity,
-    Platform,
-    TouchableNativeFeedback
-} from 'react-native';
+import { View, StyleSheet, Platform, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 
-import DefaultText from './DefaultText';
+import DefaultText from '../DefaultText';
 
 const HourContainer = props =>
 {
