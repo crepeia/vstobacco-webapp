@@ -15,7 +15,7 @@ import { AntDesign } from '@expo/vector-icons';
 const PerfilScreen = (props) => {
 
 	// const user 
-	const evaluation = true;
+	const evaluation = false;
 
 	const logout = () => {
 		Alert.alert("Logout", "Você saiu do Viva sem Tabaco.")
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
 	},
 	createPlanText: {
 		paddingHorizontal: 5,
+		textAlign: 'center'
 	},
 	button: {
 		width: Dimensions.get('window').width * 0.9,
