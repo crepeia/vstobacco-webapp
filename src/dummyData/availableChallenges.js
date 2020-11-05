@@ -29,7 +29,7 @@ const availableChallengesArray = [
         description: 'Finalize o cadastro no site. Você o encontra na seção Sobre.',
         type: 'ONCE',
         baseValue: 5,
-        modifier: 2
+        modifier: 0
     },
     {
         id: 5,
@@ -37,7 +37,7 @@ const availableChallengesArray = [
         description: 'Completar o plano de parada no site. Você o encontra na seção Sobre.',
         type: 'ONCE',
         baseValue: 10,
-        modifier: 2
+        modifier: 0
     },
 ];
 

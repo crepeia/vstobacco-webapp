@@ -15,7 +15,7 @@ import { AntDesign } from '@expo/vector-icons';
 const PerfilScreen = (props) => {
 
 	// const user 
-	const evaluation = false;
+	const evaluation = true;
 
 	const logout = () => {
 		Alert.alert("Logout", "Você saiu do Viva sem Tabaco.")
