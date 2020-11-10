@@ -249,7 +249,7 @@ const MenuNavigator = () => {
                 options={{
                     drawerIcon: props => (
                         <MaterialIcons 
-                        name={'smoking-rooms'}
+                        name={'smoke-free'}
                         size={24}
                         color={Colors.primaryColor}
                         />
@@ -354,8 +354,8 @@ const MenuNavigator = () => {
 const MainNavigator = props => {
     return (
         <NavigationContainer>
-            {/* <LoginNavigator /> */}
-            <MenuNavigator /> 
+            <LoginNavigator />
+            {/* <MenuNavigator />  */}
         </NavigationContainer>
     );
 };

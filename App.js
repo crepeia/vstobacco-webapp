@@ -4,7 +4,20 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { enableScreens } from 'react-native-screens';
 
+//redux
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import { Provider } from "react-redux";
+import ReduxThunk from "redux-thunk";
+
 import MainNavigator from './src/navigation/MainNavigator';
+
+//Reducers
+import tipsReducer from "./src/store/reducers/tips";
+import challengesReducer from "./src/store/reducers/challenge";
+import userReducer from "./src/store/reducers/user";
+
+
+import { LOGOUT } from "./src/store/actions/user";
 
 enableScreens();
 
@@ -16,6 +29,28 @@ const fetchFonts = () => {
 		"open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
 	});
 };
+
+const appReducer = combineReducers({
+	user: userReducer,
+	tips: tipsReducer,
+	challenges: challengesReducer,
+});
+
+const rootReducer = (state, action) => {
+	if (action.type === LOGOUT) {
+		// for all keys defined in your persistConfig(s)
+		//AsyncStorage.removeItem('persist:root')
+		// storage.removeItem('persist:otherKey')
+
+		state = undefined;
+	}
+	return appReducer(state, action);
+};
+
+const store = createStore(
+	rootReducer,
+	// compose(applyMiddleware(ReduxThunk), offline(newConfig), Reactotron.createEnhancer())
+);
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -30,7 +65,9 @@ export default function App() {
 	)
   } else {
 		return (
-			<MainNavigator />
+			<Provider store={store}>
+				<MainNavigator />
+			</Provider>
 		);
   }
 }
