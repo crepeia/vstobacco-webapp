@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
     StyleSheet,
     View,
     FlatList,
+    ActivityIndicator,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    Button
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+
+
+import { useSelector, useDispatch } from 'react-redux';
+import * as challengeActions from '../store/actions/challenge';
 
 import moment from "moment";
 
@@ -88,10 +94,12 @@ const fillData = (arr, days, format) => {
 
 
 const DesafiosScreen = props => {
+    const dispatch = useDispatch();
 
-    const availableChallenges = availableChallengesArray;
-    const userChallenges = userChallengesArray;
-    const points = 32;
+    const availableChallenges = useSelector(state => state.challenges.availableChallenges);
+    const userChallenges = useSelector(state => state.challenges.userChallenges);
+    const points = useSelector(state => state.challenges.points);
+    const evaluation = useSelector((state) => state.evaluation.evaluation);
 
     const dailyChallenges = availableChallenges.filter(challenge => challenge.type === 'DAILY');
     const onceChallenges = availableChallenges.filter(challenge => challenge.type === 'ONCE');
@@ -100,8 +108,9 @@ const DesafiosScreen = props => {
     const [isDaily, setIsDaily] = useState(true);
     const [isOnce, setIsOnce] = useState(false);
     const [showGraphic, setShowGraphic] = useState(false);
-
-    //const [selectedPlot, setSelectedPlot] = useState("week");
+    const [isLoading, setIsLoading] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [error, setError] = useState();
 
 	const [labels, setLabels] = useState([]);
 	const [data, setData] = useState([]);
@@ -110,6 +119,64 @@ const DesafiosScreen = props => {
         setData(fillData(userChallenges, 7, "week"));
         setLabels(fillLabels(7, "week"));
     }, [userChallenges])
+
+    const loadChallenges = useCallback(async () => {
+        setError(null);
+        setIsRefreshing(true);
+        try {
+            await dispatch(challengeActions.fetchUserChallenges());
+            if(evaluation){
+                await dispatch(challengeActions.completePlanChallenge());
+            }
+        } catch (err) {
+            setError(err.message);
+        }
+        setIsRefreshing(false);
+
+    }, [dispatch, setIsLoading, setIsRefreshing, setError]);
+
+    useEffect(() => {
+        const subscription = props.navigation.addListener('willFocus', loadChallenges);
+
+        return () => {
+            subscription.remove();
+        };
+    }, []);
+
+    useEffect(() => {
+        setIsLoading(true);
+        loadChallenges().then(() => {
+            setIsLoading(false);
+        });
+
+    }, [dispatch, loadChallenges]);
+
+    if (error) {
+        return (
+            <View style={styles.loading}>
+                <DefaultText>{'Um erro ocorreu!'}</DefaultText>
+                <DefaultText style={{textAlign: 'center', marginVertical: 5}}>{error}</DefaultText>
+
+                <Button title={'Tente novamente.'} onPress={loadChallenges} color={Colors.primaryColor} />
+            </View>
+        );
+    }
+
+    if (isLoading) {
+        return (
+            <View style={styles.loading}>
+                <ActivityIndicator size='large' color={Colors.primaryColor} />
+            </View>
+        );
+    }
+
+    if (!isLoading && availableChallenges.length === 0) {
+        return (
+            <View style={styles.loading}>
+                <DefaultText style={{paddingHorizontal: 5}}>{'Você ainda não recebeu nenhum desafio!'}</DefaultText>
+            </View>
+        );
+    }
     
 
     if (showGraphic) {
@@ -232,6 +299,8 @@ const DesafiosScreen = props => {
                         </View>
                     </View>
                 }
+                onRefresh={loadChallenges}
+                refreshing={isRefreshing}
                 style={styles.listStyle}
                 data={isDaily ? dailyChallenges : onceChallenges}
                 keyExtractor={item => item.id.toString()}

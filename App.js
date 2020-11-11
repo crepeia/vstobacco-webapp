@@ -15,6 +15,7 @@ import AppNavigator from './src/navigation/AppNavigator';
 import tipsReducer from "./src/store/reducers/tips";
 import challengesReducer from "./src/store/reducers/challenge";
 import userReducer from "./src/store/reducers/user";
+import evaluationReducer from "./src/store/reducers/evaluation";
 
 
 import { LOGOUT } from "./src/store/actions/user";
@@ -34,6 +35,7 @@ const appReducer = combineReducers({
 	user: userReducer,
 	tips: tipsReducer,
 	challenges: challengesReducer,
+	evaluation: evaluationReducer,
 });
 
 const rootReducer = (state, action) => {
@@ -49,7 +51,7 @@ const rootReducer = (state, action) => {
 
 const store = createStore(
 	rootReducer,
-	// compose(applyMiddleware(ReduxThunk), offline(newConfig), Reactotron.createEnhancer())
+	compose(applyMiddleware(ReduxThunk))
 );
 
 export default function App() {
