@@ -4,12 +4,16 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { enableScreens } from 'react-native-screens';
 
+import AppNavigator from './src/navigation/AppNavigator';
+
 //redux
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 
-import AppNavigator from './src/navigation/AppNavigator';
+//Redux-Offline
+// import { offline } from "@redux-offline/redux-offline";
+// import offlineConfig from "@redux-offline/redux-offldefaultsine/lib/";
 
 //Reducers
 import tipsReducer from "./src/store/reducers/tips";

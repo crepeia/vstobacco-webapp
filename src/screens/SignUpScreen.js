@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import moment from 'moment';
+import * as Localization from 'expo-localization';
+
+import { useDispatch } from 'react-redux';
 
 import LineSeparator from '../components/Form/LineSeparator';
 import FormTextInput from '../components/Form/FormTextInput';
@@ -13,6 +17,11 @@ import FormTerms from '../components/Form/FormTerms';
 import FormButton from '../components/Form/FormButton';
 
 import Colors from '../constants/Colors';
+import Localhost from '../constants/Localhost';
+import RegisterUser from '../models/RegisterUser';
+
+
+import * as userActions from '../store/actions/user';
 
 const tipsFrequencyData = [
     { frequency: 'Nunca', id: 0 },
@@ -64,9 +73,20 @@ const handlePhoneError = (phone) => {
 const SignUpScreen = props => {
 
     const [errorPhone, setErrorPhone] = useState(false);
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const [date, setDate] = useState('');
+
+    const language = Localization.locale;
+    let adjustedLanguage;
+
+    if (language == 'pt-BR' || language == 'pt-US') {
+        adjustedLanguage = 'pt';
+    } else {
+        adjustedLanguage = 'en';
+    }
+
+    const dispatch = useDispatch();
 
     const initialValues = {
         name: '',
@@ -78,9 +98,6 @@ const SignUpScreen = props => {
         birthDate: '',
         gender: null,
         pregnant: null,
-        cigarrosPorDia: '',
-        macoValor: '',
-        qtdCigarrosMaco: '',
         authorizeData: false,
         termsUse: false,
         signUpDate: '', //automatico
@@ -91,8 +108,22 @@ const SignUpScreen = props => {
         registration_complete: true //automatico
     }
 
-    const onSubmit = (values, actions) => {
-        Alert.alert('Cadastrado com sucesso');
+    const onSubmit = async (values, actions) => {
+        console.log('values: ')
+        console.log(values);
+        const registerValues = new RegisterUser(values.name, values.email, values.password, values.receiveEmails, values.tipsFrequency, values.phone, values.birthDate, values.gender, values.pregnant, values.authorizeData, moment(), moment(), adjustedLanguage, values.ipCreated, values.app_signup, values.registration_complete)
+        
+        setLoading(true);
+        try {
+            await dispatch(userActions.signup(registerValues));
+            setLoading(false);
+            props.navigation.navigate('Login');
+            Alert.alert('Conta criada com sucesso');
+        } catch (error) {
+            setLoading(false);
+            Alert.alert('Não foi possível criar a conta.');
+            // console.error(error)
+        }
     };
 
     return (
@@ -176,7 +207,7 @@ const SignUpScreen = props => {
                                 keyboardType='number-pad'
                             />
 
-                            <LineSeparator title={'Dados de consumo'} />
+                            {/* <LineSeparator title={'Dados de consumo'} />
 
                             <FormTextInput 
                                 placeholder={'Digite a quantidade'}
@@ -210,9 +241,9 @@ const SignUpScreen = props => {
                                 onBlur={formikProps.handleBlur('qtdCigarrosMaco')}
                                 value={formikProps.values.qtdCigarrosMaco}
                                 error={formikProps.errors.qtdCigarrosMaco}
-                                touched={formikProps.touched.qtdCigarrosMaco}
+                                touched={formikProps.touched.qtdCigarrosMaco} 
                                 keyboardType='number-pad'
-                            />
+                            /> */}
 
                             <LineSeparator title='Dados de Acesso' />
 
