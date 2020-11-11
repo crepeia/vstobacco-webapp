@@ -9,7 +9,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 
-import MainNavigator from './src/navigation/MainNavigator';
+import AppNavigator from './src/navigation/AppNavigator';
 
 //Reducers
 import tipsReducer from "./src/store/reducers/tips";
@@ -66,7 +66,7 @@ export default function App() {
   } else {
 		return (
 			<Provider store={store}>
-				<MainNavigator />
+				<AppNavigator />
 			</Provider>
 		);
   }

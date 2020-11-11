@@ -5,7 +5,8 @@ export const FETCH_USER_CHALLENGES = 'FETCH_USER_CHALLENGES';
 export const FETCH_CHALLENGES = 'FETCH_CHALLENGES';
 export const DELETE_CHALLENGE = 'DELETE_CHALLENGE';
 export const LOAD_CHALLENGES = 'LOAD_CHALLENGES';
-export const FETCH_RANKING = 'FETCH_RANKING'
+export const FETCH_RANKING = 'FETCH_RANKING';
+export const  COMPLETE_CHALLENGE = 'COMPLETE_CHALLENGE';
 
 import moment from 'moment';
 import Localhost from '../../constants/Localhost';
@@ -549,7 +550,7 @@ export const fetchRanking = () => {
             console.log(response.data)
 
             if (!response.ok) {
-                throw new Error(Traducao.t('somethingWrong'));
+                throw new Error('Algo deu errado.');
             }
 
             const resData = await response.json();

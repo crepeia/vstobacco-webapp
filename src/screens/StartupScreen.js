@@ -14,21 +14,20 @@ const StartupScreen = (props) => {
 			const userData = await AsyncStorage.getItem("userData");
 
 			if (!userData) {
-				props.navigation.navigate("Login");
+				dispatch(userActions.setDidTryLogin());
 				return;
 			}
 			let parsedData = JSON.parse(userData);
 			const { token, userId, userName, userEmail, birthDate, gender, inRanking, nickname } = parsedData;
 
 			if (!token || !userId || !userEmail || !userName) {
-				props.navigation.navigate("Login");
+				dispatch(userActions.setDidTryLogin());
 				return;
 			}
 
 			await dispatch(userActions.authenticate(token, userId, userName, 
 				userEmail, birthDate, gender, inRanking, nickname));
-
-			// props.navigation.navigate("Navegacao");
+				
 		};
 
 		tryLogin();

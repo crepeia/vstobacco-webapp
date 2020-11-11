@@ -3,6 +3,7 @@ import AsyncStorage from 'react-native';
 export const SIGNIN = 'SIGNIN';
 export const LOGOUT = 'LOGOUT';
 export const AUTHENTICATE = 'AUTHENTICATE';
+export const SET_DID_TRY_LOGIN = 'SET_DID_TRY_LOGIN';
 export const TOGGLE_RANKING = 'TOGGLE_RANKING';
 
 import Localhost from '../../constants/Localhost';
@@ -21,6 +22,11 @@ const encryptPassword = (senha) => {
 
 	return ciphertext;
 };
+
+
+export const setDidTryLogin = () => {
+	return { type: SET_DID_TRY_LOGIN }
+}
 
 export const authenticate = (token, userId, userName, userEmail, birthDate, gender, inRanking, nickname) => {
 	return {
@@ -79,31 +85,7 @@ export const signin = (email, password) => {
 		 * General checks to simplify future service calls
 		 * Check is user already have chat, record and options tables and create them.
 		 */
-		let chatId;
-		if (usr.chat == null) {
-			//CREATE CHAT
-			console.log('CREATE CHAT');
-			const chatResponse = await fetch(`http://${Localhost.address}:${Localhost.port}/aes/webresources/chat/`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({
-					user: { id: usr.id },
-				}),
-			});
-
-			if (!chatResponse.ok) {
-				throw new Error('Não foi possível criar o registro!');
-			}
-			const chat = await chatResponse.json();
-
-			chatId = chat.id;
-		} else {
-			chatId = usr.chat.id;
-		}
+		
 
 		if (usr.record == null) {
 			//CREATE RECORD

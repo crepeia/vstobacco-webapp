@@ -22,6 +22,7 @@ import PerfilScreen, { screenOptions as perfilOptions } from '../screens/PerfilS
 import RankingScreen, { screenOptions as rankingOptions } from '../screens/RankingScreen';
 import RankingJoinScreen, { screenOptions as rankingJoinOptions } from '../screens/RankingJoinScreen';
 import SignUpScreen from '../screens/SignUpScreen'; 
+import StartupLogin from '../screens/StartupLogin'; 
 import TermosUso from '../screens/TermosUso';
 import TermoConsentimento from '../screens/TermoConsetimento';
 
@@ -55,12 +56,23 @@ const defaultNavOptionsStack = {
 
 const LoginStackNavigator = createStackNavigator();
 
-const LoginNavigator = () => {
+export const LoginNavigator = () => {
     return (
         <LoginStackNavigator.Navigator screenOptions={defaultNavOptionsStack}>
             <LoginStackNavigator.Screen
                 name='Login'
                 component={LoginScreen}
+                options={{
+                    headerShown: false
+                }}
+            />
+            {/* <LoginStackNavigator.Screen
+                name='StartupLogin'
+                component={StartupLogin}
+            /> */}
+            <LoginStackNavigator.Screen
+                name='Menu'
+                component={MenuNavigator}
                 options={{
                     headerShown: false
                 }}
@@ -225,7 +237,7 @@ const OptionsNavigator = () => {
 
 const MenuDrawerNavigator = createDrawerNavigator();
 
-const MenuNavigator = () => {
+export const MenuNavigator = () => {
     return (
         <MenuDrawerNavigator.Navigator initialRouteName='Home' drawerContentOptions={{
             activeTintColor: Colors.primaryColor
@@ -351,13 +363,13 @@ const MenuNavigator = () => {
     );
 };
 
-const MainNavigator = props => {
-    return (
-        <NavigationContainer>
-            <LoginNavigator />
-            {/* <MenuNavigator />  */}
-        </NavigationContainer>
-    );
-};
+// const MainNavigator = props => {
+//     return (
+//         <NavigationContainer>
+//             <LoginNavigator />
+//             {/* <MenuNavigator />  */}
+//         </NavigationContainer>
+//     );
+// };
 
-export default MainNavigator;
+// export default MainNavigator;

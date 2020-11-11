@@ -1,10 +1,11 @@
-import { AUTHENTICATE, TOGGLE_RANKING, LOGOUT, SIGNIN } from '../actions/user';
+import { AUTHENTICATE, TOGGLE_RANKING, LOGOUT, SIGNIN, SET_DID_TRY_LOGIN } from '../actions/user';
 
 import User from '../../models/User';
 
 const initialState = {
 	token: null,
 	currentUser: null,
+	didTryAutoLogin: false
 };
 
 export default (state = initialState, action) => {
@@ -36,6 +37,7 @@ export default (state = initialState, action) => {
 					action.inRanking,
 					action.nickname
 				),
+				didTryAutoLogin: true
 			};
 		case TOGGLE_RANKING:
 			const newUser = new User(
@@ -51,8 +53,16 @@ export default (state = initialState, action) => {
 				...state,
 				currentUser: newUser,
 			};
+		case SET_DID_TRY_LOGIN:
+			return {
+				...state,
+				didTryAutoLogin: true
+			};
 		case LOGOUT:
-			return initialState;
+			return {
+                ...initialState,
+                didTryAutoLogin: true
+            };
 		default:
 			return state;
 	}
