@@ -1,35 +1,87 @@
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Alert, ScrollView, Dimensions } from 'react-native';
+import React, { useCallback, useState, useEffect } from 'react';
+import { StyleSheet, View, TouchableOpacity, Alert, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import * as Linking from 'expo-linking';
+import * as Notifications from 'expo-notifications';
+import { useSelector, useDispatch } from 'react-redux';
 import { Gravatar } from 'react-native-gravatar';
+
+import * as userActions from '../store/actions/user';
+import * as evaluationActions from '../store/actions/evaluation';
 
 import Colors from '../constants/Colors';
 import DefaultText from '../components/DefaultText';
 import HeaderButton from '../components/UI/HeaderButton';
 import DefaultTitle from '../components/DefaultTitle';
 import Card from '../components/UI/Card';
+import Localhost from '../constants/Localhost';
 
 import { AntDesign } from '@expo/vector-icons'; 
 
 const PerfilScreen = (props) => {
+	const dispatch = useDispatch();
 
-	// const user 
-	const evaluation = true;
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState();
 
-	const logout = () => {
-		Alert.alert("Logout", "Você saiu do Viva sem Tabaco.")
-  };
+	const user = useSelector((state) => state.user.currentUser);
+	const evaluation = useSelector((state) => state.evaluation.evaluation);
+
+	const options = { email: user.email, secure: true };
+
+	const logout = useCallback(() => {
+		setError(null);
+
+		try {
+			setLoading(true);
+			Notifications.cancelAllScheduledNotificationsAsync();
+			dispatch(userActions.logout());
+			props.navigation.navigate('Login');
+		} catch (err) {
+			setLoading(false);
+			setError(err.message);
+		}
+	}, [dispatch]);
   
-  const options = { email: 'luciananssantana@gmail.com', secure: true };
+	const loadEvaluation = useCallback(async () => {
+		setError(null);
+		try {
+			setLoading(true);
+			await dispatch(evaluationActions.fetchEvaluation());
+		} catch (err) {
+			setError(err.message);
+		}
+		setLoading(false);
+	}, [dispatch]);
+
+	useEffect(() => {
+		setLoading(true);
+		loadEvaluation().then(() => {
+			setLoading(false);
+		});
+	}, [dispatch, loadEvaluation]);
+
+	useEffect(() => {
+		if (error) {
+			Alert.alert('Um erro ocorreu!', error, [{ text: 'Ok' }]);
+		}
+	}, [error]);
+
+	if (loading) {
+		return (
+			<View style={styles.loading}>
+				<ActivityIndicator size='large' color={Colors.primaryColor} />
+			</View>
+		);
+	}
 
 	return (
 		<ScrollView style={styles.background}>
 			<View style={styles.container}>
 				<Gravatar options={options} style={styles.avatar} />
 
-				<DefaultText style={styles.nickname}>Luciana Nascimento</DefaultText>
-				<DefaultText style={styles.email}>luciananssantana@gmail.com</DefaultText>
+				<DefaultText style={styles.nickname}>{user.name}</DefaultText>
+				<DefaultText style={styles.email}>{user.email}</DefaultText>
 
         <TouchableOpacity onPress={logout} style={{marginTop: 25}}>
           <AntDesign name="logout" size={40} color={Colors.errorColor} />
@@ -59,19 +111,13 @@ const PerfilScreen = (props) => {
 						<DefaultTitle style={styles.tituloPlano}>Seu plano de parada</DefaultTitle>
 
 						<DefaultText style={styles.labelPlano}>Data de parada:</DefaultText>
-						<DefaultText style={styles.textoPlano}>2020-10-15</DefaultText>
+						<DefaultText style={styles.textoPlano}>{evaluation.dataParada}</DefaultText>
 
 						<DefaultText style={styles.labelPlano}>Técnicas para a fissura:</DefaultText>
-						<DefaultText style={styles.textoPlano}>Fazer exercício de relaxamento em áudio mp3.</DefaultText>
-						<TouchableOpacity activeOpacity={0.4} onPress={() => Linking.openURL('http://vivasemtabaco.com.br/wati/download/surfandoafissura.mp3')}>
-							<DefaultText style={{color: Colors.primaryColor, fontSize: 12, paddingBottom: 10}}>DOWNLOAD</DefaultText>
-						</TouchableOpacity>
-						<DefaultText style={styles.textoPlano}>Beber um copo de água pausadamente.</DefaultText>
-						<DefaultText style={styles.textoPlano}>Comer alimentos com baixa quantidade de calorias como frutas cristalizadas (uva passas), balas dietéticas e chicletes dietéticos.</DefaultText>
-						<DefaultText style={styles.textoPlano}>Ler um cartão com suas razões para ter parado de fumar.</DefaultText>
+						<DefaultText style={styles.textoPlano}>{evaluation.tecnicasFissura}</DefaultText>
 
 						<DefaultText style={styles.labelPlano}>Estratégias para resistir ao cigarro:</DefaultText>
-						<DefaultText style={styles.textoPlano}>Comer cenouras e beber água.</DefaultText>
+						<DefaultText style={styles.textoPlano}>{evaluation.estrategiasParaResistir}</DefaultText>
 					</Card>
 				)}
 

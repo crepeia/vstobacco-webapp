@@ -109,6 +109,13 @@ const PerfilNavigator = () => {
                 component={PerfilScreen}
                 options={perfilOptions}
             />
+            <PerfilStackNavigator.Screen
+                name='Login'
+                component={LoginNavigator}
+                options={{
+                    headerShown: false
+                }}
+            />
         </PerfilStackNavigator.Navigator>
     )
 }
