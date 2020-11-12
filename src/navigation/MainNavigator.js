@@ -66,17 +66,6 @@ export const LoginNavigator = () => {
                     headerShown: false
                 }}
             />
-            {/* <LoginStackNavigator.Screen
-                name='StartupLogin'
-                component={StartupLogin}
-            /> */}
-            <LoginStackNavigator.Screen
-                name='Menu'
-                component={MenuNavigator}
-                options={{
-                    headerShown: false
-                }}
-            />
             <LoginStackNavigator.Screen
                 name='Cadastro'
                 component={SignUpScreen}
@@ -369,6 +358,33 @@ export const MenuNavigator = () => {
         </MenuDrawerNavigator.Navigator>
     );
 };
+
+const StartupStackNavigator = createStackNavigator();
+
+export const StartupNavigator = () => {
+    return (
+
+        <StartupStackNavigator.Navigator>
+            <LoginStackNavigator.Screen
+                name='StartupLogin'
+                component={StartupLogin}
+                options={{
+                    headerShown: false
+                }}
+            />
+            <LoginStackNavigator.Screen
+                name='Menu'
+                component={MenuNavigator}
+                options={{
+                    headerShown: false
+                }}
+            />
+
+        </StartupStackNavigator.Navigator>
+
+    )
+};
+
 
 // const MainNavigator = props => {
 //     return (

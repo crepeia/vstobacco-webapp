@@ -67,9 +67,9 @@ const LoginScreen = props => {
 
 		try {
 			setLoading(true);
-			// await dispatch(userActions.signin(email, password));
+			await dispatch(userActions.signin(email, password));
             // props.navigation.navigate('StartupLogin'); está pronta mas ainda temos que acabar o redux
-            props.navigation.navigate('Menu'); // temporário
+            // props.navigation.navigate('Menu'); // temporário
 		} catch (err) {
 			setLoading(false);
 			setError(err.message);

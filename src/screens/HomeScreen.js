@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Dimensions, ScrollView, ActivityIndicator, Alert, BackHandler } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts';
@@ -9,6 +9,7 @@ import moment from 'moment';
 import NumberInput from '../components/UI/NumberInput';
 import HeaderButton from '../components/UI/HeaderButton';
 import DefaultText from '../components/DefaultText';
+import DefaultTitle from '../components/DefaultTitle';
 import Colors from '../constants/Colors';
 
 const data = [
@@ -83,6 +84,12 @@ const HomeScreen = props => {
 			strokeWidth={ 2 }
 		/>
 	));
+
+	useEffect(() => {
+		BackHandler.addEventListener('hardwareBackPress', () => {
+			return true;
+		})
+	}, []);
 
     return (
 		<ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -174,44 +181,17 @@ const HomeScreen = props => {
 
 				{/* DADOS DE CONSUMO */}
 				<View style={styles.colunaConsumo}>
-					<View style={styles.consumoContainer}>
+					<View style={{...styles.consumoContainer, marginBottom: 10}}>
 						<DefaultText style={styles.consumoText}>{'Cigarros fumados por dia'}</DefaultText>
-						<NumberInput
-							type={'int'}
-                            maxLength={2}
-                            onValueChange={(value) => {
-								setDailyCigars(value);
-								setIsModified(true);
-							}}
-							value={dailyCigars}
-							onFocus={() => { setDailyCigars('') }}
-                        />
+						<DefaultTitle style={styles.numberHighlight}>{'5'}</DefaultTitle>
 					</View>
-					<View style={styles.consumoContainer}>
+					<View style={{...styles.consumoContainer, borderTopWidth: 0.8, borderBottomWidth: 0.8, borderColor: Colors.primaryColor, paddingVertical: 10}}>
 						<DefaultText style={styles.consumoText}>{'Preço do maço de cigarros'}</DefaultText>
-						<NumberInput 
-                            type={'float'}
-                            maxLength={4}
-                            onValueChange={(value) => {
-								setPackPrice(value);
-								setIsModified(true);
-							}}
-							value={packPrice}
-							onFocus={() => { setPackPrice('') }}
-                        />
+						<DefaultTitle style={styles.numberHighlight}>R$ {'4.70'}</DefaultTitle>
 					</View>
-					<View style={styles.consumoContainer}>
+					<View style={{...styles.consumoContainer, marginTop: 10}}>
 						<DefaultText style={styles.consumoText}>{'Quantidade de cigarros no maço'}</DefaultText>
-						<NumberInput 
-                            type={'int'}
-                            maxLength={2}
-                            onValueChange={(value) => {
-								setPackAmount(value);
-								setIsModified(true);
-							}}
-                            value={packAmount}
-							onFocus={() => { setPackAmount('') }}
-                        />
+						<DefaultTitle style={styles.numberHighlight}>{'10'}</DefaultTitle>
 					</View>
 				</View>
 
@@ -301,19 +281,26 @@ const styles = StyleSheet.create({
 	},
 	colunaConsumo: {
 		width: Dimensions.get('window').width * 0.95,
-		paddingVertical: 5,
+		paddingVertical: 10,
 		paddingHorizontal: 10,
+		borderWidth: 0.8,
+		borderRadius: 10,
+		borderColor: Colors.primaryColor
 	},
 	consumoContainer: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		marginVertical: 10,
 	},
 	consumoText: {
 		color: Colors.primaryColor,
 		fontSize: 15,
 		fontFamily: 'open-sans-bold'
+	},
+	numberHighlight: {
+		marginRight: 4,
+		color: Colors.primaryColor,
+		fontSize: 18
 	},
 	button: {
         width: Dimensions.get('window').width * 0.9,
@@ -340,6 +327,17 @@ export const screenOptions = navData => {
 					iconName={'md-menu'}
 					onPress={() => {
 					navData.navigation.toggleDrawer();
+					}}
+				/>
+			</HeaderButtons>
+		),
+		headerRight: () => (
+			<HeaderButtons HeaderButtonComponent={HeaderButton}>
+				<Item 
+					title='Cigarros fumados'
+					iconName={'md-add-circle'}
+					onPress={() => {
+					navData.navigation.navigate('Cigarros fumados');
 					}}
 				/>
 			</HeaderButtons>

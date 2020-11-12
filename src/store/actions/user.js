@@ -1,4 +1,4 @@
-import AsyncStorage from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const SIGNIN = 'SIGNIN';
 export const LOGOUT = 'LOGOUT';
@@ -117,16 +117,32 @@ export const signin = (email, password) => {
 			userId: usr.id,
 			userName: usr.name,
 			userEmail: usr.email,
-			birthDate: usr.birthDate,
-			gender: usr.gender,
+			birthDate: '11/11/2020',
+			gender: 'M',
 			token: token,
 			// isAdmin: usr.admin,
 			// isConsultant: usr.consultant,
 			// chatId: chatId,
-			inRanking: usr.inRanking,
-			nickname: usr.nickname
+			inRanking: false,
+			nickname: ''
 		});
-		saveDataToStorage(token, usr.id, usr.name, usr.email, usr.birthDate, usr.gender, usr.inRanking, usr.nickname);
+		saveDataToStorage(token, usr.id, usr.name, usr.email, '11/11/2020', 'M', false, '');
+	
+		// dispatch({
+		// 	type: SIGNIN,
+		// 	userId: usr.id,
+		// 	userName: usr.name,
+		// 	userEmail: usr.email,
+		// 	birthDate: usr.birthDate,
+		// 	gender: usr.gender,
+		// 	token: token,
+		// 	// isAdmin: usr.admin,
+		// 	// isConsultant: usr.consultant,
+		// 	// chatId: chatId,
+		// 	inRanking: usr.inRanking,
+		// 	nickname: usr.nickname
+		// });
+		// saveDataToStorage(token, usr.id, usr.name, usr.email, usr.birthDate, usr.gender, usr.inRanking, usr.nickname);
 	};
 };
 
@@ -156,7 +172,7 @@ export const signup = (jsonForm) => {
 
 		const usr = await response.json();
 
-		console.log(usr)
+		// console.log(usr)
 	};
 };
 
@@ -196,7 +212,9 @@ export const toggleRanking = (inRanking, nickname) => {
 				nickname: nickname
 			}))
 
-		dispatch({ type: TOGGLE_RANKING, inRanking: inRanking, nickname: nickname });
+		dispatch({ type: TOGGLE_RANKING, inRanking: true, nickname: 'Alex' });
+
+		// dispatch({ type: TOGGLE_RANKING, inRanking: inRanking, nickname: nickname });
 	};
 }
 

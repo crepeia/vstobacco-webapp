@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useNetInfo } from '@react-native-community/netinfo';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from "react-redux";
 
 import HeaderButton from '../components/UI/HeaderButton';
+import OfflineWarning from '../components/OfflineWarning';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
@@ -11,6 +15,12 @@ import moment from 'moment';
 import Colors from '../constants/Colors';
 
 const AddCigarrosScreen = props => {
+
+    const NetInfo = useNetInfo();
+    const dispatch = useDispatch();
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
     const [cigarros, setCigarros] = useState(0);
 
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -18,6 +28,13 @@ const AddCigarrosScreen = props => {
     
     const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
     const [markedDate, setMarkedDate] = useState(moment().format("dddd"));
+    const [isOnline, setIsOnline] = useState(true);
+
+    console.log(isOnline);
+
+    useEffect(() => {
+        setIsOnline(NetInfo.isConnected);
+    }, [NetInfo]);
 
     const addCigarro = () => {
         if (cigarros < 100) {
@@ -32,7 +49,9 @@ const AddCigarrosScreen = props => {
     }
 
     return (
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.background}>
+            <OfflineWarning show={!isOnline}/>
             <View style={styles.numeroCigarrosContainer}>
                 <View style={styles.titleContainer}>
                     <TouchableOpacity activeOpacity={0.4} style={styles.calendarButtonContainer} onPress={() => setShowDatePicker(true)}>
@@ -98,6 +117,7 @@ const AddCigarrosScreen = props => {
                 </View>
             </View>
         </View>
+        </ScrollView>
     );
 };
 
@@ -137,7 +157,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-around',
         alignItems: 'center',
-        paddingVertical: 75
+        paddingTop: 50,
     },
     titleContainer:
     {
