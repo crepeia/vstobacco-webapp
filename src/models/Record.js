@@ -1,8 +1,8 @@
 class Record {
-    constructor(id, cigarsDaily, cigarPrice, packAmount, userId) {
+    constructor(id, cigarsDaily, packPrice, packAmount, userId) {
         this.id = id;
         this.cigarsDaily = cigarsDaily;
-        this.cigarPrice = cigarPrice;
+        this.packPrice = packPrice;
         this.packAmount = packAmount;
         this.userId = userId;
     }
