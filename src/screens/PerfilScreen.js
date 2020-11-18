@@ -113,16 +113,18 @@ const PerfilScreen = (props) => {
 						<DefaultText style={styles.textoPlano}>{evaluation.dataParada}</DefaultText>
 
 						<DefaultText style={styles.labelPlano}>Técnicas para a fissura:</DefaultText>
-						<DefaultText style={styles.textoPlano}>{evaluation.tecnicasFissura}</DefaultText>
+						<DefaultText style={styles.textoPlano}>{evaluation.beberAgua}</DefaultText>
+						<DefaultText style={styles.textoPlano}>{evaluation.comerAlimentos}</DefaultText>
+						<DefaultText style={styles.textoPlano}>{evaluation.lerCartao}</DefaultText>
+						<DefaultText style={styles.textoPlano}>{evaluation.exercicioRelaxamento}</DefaultText>
+
+						<DefaultText style={styles.labelPlano}>Técnicas para evitar recaídas:</DefaultText>
+						<DefaultText style={styles.textoPlano}>{evaluation.evitarRecaida}</DefaultText>
 
 						<DefaultText style={styles.labelPlano}>Estratégias para resistir ao cigarro:</DefaultText>
 						<DefaultText style={styles.textoPlano}>{evaluation.estrategiasParaResistir}</DefaultText>
 					</Card>
 				)}
-
-				{/* <TouchableOpacity onPress={toggleConsultant} style={{...styles.button, width: null}}>
-					<DefaultText style={styles.buttonText}>Alternar tipo de usuário</DefaultText>
-				</TouchableOpacity> */}
 			</View>
 		</ScrollView>
 	);

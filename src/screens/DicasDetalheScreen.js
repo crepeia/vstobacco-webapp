@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     title: {
         color: Colors.primaryColor,
         fontSize: 32,
-        marginVertical: 15
+        marginVertical: 10
     },
     descrip: {
         marginHorizontal: 10,
