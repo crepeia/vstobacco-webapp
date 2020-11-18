@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import React, { useCallback, useEffect, useState } from 'react';
+import { 
+    View, 
+    StyleSheet, 
+    Alert,
+    ActivityIndicator, 
+    ScrollView, 
+    Dimensions 
+} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
 
 import Card from '../components/UI/Card';
@@ -8,32 +15,78 @@ import DefaultText from '../components/DefaultText';
 import DefaultTitle from '../components/DefaultTitle';
 import Colors from '../constants/Colors';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleDislikeTip, toggleLikeTip, readTip } from '../store/actions/tips';
+
 const DicasDetalheScreen = props => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
 
-    const [likedTip, setLikedTip] = useState(null);
 
-    const title = props.route.params ? props.route.params.title : null;
-    const description = props.route.params ? props.route.params.description : null;
+    const tips = useSelector(state => state.tips.userTips);
+    const { tipId } = props.route.params;
+
+    const selectedTip = tips.find(tip => tip.id === tipId);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!selectedTip.read) {
+            dispatch(readTip(tipId));
+        }
+    }, [dispatch]);
+
+    const toggleLikedHandler = useCallback(async () => {
+        setError(null);
+        setIsLoading(true);
+        try {
+            await dispatch(toggleLikeTip(tipId, selectedTip.liked));
+        } catch (err) {
+            setError(err.message);
+        }
+        setIsLoading(false);
+    }, [dispatch, tipId]);
+
+    const toggleDislikedHandler = useCallback(async () => {
+        setError(null);
+        setIsLoading(true);
+        try {
+            await dispatch(toggleDislikeTip(tipId, selectedTip.liked));
+        } catch (err) {
+            setError(err.message);
+        }
+        setIsLoading(false);
+    }, [dispatch, tipId]);
+
+    useEffect(() => {
+        if (error) {
+            Alert.alert('Um erro ocorreu!', error, [{ text: 'Ok' }])
+        }
+    }, [error]);
+
 
     return (
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
             <View style={styles.background}>
                 <Card style={styles.textContainer}>
-                    <DefaultTitle style={styles.title}>{title}</DefaultTitle>
-                    <DefaultText style={styles.descrip}>{description}</DefaultText>
-                    <DefaultTitle style={styles.data}>28/10/2020</DefaultTitle>
+                    <DefaultTitle style={styles.title}>{selectedTip.title}</DefaultTitle>
+                    <DefaultText style={styles.descrip}>{selectedTip.description}</DefaultText>
+                    <DefaultTitle style={styles.data}>{selectedTip.dateSent}</DefaultTitle>
                 </Card>
                 <View style={styles.toggleContainer} >
                     <DefaultText style={styles.likeText}>Você gostou dessa dica?</DefaultText>
                     <View style={styles.iconsContainer}>
-                        <TouchableOpacity onPress={() => setLikedTip(false)}>
-                            <FontAwesome name={likedTip === false ? "thumbs-down" : "thumbs-o-down"} size={38} color={'#aaa'} />
+                        <TouchableOpacity onPress={toggleDislikedHandler}>
+                            <FontAwesome name={selectedTip.liked != null && !selectedTip.liked ? 'thumbs-down' : 'thumbs-o-down'} size={38} color={'#aaa'} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setLikedTip(true)}>
-                            <FontAwesome name={likedTip === true ? "thumbs-up" : "thumbs-o-up"} size={38} color={Colors.primaryColor} />
+                        <TouchableOpacity onPress={toggleLikedHandler}>
+                            <FontAwesome name={selectedTip.liked != null && selectedTip.liked ? 'thumbs-up' : 'thumbs-o-up'} size={38} color={Colors.primaryColor} />
                         </TouchableOpacity>
                     </View>
                 </View>
+                {isLoading &&
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color={Colors.primaryColor} />
+                </View>}
             </View>
         </ScrollView>
     );
@@ -49,23 +102,24 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         alignItems: 'center',
-        padding: 4,
+        padding: 10,
         elevation: 4,
-        borderRadius: 20,
+        borderRadius: 20
     },
     title: {
         color: Colors.primaryColor,
         fontSize: 32,
-        marginTop: 10,
-        marginBottom: 20,
+        marginVertical: 15
     },
     descrip: {
         marginHorizontal: 10,
         fontSize: 20,
-        color: Colors.primaryColor
+        color: Colors.primaryColor,
+        textAlign: 'center'
     },
     data: {
         alignSelf: 'flex-end',
+        marginVertical: 10,
         marginRight: 16,
         color: Colors.primaryColor,
         fontSize: 15
@@ -84,6 +138,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 100,
         marginTop: 10
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
