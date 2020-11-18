@@ -18,8 +18,9 @@ export default (state = initialState, action) => {
             if (action.evaluation.dataParada != null) {
 
 
-                const ev = new Evaluation(action.evaluation.id, moment(action.evaluation.dataParada).format("YYYY-MM-DD"), action.evaluation.tecnicasFissura, 
-                action.evaluation.estrategiasParaResistir);
+                const ev = new Evaluation(action.evaluation.id, moment(action.evaluation.dataParada).format("YYYY-MM-DD"), action.evaluation.beberAgua, 
+                action.evaluation.comerAlimentos, action.evaluation.lerCartao, action.evaluation.exercicioRelaxamento, 
+                action.evaluation.evitarRecaida, action.evaluation.estrategiasParaResistir);
                 /*
                                 AsyncStorage.setItem('evaluationData', JSON.stringify({
                                     evaluation: ev
