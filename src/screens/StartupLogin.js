@@ -126,8 +126,8 @@ const StartupLogin = (props) => {
 	useEffect(() => {
         const tryLogin = async () => {
 
-            // await dispatch(recordActions.fetchRecord());
-            // await dispatch(recordActions.fetchDailyLogs());
+            await dispatch(recordActions.fetchRecord());
+            await dispatch(recordActions.fetchDailyLogs());
             await dispatch(challengeActions.fetchChallenges());
 			await dispatch(challengeActions.fetchUserChallenges());
 			await dispatch(challengeActions.completeLoginChallenge());
