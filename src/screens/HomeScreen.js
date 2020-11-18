@@ -182,7 +182,7 @@ const HomeScreen = props => {
 				{/* DADOS DE CONSUMO */}
 				<View style={styles.colunaConsumo}>
 					<View style={{...styles.consumoContainer, marginBottom: 10}}>
-						<DefaultText style={styles.consumoText}>{'Cigarros fumados por dia'}</DefaultText>
+						<DefaultText style={styles.consumoText}>{'Cigarros fumados por dia antes'}</DefaultText>
 						<DefaultTitle style={styles.numberHighlight}>{'5'}</DefaultTitle>
 					</View>
 					<View style={{...styles.consumoContainer, borderTopWidth: 0.8, borderBottomWidth: 0.8, borderColor: Colors.primaryColor, paddingVertical: 10}}>

@@ -212,9 +212,9 @@ export const toggleRanking = (inRanking, nickname) => {
 				nickname: nickname
 			}))
 
-		dispatch({ type: TOGGLE_RANKING, inRanking: true, nickname: 'Alex' });
+		// dispatch({ type: TOGGLE_RANKING, inRanking: true, nickname: 'lucytest' });
 
-		// dispatch({ type: TOGGLE_RANKING, inRanking: inRanking, nickname: nickname });
+		dispatch({ type: TOGGLE_RANKING, inRanking: inRanking, nickname: nickname });
 	};
 }
 

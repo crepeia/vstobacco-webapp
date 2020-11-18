@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -8,6 +8,8 @@ import HeaderButton from '../components/UI/HeaderButton';
 import FormTextInput from '../components/Form/FormTextInput';
 import DefaultText from '../components/DefaultText';
 import Colors from '../constants/Colors';
+import { useDispatch, useSelector } from 'react-redux';
+import * as userActions from '../store/actions/user';
 import HelpButtonModal from '../components/HelpButtonModal.js';
 
 const validationSchema = yup.object({
@@ -18,16 +20,44 @@ const validationSchema = yup.object({
 });
 
 const RankingJoin = props => {
+    const dispatch = useDispatch();
 
-    const userNickname = 'lunascsant'; // provisório
+    const [isLoading, setIsLoading] = useState(false);
+
+    const inRanking = useSelector((state) => state.user.currentUser.inRanking);
+    const userNickname = useSelector((state) => state.user.currentUser.nickname);
+
 
     const initialValues = {
         nickname: userNickname,
     };
 
 
-    const onSubmit = () => {
-        props.navigation.navigate('Ranking');
+    useEffect(() => {
+        console.log(inRanking);
+        if(inRanking){
+            props.navigation.navigate('Ranking');
+        }
+    }, [])
+
+    const onSubmit = async (values, actions) => {
+        setIsLoading(true);
+        try {
+            await dispatch(userActions.toggleRanking(true, values.nickname));
+            setIsLoading(false);
+            props.navigation.navigate('Ranking');
+        } catch(e) {
+            console.log(e.message)
+        }
+        setIsLoading(false);
+    };
+
+    if (isLoading || inRanking) {
+        return (
+            <View style={styles.loading}>
+                <ActivityIndicator size='large' color={Colors.primaryColor} />
+            </View>
+        );
     };
 
     return (
@@ -67,8 +97,8 @@ const RankingJoin = props => {
                                 placeholder={'Digite seu apelido'}
                                 title={'Apelido'}
                                 titleColor={Colors.primaryColor}
-                                onChangeText={formikProps.handleChange('Apelido')}
-                                onBlur={formikProps.handleBlur('Apelido')}
+                                onChangeText={formikProps.handleChange('nickname')}
+                                onBlur={formikProps.handleBlur('nickname')}
                                 value={formikProps.values.nickname}
                                 error={formikProps.errors.nickname}
                                 touched={formikProps.touched.nickname}
