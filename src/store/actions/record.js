@@ -36,7 +36,7 @@ export const fetchRecord = () => {
             packPrice: '',
             packAmount: null,
 			userId: userId,
-			filled: null,
+			filled: false,
 		});
 	};
 };

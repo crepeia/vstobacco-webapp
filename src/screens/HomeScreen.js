@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, ScrollView, ActivityIndicator, Alert, BackHandler } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, StyleSheet, Dimensions, ScrollView, BackHandler } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts';
 import { Line } from 'react-native-svg';
 import moment from 'moment';
+
+import { useSelector } from 'react-redux';
 
 import NumberInput from '../components/UI/NumberInput';
 import HeaderButton from '../components/UI/HeaderButton';
@@ -52,6 +53,8 @@ const fillLabels = (numLabels, format) => {
 
 const HomeScreen = props => {
 
+	const record = useSelector((state) => state.record.record);
+
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [selectedPlot, setSelectedPlot] = useState("week");
@@ -65,10 +68,9 @@ const HomeScreen = props => {
 	const [drinksToday, setDrinksToday] = useState(0);
 
 	// Variáveis de consumo
-	const [dailyCigars, setDailyCigars] = useState('0');
-	const [packPrice, setPackPrice] = useState('0');
-	const [packAmount, setPackAmount] = useState('0');
-	const [isModified, setIsModified] = useState(false);
+	const dailyCigars = record.cigarsDaily.toString();
+	const packPrice = record.packPrice.toString();
+	const packAmount = record.packAmount.toString();
 
 	// Variável e Componente p/ gráfico
 	const verticalContentInset = { top: 20, bottom: 20 };
@@ -183,35 +185,17 @@ const HomeScreen = props => {
 				<View style={styles.colunaConsumo}>
 					<View style={{...styles.consumoContainer, marginBottom: 10}}>
 						<DefaultText style={styles.consumoText}>{'Cigarros fumados por dia antes'}</DefaultText>
-						<DefaultTitle style={styles.numberHighlight}>{'5'}</DefaultTitle>
+						<DefaultTitle style={styles.numberHighlight}>{dailyCigars}</DefaultTitle>
 					</View>
 					<View style={{...styles.consumoContainer, borderTopWidth: 0.8, borderBottomWidth: 0.8, borderColor: Colors.primaryColor, paddingVertical: 10}}>
 						<DefaultText style={styles.consumoText}>{'Preço do maço de cigarros'}</DefaultText>
-						<DefaultTitle style={styles.numberHighlight}>R$ {'4.70'}</DefaultTitle>
+						<DefaultTitle style={styles.numberHighlight}>R$ {packPrice}</DefaultTitle>
 					</View>
 					<View style={{...styles.consumoContainer, marginTop: 10}}>
 						<DefaultText style={styles.consumoText}>{'Quantidade de cigarros no maço'}</DefaultText>
-						<DefaultTitle style={styles.numberHighlight}>{'10'}</DefaultTitle>
+						<DefaultTitle style={styles.numberHighlight}>{packAmount}</DefaultTitle>
 					</View>
 				</View>
-
-				{/* BOTÃO SALVAR */}
-				{isModified 
-					&&
-				<TouchableOpacity 
-					onPress={() => {
-						Alert.alert('Dados de consumo salvos com sucesso!');
-						setIsModified(false);
-					}}
-					style={styles.button}
-				>
-					{isLoading ? 
-						<ActivityIndicator size={27} color='white' />
-						:
-						<DefaultText style={styles.buttonText}>{'Salvar alterações'}</DefaultText>
-					}
-				</TouchableOpacity>
-				}
 
 			</View>
 		</ScrollView>

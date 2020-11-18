@@ -8,11 +8,14 @@ import StartupScreen from '../screens/StartupScreen';
 const AppNavigator = props => {
     const isAuth = useSelector(state => state.user.token);
     const didTryAutoLogin = useSelector(state => state.user.didTryAutoLogin);
+    const recordIsFilled = useSelector(state => state.record.record ? state.record.record.filled : false);
 
+    console.log('valor do record filled: ' + recordIsFilled);
     return (
         //No lugar do MenuNavigator chamar o StartupNavigator e nele usar o Navigate pro Menu
         <NavigationContainer>
-            {isAuth && <StartupNavigator />}
+            {isAuth && recordIsFilled && <MenuNavigator />}
+            {isAuth && !recordIsFilled && <StartupNavigator />}
             {!isAuth && didTryAutoLogin && <LoginNavigator />}
             {!isAuth && !didTryAutoLogin && <StartupScreen />}
         </NavigationContainer>

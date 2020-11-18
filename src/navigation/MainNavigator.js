@@ -21,6 +21,7 @@ import OptionsScreen, { screenOptions as configOptions } from '../screens/Option
 import PerfilScreen, { screenOptions as perfilOptions } from '../screens/PerfilScreen';
 import RankingScreen, { screenOptions as rankingOptions } from '../screens/RankingScreen';
 import RankingJoinScreen, { screenOptions as rankingJoinOptions } from '../screens/RankingJoinScreen';
+import RecordScreen from '../screens/RecordScreen';
 import SignUpScreen from '../screens/SignUpScreen'; 
 import StartupLogin from '../screens/StartupLogin'; 
 import TermosUso from '../screens/TermosUso';
@@ -373,8 +374,8 @@ export const StartupNavigator = () => {
                 }}
             />
             <LoginStackNavigator.Screen
-                name='Menu'
-                component={MenuNavigator}
+                name='Record'
+                component={RecordScreen}
                 options={{
                     headerShown: false
                 }}

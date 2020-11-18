@@ -29,7 +29,7 @@ const NumberInput = props =>
 
 const styles = StyleSheet.create({
     textInput: {
-        width: 40,
+        minWidth: 40,
         height: 30,
         textAlign: 'center',
         borderBottomColor: Colors.primaryColor,

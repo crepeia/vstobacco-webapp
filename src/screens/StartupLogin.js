@@ -142,7 +142,7 @@ const StartupLogin = (props) => {
     useEffect(() => {
         if(isLogging){
             // registerForPushNotificationsAsync();
-            props.navigation.navigate("Menu");
+            props.navigation.navigate("Record");
         }
     }, [dispatch, isLogging]);
 
