@@ -16,8 +16,6 @@ const TermoConsentimento = props => {
 
     const dispatch = useDispatch();
 
-    const [isLoading, setIsLoading] = useState(false);
-
     // Variáveis de consumo
     const [dailyCigars, setDailyCigars] = useState('0');
     const [isDailyModified, setIsDailyModified] = useState(false);
@@ -27,13 +25,11 @@ const TermoConsentimento = props => {
     const [isAmountModified, setIsAmountModified] = useState(false);
     
     const saveRecordHandler = useCallback(async () => {
-        setIsLoading(true);
 		try {
-			await dispatch(recordActions.updateRecord(dailyCigars, packPrice, packAmount));
+            await dispatch(recordActions.updateRecord(dailyCigars, packPrice, packAmount));
 		} catch (err) {
 			Alert.alert(err.message);
         }
-        setIsLoading(false);
 	}, [dispatch, dailyCigars, packPrice, packAmount]);
 
     return (
@@ -104,12 +100,9 @@ const TermoConsentimento = props => {
                         <TouchableOpacity 
                             onPress={saveRecordHandler}
                             style={styles.button}
+                            activeOpacity={0.6}
                         >
-                            {isLoading ? 
-                                <ActivityIndicator size={27} color='white' />
-                                :
-                                <DefaultText style={styles.buttonText}>{'PROSSEGUIR'}</DefaultText>
-                            }
+                            <DefaultText style={styles.buttonText}>{'PROSSEGUIR'}</DefaultText>
                         </TouchableOpacity>
                         }
 
