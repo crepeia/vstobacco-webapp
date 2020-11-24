@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import * as recordActions from '../store/actions/record';
 import * as challengeActions from '../store/actions/challenge';
+import * as achievementActions from '../store/actions/achievement';
 // import * as tipActions from '../store/actions/tips';
 // import * as optionsActions from '../store/actions/options';
 // import * as messageActions from '../store/actions/message';
@@ -131,6 +132,7 @@ const StartupLogin = (props) => {
             await dispatch(challengeActions.fetchChallenges());
 			await dispatch(challengeActions.fetchUserChallenges());
 			await dispatch(challengeActions.completeLoginChallenge());
+			await dispatch(achievementActions.fetchDailyAchievements());
             // await dispatch(tipActions.fetchTips());
             // await dispatch(tipActions.fetchUserTips());
             // await dispatch(optionsActions.fetchOptions());

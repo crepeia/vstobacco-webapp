@@ -13,6 +13,7 @@ import OfflineWarning from '../components/OfflineWarning';
 import { useDispatch, useSelector } from "react-redux";
 import * as recordActions from '../store/actions/record';
 import * as challengeActions from '../store/actions/challenge';
+import * as achievementActions from '../store/actions/achievement';
 
 import Colors from '../constants/Colors';
 
@@ -73,6 +74,7 @@ const AddCigarrosScreen = props => {
             setIsLoading(true);
             // await dispatch(recordActions.saveLog(cigarros, date, '', ''));
             await dispatch(recordActions.saveLog(cigarros, date));
+            await dispatch(achievementActions.saveAchievement(cigarros, date));
             await dispatch(challengeActions.completeDailyLogChallenge());
             if(cigarros === 0){
                 await dispatch(challengeActions.completeDontSmokeChallenge(date));

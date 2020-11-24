@@ -6,7 +6,7 @@ export const FETCH_CHALLENGES = 'FETCH_CHALLENGES';
 export const DELETE_CHALLENGE = 'DELETE_CHALLENGE';
 export const LOAD_CHALLENGES = 'LOAD_CHALLENGES';
 export const FETCH_RANKING = 'FETCH_RANKING';
-export const  COMPLETE_CHALLENGE = 'COMPLETE_CHALLENGE';
+export const COMPLETE_CHALLENGE = 'COMPLETE_CHALLENGE';
 
 import moment from 'moment';
 import Localhost from '../../constants/Localhost';

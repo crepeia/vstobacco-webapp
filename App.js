@@ -21,6 +21,7 @@ import challengesReducer from "./src/store/reducers/challenge";
 import userReducer from "./src/store/reducers/user";
 import evaluationReducer from "./src/store/reducers/evaluation";
 import recordReducer from './src/store/reducers/record';
+import achievementReducer from './src/store/reducers/achievement';
 
 
 import { LOGOUT } from "./src/store/actions/user";
@@ -42,6 +43,7 @@ const appReducer = combineReducers({
 	challenges: challengesReducer,
 	evaluation: evaluationReducer,
 	record: recordReducer,
+	achievement: achievementReducer
 });
 
 const rootReducer = (state, action) => {
