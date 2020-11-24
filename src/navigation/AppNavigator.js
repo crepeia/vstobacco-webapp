@@ -10,7 +10,6 @@ const AppNavigator = props => {
     const didTryAutoLogin = useSelector(state => state.user.didTryAutoLogin);
     const recordIsFilled = useSelector(state => state.record.record ? state.record.record.filled : false);
 
-    console.log('valor do record filled: ' + recordIsFilled);
     return (
         //No lugar do MenuNavigator chamar o StartupNavigator e nele usar o Navigate pro Menu
         <NavigationContainer>

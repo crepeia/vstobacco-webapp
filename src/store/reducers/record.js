@@ -49,13 +49,6 @@ export default (state = initialState, action) => {
                 needSyncs: true 
             };
         case FETCH_DAILY_LOGS:
-            if (action.loadedLogs) {
-                /*
-                AsyncStorage.setItem('dailyLogsData', JSON.stringify({
-                    dailyLogs: action.loadedLogs
-                }));
-                */
-            }
             return {
                 ...state,
                 dailyLogs: action.loadedLogs,

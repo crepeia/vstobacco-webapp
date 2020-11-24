@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
-import { useDispatch, useSelector } from "react-redux";
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 
 import HeaderButton from '../components/UI/HeaderButton';
 import OfflineWarning from '../components/OfflineWarning';
 
-import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment';
+import { useDispatch, useSelector } from "react-redux";
+import * as recordActions from '../store/actions/record';
+import * as challengeActions from '../store/actions/challenge';
 
 import Colors from '../constants/Colors';
 
@@ -18,6 +20,7 @@ const AddCigarrosScreen = props => {
 
     const NetInfo = useNetInfo();
     const dispatch = useDispatch();
+    const dailyLogs = useSelector(state => state.record.dailyLogs);
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
@@ -30,11 +33,59 @@ const AddCigarrosScreen = props => {
     const [markedDate, setMarkedDate] = useState(moment().format("dddd"));
     const [isOnline, setIsOnline] = useState(true);
 
-    console.log(isOnline);
+    const loadRecord = useCallback(async () => {
+        setError(null);
+        if (isOnline) {
+            try {
+
+                await dispatch(recordActions.fetchDailyLogs());
+
+            } catch (err) {
+                setError(err.message);
+            }
+        }
+    }, [dispatch, isOnline]);
 
     useEffect(() => {
-        setIsOnline(NetInfo.isConnected);
-    }, [NetInfo]);
+        setIsLoading(true);
+        loadRecord().then(() => {
+            setIsLoading(false);
+        });
+    }, [dispatch, loadRecord]);
+
+    useEffect(() => {
+        const index = dailyLogs.findIndex(log => log.logDate === date);
+        if (index >= 0) {
+            setCigarros(dailyLogs[index].cigars);
+        } else {
+            setCigarros(0);
+        }
+    }, [dispatch, loadRecord, date]);
+
+    useEffect(() => {
+        setIsOnline(NetInfo.isConnected.valueOf());
+    });
+
+    const saveLogHandler = useCallback(async () => {
+        setError(null);
+
+        try {
+            setIsLoading(true);
+            // await dispatch(recordActions.saveLog(cigarros, date, '', ''));
+            await dispatch(recordActions.saveLog(cigarros, date));
+            await dispatch(challengeActions.completeDailyLogChallenge());
+            if(cigarros === 0){
+                await dispatch(challengeActions.completeDontSmokeChallenge(date));
+            } else {
+                await dispatch(challengeActions.checkDontSmokeChallenge(date));
+            }
+            console.log('try')
+        } catch (err) {
+            setError(err.message);
+            console.log('erro')
+        }
+        setIsLoading(false);
+    }, [dispatch, cigarros, date]);
 
     const addCigarro = () => {
         if (cigarros < 100) {
@@ -106,7 +157,7 @@ const AddCigarrosScreen = props => {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity activeOpacity={0.4} onPress={() => {}} style={styles.button}>
+                    <TouchableOpacity activeOpacity={0.4} onPress={saveLogHandler} style={styles.button}>
                         <Text style={styles.buttonText}>Salvar</Text>
                     </TouchableOpacity>
                 </View>
@@ -116,6 +167,11 @@ const AddCigarrosScreen = props => {
                     </Text>
                 </View>
             </View>
+            {isLoading &&
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color={Colors.primaryColor} />
+                </View>
+            }
         </View>
         </ScrollView>
     );
@@ -144,37 +200,31 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primaryColor,
         elevation: 4,
     },
-    numeroCigarros:
-    {
+    numeroCigarros: {
         color: Colors.accentColor,
         fontSize: 200,
         fontFamily: 'open-sans-bold',
         alignSelf: 'center',
         maxHeight: 240
     },
-    numeroCigarrosContainer:
-    {
+    numeroCigarrosContainer: {
         width: '100%',
         justifyContent: 'space-around',
         alignItems: 'center',
         paddingTop: 50,
     },
-    titleContainer:
-    {
+    titleContainer: {
         alignItems: 'center',
     },
-    title:
-    {
+    title: {
         color: Colors.primaryColor,
         marginTop: 5
     },
-    inputButton:
-    {
+    inputButton: {
         color: Colors.secondaryColor,
         fontSize: 27,
     },
-    button:
-    {
+    button: {
         width: 300,
         padding: 10,
         marginTop: 40,
@@ -182,14 +232,12 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         elevation: 2,
     },
-    buttonText:
-    {
+    buttonText: {
         fontSize: 20,
         color: 'white',
         textAlign: 'center'
     },
-    calendarButtonContainer:
-    {
+    calendarButtonContainer: {
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -199,24 +247,20 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10
     },
-    calendarDataContainer:
-    {
+    calendarDataContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    calendarIcon:
-    {
+    calendarIcon: {
         fontSize: 27,
         color: Colors.primaryColor,
         marginRight: 15
     },
-    calendarData:
-    {
+    calendarData: {
         color: Colors.primaryColor
     },
-    calendarChangeText:
-    {
+    calendarChangeText: {
         fontSize: 10, 
         alignSelf: 'center', 
         color: Colors.primaryColor,
@@ -231,7 +275,18 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         fontFamily: 'open-sans-bold'
-    }
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.secondaryColor,
+        opacity: 0.5
+    },
 });
 
 export const screenOptions = navData => {

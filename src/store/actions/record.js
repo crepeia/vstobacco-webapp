@@ -6,6 +6,8 @@ export const FETCH_DAILY_LOGS = "FETCH_DAILY_LOGS";
 export const SAVE_LOG = "SAVE_LOG";
 export const SAVE_LOG_ROLLBACK = "SAVE_LOG_ROLLBACK";
 
+import DailyLog from '../../models/DailyLog';
+
 export const fetchRecord = () => {
 	return async (dispatch, getState) => {
 		// const token = getState().user.token;
@@ -147,13 +149,12 @@ export const saveLog = (cigars, date) => {
 			oldLog = log;
 			action = "create";
 		}
-		//console.log("Save log");
-		//console.log(moment.utc(date).format());
+		
+		// let newDate = moment.utc(date).format();
 
-		let newDate = moment.utc(date).format();
 		dispatch({
 			type: SAVE_LOG,
-			payload: log,
+			payload: log
 			// meta: {
 			// 	offline: {
 			// 		// the network action to execute:
