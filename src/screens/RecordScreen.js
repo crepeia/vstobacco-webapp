@@ -155,8 +155,9 @@ const styles = StyleSheet.create({
 	},
 	consumoText: {
 		color: Colors.primaryColor,
-		fontSize: 15,
-		fontFamily: 'open-sans-bold'
+		fontSize: 14,
+        fontFamily: 'open-sans-bold',
+        paddingLeft: 6
     },
     button: {
         width: '100%',

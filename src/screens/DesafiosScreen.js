@@ -138,9 +138,7 @@ const DesafiosScreen = props => {
     useEffect(() => {
         const subscription = props.navigation.addListener('willFocus', loadChallenges);
 
-        return () => {
-            subscription.remove();
-        };
+        return subscription;
     }, []);
 
     useEffect(() => {
