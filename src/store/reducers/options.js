@@ -4,7 +4,17 @@ import moment from 'moment';
 import { FETCH_OPTIONS, UPDATE_OPTIONS, UPDATE_OPTIONS_COMMIT, UPDATE_OPTIONS_ROLLBACK } from '../actions/options';
 
 const initialState = {
-    options: null,
+    options: {
+        id: 6, 
+        userId: 22795, 
+        allowCigarNotifications: true, 
+        allowTipNotifications: true, 
+        allowAchievementsNotifications: true, 
+        cigarNotificationTime: '19:00-03:00',
+        tipNotificationTime: '19:00-03:00',
+        achievementsNotificationTime: '19:00-03:00',
+        notificationToken: 'VLz1pJD0g-IacYh3geV8Z2'
+    },
     needSync: false
 };
 

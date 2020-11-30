@@ -89,13 +89,13 @@ const OptionsScreen = props => {
                 alert('Notificações só funcionam em dispositivos físicos!');
             }
             if (Platform.OS === 'android') {
-                Notifications.createChannelAndroidAsync('default', {
-                    name: 'default',
-                    sound: true,
-                    priority: 'max',
-                    vibrate: [0, 250, 250, 250],
-                });
-            }
+				Notifications.setNotificationChannelAsync('default', {
+				  name: 'default',
+				  importance: Notifications.AndroidImportance.MAX,
+				  vibrationPattern: [0, 250, 250, 250],
+				  lightColor: '#FF231F7C',
+				});
+			}
         }
         if (cigarNotification) {
             Notifications.cancelAllScheduledNotificationsAsync();
@@ -113,7 +113,7 @@ const OptionsScreen = props => {
             };
 
             //Notifications.addListener(handleNotification)
-            Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
+            Notifications.scheduleNotificationAsync(localNotification, schedulingOptions);
         } else {
             Notifications.cancelAllScheduledNotificationsAsync();
         }

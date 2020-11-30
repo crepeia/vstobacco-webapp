@@ -23,7 +23,9 @@ const StartupLogin = (props) => {
     const [isLogging, setIsLogging] = useState(false);
 
     const options = useSelector((state) => state.options.options);
-    
+	
+	console.log(options.cigarNotificationTime);
+	console.log('verifica aqui lu');
     const registerForPushNotificationsAsync = async () => {
 		if (Constants.isDevice) {
 			const { status: existingStatus } = await Permissions.getAsync(
@@ -57,16 +59,12 @@ const StartupLogin = (props) => {
 				return;
 			}
 
-			Alert.alert('Sobre as notificações: ', 'Você pode alterar o horário de notificação em Opções no menu.', [
-				{ text: "Ok", style: "destructive" },
-			]);
-
-			let token = await Notifications.getExpoPushTokenAsync();
+			let token = (await Notifications.getExpoPushTokenAsync()).data;
 
 			const localNotification = {
 				title: "Lembrete",
 				body: "Informe a quantidade de cigarros fumados hoje!",
-				data: JSON.stringify({ screen: "Cigarros fumados" }),
+				data: JSON.stringify({ screen: "AddCigarrosScreen" }),
 				android: { sound: true }, // Make a sound on Android
 			};
 
@@ -82,7 +80,7 @@ const StartupLogin = (props) => {
 				repeat: "day",
 			};
 
-			Notifications.scheduleLocalNotificationAsync(
+			Notifications.scheduleNotificationAsync(
 				localNotification,
 				schedulingOptions
 			);
@@ -93,7 +91,7 @@ const StartupLogin = (props) => {
 					true,
 					true,
 					true,
-					moment(options. cigarNotificationTime, "HH:mm").format(
+					moment(options.cigarNotificationTime, "HH:mm").format(
 						"HH:mm"
 					),
 					moment(options.tipNotificationTime, "HH:mm").format(
@@ -126,12 +124,12 @@ const StartupLogin = (props) => {
 			alert("Must use physical device for Push Notifications");
 		}
 
-		if (Platform.OS === "android") {
-			Notifications.createChannelAndroidAsync("default", {
-				name: "default",
-				sound: true,
-				priority: "max",
-				vibrate: [0, 250, 250, 250],
+		if (Platform.OS === 'android') {
+			Notifications.setNotificationChannelAsync('default', {
+			  name: 'default',
+			  importance: Notifications.AndroidImportance.MAX,
+			  vibrationPattern: [0, 250, 250, 250],
+			  lightColor: '#FF231F7C',
 			});
 		}
     };
