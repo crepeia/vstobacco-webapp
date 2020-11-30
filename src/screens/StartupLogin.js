@@ -10,7 +10,8 @@ import * as optionsActions from '../store/actions/options';
 // import * as messageActions from '../store/actions/message';
 
 
-import * as Notifications from "expo-notifications";
+// import * as Notifications from "expo-notifications";
+import { Notifications } from 'expo';
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 import moment from "moment";
@@ -80,7 +81,7 @@ const StartupLogin = (props) => {
 				repeat: "day",
 			};
 
-			Notifications.scheduleNotificationAsync(
+			Notifications.scheduleLocalNotificationAsync(
 				localNotification,
 				schedulingOptions
 			);
@@ -124,12 +125,12 @@ const StartupLogin = (props) => {
 			alert("Must use physical device for Push Notifications");
 		}
 
-		if (Platform.OS === 'android') {
-			Notifications.setNotificationChannelAsync('default', {
-			  name: 'default',
-			  importance: Notifications.AndroidImportance.MAX,
-			  vibrationPattern: [0, 250, 250, 250],
-			  lightColor: '#FF231F7C',
+		if (Platform.OS === "android") {
+			Notifications.createChannelAndroidAsync("default", {
+				name: "default",
+				sound: true,
+				priority: "max",
+				vibrate: [0, 250, 250, 250],
 			});
 		}
     };

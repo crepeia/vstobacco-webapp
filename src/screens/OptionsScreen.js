@@ -17,7 +17,8 @@ import * as optionsActions from '../store/actions/options';
 import * as userActions from '../store/actions/user';
 import { useDispatch, useSelector } from "react-redux";
 
-import * as Notifications from 'expo-notifications';
+// import * as Notifications from 'expo-notifications';
+import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
@@ -56,15 +57,12 @@ const OptionsScreen = props => {
 
 	const [isInRanking, setIsInRanking] = useState(true);
 
-	const [isModified, setIsModified] = useState(false);
-
 	useEffect(() => {
-        setIsInRanking(inRanking)
-        
+        setIsInRanking(inRanking);
 	}, [inRanking])
 	
 	const saveOptions = useCallback(async () => {
-        console.log('aqui lu');
+        console.log('aqui lu ta salvando as opcoes');
         let finalStatus = '';
         let token = '';
 		setIsLoading(true);
@@ -88,12 +86,12 @@ const OptionsScreen = props => {
             } else {
                 alert('Notificações só funcionam em dispositivos físicos!');
             }
-            if (Platform.OS === 'android') {
-				Notifications.setNotificationChannelAsync('default', {
-				  name: 'default',
-				  importance: Notifications.AndroidImportance.MAX,
-				  vibrationPattern: [0, 250, 250, 250],
-				  lightColor: '#FF231F7C',
+            if (Platform.OS === "android") {
+				Notifications.createChannelAndroidAsync("default", {
+					name: "default",
+					sound: true,
+					priority: "max",
+					vibrate: [0, 250, 250, 250],
 				});
 			}
         }
@@ -113,7 +111,7 @@ const OptionsScreen = props => {
             };
 
             //Notifications.addListener(handleNotification)
-            Notifications.scheduleNotificationAsync(localNotification, schedulingOptions);
+            Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
         } else {
             Notifications.cancelAllScheduledNotificationsAsync();
         }
@@ -123,7 +121,6 @@ const OptionsScreen = props => {
 
 		console.log("chega aqui lu");
         setIsLoading(false);
-        setIsModified(false);
         Alert.alert('Opções', 'Alterações salvas com sucesso!', [{ text: 'Ok', style: 'destructive' }])
     }, [dispatch, isInRanking, cigarNotification, cigarNotificationTime, tipNotification, tipNotificationTime, achievementsNotification, achievementsNotificationTime]);
     
@@ -167,8 +164,7 @@ const OptionsScreen = props => {
 							ios_backgroundColor="#3e3e3e"
 							onValueChange={() => {
 								setCigarNotification(prevState => !prevState)
-								setIsModified(true)}
-								
+							}
 							}
 							value={cigarNotification}
 						/>
@@ -216,7 +212,6 @@ const OptionsScreen = props => {
 													setCigarNotificationTimeString(itemData.item)
 													setCigarNotificationTime(moment(moment().format("YYYY-MM-DD").toString() + ' ' + itemData.item).format("HH:mm"))
 													setModalCigarVisible(false)
-													setIsModified(true)
 												}}
 											/>
 										)}
@@ -244,7 +239,7 @@ const OptionsScreen = props => {
 							ios_backgroundColor="#3e3e3e"
 							onValueChange={() => {
 								setTipNotification(prevState => !prevState)
-								setIsModified(true)}
+								}
 							}
 							value={tipNotification}
 						/>
@@ -292,7 +287,6 @@ const OptionsScreen = props => {
 													setTipNotificationTimeString(itemData.item)
 													setTipNotificationTime(moment(moment().format("YYYY-MM-DD").toString() + ' ' + itemData.item).format("HH:mm"))
 													setModalTipVisible(false)
-													setIsModified(true)
 												}}
 											/>
 										)}
@@ -321,7 +315,7 @@ const OptionsScreen = props => {
 							ios_backgroundColor="#3e3e3e"
 							onValueChange={() => {
 								setAchievementsNotification(prevState => !prevState)
-								setIsModified(true)}
+								}
 								
 							}
 							value={achievementsNotification}
@@ -370,7 +364,6 @@ const OptionsScreen = props => {
 													setAchievementsNotificationTimeString(itemData.item)
 													setAchievementsNotificationTime(moment(moment().format("YYYY-MM-DD").toString() + ' ' + itemData.item).format("HH:mm"))
 													setModalAchievementsVisible(false)
-													setIsModified(true)
 												}}
 											/>
 										)}
@@ -410,13 +403,13 @@ const OptionsScreen = props => {
 					</View>
 					<View style={styles.toggleContainer}>
 						<Switch
-							disabled={!true}
+							disabled={!inRanking}
 							trackColor={{ false: "#767577", true: Colors.primaryColor }}
 							thumbColor={isInRanking ? Colors.primaryColor : "#f4f3f4"}
 							ios_backgroundColor="#3e3e3e"
 							onValueChange={() => {
 								setIsInRanking(prevState => !prevState)
-								setIsModified(true)}
+								}
 							}
 							value={isInRanking}
 						/>
