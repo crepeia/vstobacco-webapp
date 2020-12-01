@@ -19,6 +19,27 @@ import moment from "moment";
 import Colors from "../constants/Colors";
 
 const StartupLogin = (props) => {
+	const today = new Date();
+	const day = today.getDate();
+	const isEven = day % 2;
+
+	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
+	const moneySaved = useSelector(state => state.achievement.moneySaved);
+	const lifeTimeSaved = useSelector(state => state.achievement.lifeTimeSaved);
+	
+	// calculo tempo vida	
+	const mes = lifeTimeSaved > 43800 ? Math.floor(lifeTimeSaved / 43800) : 0;
+	const mesPercent = mes >= 1 ? lifeTimeSaved % 43800 : lifeTimeSaved;
+
+	const dia = mesPercent > 1440 ? Math.floor(mesPercent / 1440) : 0;
+	const diaPercent = dia >= 1 ? mesPercent % 1440 : mesPercent;
+
+	const hora = diaPercent > 60 ? Math.floor(diaPercent / 60) : 0;
+	const horaPercent = hora >= 1 ? diaPercent % 60 : diaPercent; //minutos
+
+	const lifeTimeSavedText = `${mes === 1 ? `${mes} mês` : `${mes} meses`}, ${dia === 1 ? `${dia} dia` : `${dia} dias`}, ${hora === 1 ? `${hora} hora` : `${hora} horas`} e ${horaPercent === 1 ? `${horaPercent} minuto` : `${horaPercent} minutos`}`;
+	// fim calculo tempo vida
+
     const dispatch = useDispatch();
 
     const [isLogging, setIsLogging] = useState(false);
@@ -59,6 +80,7 @@ const StartupLogin = (props) => {
 
 			let token = (await Notifications.getExpoPushTokenAsync()).data;
 
+			// configuração notificação cigarro
 			const localCigarNotification = {
 				title: "Lembrete",
 				body: "Informe a quantidade de cigarros fumados hoje!",
@@ -83,6 +105,33 @@ const StartupLogin = (props) => {
 				schedulingCigarOptions
 			);
 
+			// configuracao notificacao conquista
+
+			const localAchievementsNotification = {
+				title: "Conquista",
+				body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
+				: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+				data: JSON.stringify({ screen: "Conquistas" }),
+				android: { sound: true }, // Make a sound on Android
+			};
+
+			const schedulingAchievementsOptions = {
+				time: moment(options.achievementsNotificationTime, "HH:mm").isBefore(
+					moment()
+				)
+					? moment(options.achievementsNotificationTime, "HH:mm")
+							.add(1, "day")
+							.toDate()
+					: moment(options.achievementsNotificationTime, "HH:mm").toDate(),
+				// (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+				repeat: "day",
+			};
+
+			const idAchievementsNotification = await Notifications.scheduleLocalNotificationAsync(
+				localAchievementsNotification,
+				schedulingAchievementsOptions
+			);
+
 			//console.log(token);
 			await dispatch(
 				optionsActions.updateOptions(
@@ -102,7 +151,8 @@ const StartupLogin = (props) => {
 				)
 			);
 
-			await dispatch(optionsActions.storeIdNotification(idCigarNotification));
+			await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
+			await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
 		} else {
 			await dispatch(
 				optionsActions.updateOptions(

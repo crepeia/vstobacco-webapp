@@ -26,19 +26,39 @@ import Constants from 'expo-constants';
 import Colors from '../constants/Colors';
 
 const OptionsScreen = props => {
+	const today = new Date();
+	const day = today.getDate();
+	const isEven = day % 2;
 
 	const dispatch = useDispatch();
 
-    const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	let idCigarNotification = useSelector(state => state.options.idCigarNotification);
 	let idAchievementsNotification = useSelector(state => state.options.idAchievementsNotification);
-    const options = useSelector(state => state.options.options);
+	const options = useSelector(state => state.options.options);
+	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
+	const moneySaved = useSelector(state => state.achievement.moneySaved);
+	const lifeTimeSaved = useSelector(state => state.achievement.lifeTimeSaved);
+	
+	// calculo tempo vida	
+	const mes = lifeTimeSaved > 43800 ? Math.floor(lifeTimeSaved / 43800) : 0;
+	const mesPercent = mes >= 1 ? lifeTimeSaved % 43800 : lifeTimeSaved;
+
+	const dia = mesPercent > 1440 ? Math.floor(mesPercent / 1440) : 0;
+	const diaPercent = dia >= 1 ? mesPercent % 1440 : mesPercent;
+
+	const hora = diaPercent > 60 ? Math.floor(diaPercent / 60) : 0;
+	const horaPercent = hora >= 1 ? diaPercent % 60 : diaPercent; //minutos
+
+	const lifeTimeSavedText = `${mes === 1 ? `${mes} mês` : `${mes} meses`}, ${dia === 1 ? `${dia} dia` : `${dia} dias`}, ${hora === 1 ? `${hora} hora` : `${hora} horas`} e ${horaPercent === 1 ? `${horaPercent} minuto` : `${horaPercent} minutos`}`;
+	// fim calculo tempo vida
+
     const inRanking = useSelector((state) => state.user.currentUser.inRanking);
     const userNickname = useSelector((state) => state.user.currentUser.nickname);
 
 	// Variáveis para o Modal
-	const hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '16:30', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+	const hours = ['22:40', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '16:30', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
 	const [modalCigarVisible, setModalCigarVisible] = useState(false);
 	const [modalTipVisible, setModalTipVisible] = useState(false);
 	const [modalAchievementsVisible, setModalAchievementsVisible] = useState(false);
@@ -129,8 +149,9 @@ const OptionsScreen = props => {
 			}
 
             const localAchievementsNotification = {
-                title: "Conquista",
-                body: "Você deixou de fumar x cigarros hoje!",
+                title: "Conquista =)",
+				body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
+				: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
                 data: JSON.stringify({ screen: "Conquistas" }),
                 android: { sound: true } // Make a sound on Android
             }
