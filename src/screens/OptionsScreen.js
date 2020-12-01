@@ -31,12 +31,14 @@ const OptionsScreen = props => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+	let idCigarNotification = useSelector(state => state.options.idCigarNotification);
+	let idAchievementsNotification = useSelector(state => state.options.idAchievementsNotification);
     const options = useSelector(state => state.options.options);
     const inRanking = useSelector((state) => state.user.currentUser.inRanking);
     const userNickname = useSelector((state) => state.user.currentUser.nickname);
 
 	// Variáveis para o Modal
-	const hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+	const hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '16:30', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
 	const [modalCigarVisible, setModalCigarVisible] = useState(false);
 	const [modalTipVisible, setModalTipVisible] = useState(false);
 	const [modalAchievementsVisible, setModalAchievementsVisible] = useState(false);
@@ -66,7 +68,6 @@ const OptionsScreen = props => {
         let finalStatus = '';
         let token = '';
 		setIsLoading(true);
-		console.log('aqui lu 2');
         if (cigarNotification || tipNotification || achievementsNotification) {
             if (Constants.isDevice) {
                 const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
@@ -94,29 +95,63 @@ const OptionsScreen = props => {
 					vibrate: [0, 250, 250, 250],
 				});
 			}
-        }
+		}
+		
         if (cigarNotification) {
-            Notifications.cancelAllScheduledNotificationsAsync();
-            const localNotification = {
+			if (idCigarNotification) {
+				Notifications.cancelScheduledNotificationAsync(idCigarNotification);
+			}
+
+            const localCigarNotification = {
                 title: "Lembrete",
                 body: "Informe a quantidade de cigarros fumados hoje!",
                 data: JSON.stringify({ screen: "Cigarros Fumados" }),
                 android: { sound: true } // Make a sound on Android
             }
 
-            const schedulingOptions = {
+            const schedulingCigarOptions = {
                 time: moment(cigarNotificationTime, "HH:mm").isBefore(moment()) ? moment(cigarNotificationTime, "HH:mm").add(1, 'day').toDate() : moment(cigarNotificationTime, "HH:mm").toDate(),
                 // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
                 repeat: 'day'
             };
 
             //Notifications.addListener(handleNotification)
-            Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
+            idCigarNotification = await Notifications.scheduleLocalNotificationAsync(localCigarNotification, schedulingCigarOptions);
         } else {
-            Notifications.cancelAllScheduledNotificationsAsync();
-        }
+			if (idCigarNotification) {
+				Notifications.cancelScheduledNotificationAsync(idCigarNotification);
+			}
+		}
+		
+        if (achievementsNotification) {
+			if (idAchievementsNotification) {
+				Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
+			}
 
-        await dispatch(optionsActions.updateOptions(cigarNotification, tipNotification, achievementsNotification, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, token));
+            const localAchievementsNotification = {
+                title: "Conquista",
+                body: "Você deixou de fumar x cigarros hoje!",
+                data: JSON.stringify({ screen: "Conquistas" }),
+                android: { sound: true } // Make a sound on Android
+            }
+
+            const schedulingAchievementsOptions = {
+                time: moment(achievementsNotificationTime, "HH:mm").isBefore(moment()) ? moment(achievementsNotificationTime, "HH:mm").add(1, 'day').toDate() : moment(achievementsNotificationTime, "HH:mm").toDate(),
+                // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+                repeat: 'day'
+            };
+
+            //Notifications.addListener(handleNotification)
+            idAchievementsNotification = await Notifications.scheduleLocalNotificationAsync(localAchievementsNotification, schedulingAchievementsOptions);
+        } else {
+			if (idAchievementsNotification) {
+				Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
+			}
+		}
+
+		await dispatch(optionsActions.updateOptions(cigarNotification, tipNotification, achievementsNotification, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, token));
+		await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
+		await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
         await dispatch(userActions.toggleRanking(isInRanking, userNickname));
 
 		console.log("chega aqui lu");
@@ -147,6 +182,10 @@ const OptionsScreen = props => {
 						<DefaultText style={styles.helpText}>
 							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{'Lembrete de dicas'}</DefaultText>
 							{': notificação para lembrar a leitura das dicas recebidas automaticamente.'}
+						</DefaultText>
+						<DefaultText style={styles.helpText}>
+							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{'Lembrete de conquistas'}</DefaultText>
+							{': notificação para lembrar as suas conquistas diariamente.'}
 						</DefaultText>
                 	</HelpButtonModal>
 				</OptionsHeader>

@@ -23,10 +23,7 @@ const StartupLogin = (props) => {
 
     const [isLogging, setIsLogging] = useState(false);
 
-    const options = useSelector((state) => state.options.options);
-	
-	console.log(options.cigarNotificationTime);
-	console.log('verifica aqui lu');
+	const options = useSelector((state) => state.options.options);
     const registerForPushNotificationsAsync = async () => {
 		if (Constants.isDevice) {
 			const { status: existingStatus } = await Permissions.getAsync(
@@ -62,14 +59,14 @@ const StartupLogin = (props) => {
 
 			let token = (await Notifications.getExpoPushTokenAsync()).data;
 
-			const localNotification = {
+			const localCigarNotification = {
 				title: "Lembrete",
 				body: "Informe a quantidade de cigarros fumados hoje!",
-				data: JSON.stringify({ screen: "AddCigarrosScreen" }),
+				data: JSON.stringify({ screen: "Cigarros fumados" }),
 				android: { sound: true }, // Make a sound on Android
 			};
 
-			const schedulingOptions = {
+			const schedulingCigarOptions = {
 				time: moment(options.cigarNotificationTime, "HH:mm").isBefore(
 					moment()
 				)
@@ -81,9 +78,9 @@ const StartupLogin = (props) => {
 				repeat: "day",
 			};
 
-			Notifications.scheduleLocalNotificationAsync(
-				localNotification,
-				schedulingOptions
+			const idCigarNotification = await Notifications.scheduleLocalNotificationAsync(
+				localCigarNotification,
+				schedulingCigarOptions
 			);
 
 			//console.log(token);
@@ -104,6 +101,8 @@ const StartupLogin = (props) => {
 					token
 				)
 			);
+
+			await dispatch(optionsActions.storeIdNotification(idCigarNotification));
 		} else {
 			await dispatch(
 				optionsActions.updateOptions(
