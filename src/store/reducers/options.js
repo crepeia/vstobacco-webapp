@@ -1,13 +1,14 @@
 import Options from '../../models/Options';
 import moment from 'moment';
 
-import { FETCH_OPTIONS, UPDATE_OPTIONS, UPDATE_OPTIONS_COMMIT, UPDATE_OPTIONS_ROLLBACK, STORE_ID_CIGAR_NOTIFICATION, STORE_ID_ACHIEVEMENTS_NOTIFICATION } from '../actions/options';
+import { FETCH_OPTIONS, UPDATE_OPTIONS, UPDATE_OPTIONS_COMMIT, UPDATE_OPTIONS_ROLLBACK, STORE_ID_CIGAR_NOTIFICATION, STORE_ID_ACHIEVEMENTS_NOTIFICATION, STORE_ID_TIP_NOTIFICATION } from '../actions/options';
 
 const initialState = {
     options: null,
     needSync: false,
     idCigarNotification: null,
-    idAchievementsNotification: null
+    idAchievementsNotification: null,
+    idTipNotification: null,
 };
 
 export default (state = initialState, action) => {
@@ -26,6 +27,8 @@ export default (state = initialState, action) => {
             return { ...state, idCigarNotification: action.idCigarNotification}
         case STORE_ID_ACHIEVEMENTS_NOTIFICATION:
             return { ...state, idAchievementsNotification: action.idAchievementsNotification}
+        case STORE_ID_TIP_NOTIFICATION:
+            return { ...state, idTipNotification: action.idTipNotification}
         default:
             return state;
     }

@@ -36,6 +36,7 @@ const OptionsScreen = props => {
 
 	let idCigarNotification = useSelector(state => state.options.idCigarNotification);
 	let idAchievementsNotification = useSelector(state => state.options.idAchievementsNotification);
+	let idTipNotification = useSelector(state => state.options.idTipNotification);
 	const options = useSelector(state => state.options.options);
 	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
 	const moneySaved = useSelector(state => state.achievement.moneySaved);
@@ -58,7 +59,7 @@ const OptionsScreen = props => {
     const userNickname = useSelector((state) => state.user.currentUser.nickname);
 
 	// Variáveis para o Modal
-	const hours = ['22:40', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '16:30', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+	const hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '16:30', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
 	const [modalCigarVisible, setModalCigarVisible] = useState(false);
 	const [modalTipVisible, setModalTipVisible] = useState(false);
 	const [modalAchievementsVisible, setModalAchievementsVisible] = useState(false);
@@ -117,6 +118,8 @@ const OptionsScreen = props => {
 			}
 		}
 		
+		// notificacao cigarros 
+
         if (cigarNotification) {
 			if (idCigarNotification) {
 				Notifications.cancelScheduledNotificationAsync(idCigarNotification);
@@ -142,6 +145,8 @@ const OptionsScreen = props => {
 				Notifications.cancelScheduledNotificationAsync(idCigarNotification);
 			}
 		}
+
+		// notificacao conquistas
 		
         if (achievementsNotification) {
 			if (idAchievementsNotification) {
@@ -170,9 +175,38 @@ const OptionsScreen = props => {
 			}
 		}
 
+		// notificacao dicas
+
+        if (tipNotification) {
+			if (idTipNotification) {
+				Notifications.cancelScheduledNotificationAsync(idTipNotification);
+			}
+
+            const localTipNotification = {
+                title: "Lembrete",
+				body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+                data: JSON.stringify({ screen: "Dicas" }),
+                android: { sound: true } // Make a sound on Android
+            }
+
+            const schedulingTipOptions = {
+                time: moment(tipNotificationTime, "HH:mm").isBefore(moment()) ? moment(tipNotificationTime, "HH:mm").add(1, 'day').toDate() : moment(tipNotificationTime, "HH:mm").toDate(),
+                // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+                repeat: 'day'
+            };
+
+            //Notifications.addListener(handleNotification)
+            idTipNotification = await Notifications.scheduleLocalNotificationAsync(localTipNotification, schedulingTipOptions);
+        } else {
+			if (idTipNotification) {
+				Notifications.cancelScheduledNotificationAsync(idTipNotification);
+			}
+		}
+
 		await dispatch(optionsActions.updateOptions(cigarNotification, tipNotification, achievementsNotification, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, token));
 		await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
 		await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
+		await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
         await dispatch(userActions.toggleRanking(isInRanking, userNickname));
 
 		console.log("chega aqui lu");

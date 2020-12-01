@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, ScrollView, BackHandler } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, StyleSheet, Dimensions, ScrollView, BackHandler, RefreshControl, Modal, Picker, Alert, TouchableOpacity } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts';
 import { Line } from 'react-native-svg';
@@ -7,23 +7,12 @@ import moment from 'moment';
 
 import { useSelector } from 'react-redux';
 
-import NumberInput from '../components/UI/NumberInput';
+import { Ionicons } from '@expo/vector-icons';
+
 import HeaderButton from '../components/UI/HeaderButton';
 import DefaultText from '../components/DefaultText';
 import DefaultTitle from '../components/DefaultTitle';
 import Colors from '../constants/Colors';
-
-const data = [
-	{
-		data: [0, 1, 4, 3, 1, 2, 0]
-	},
-	{
-		data: [5, 5, 5, 5, 5, 5, 5],
-		svg:{
-			stroke: 'transparent'
-		}
-	}
-];
 
 const mesPassado = moment().add(-31, 'days').format("MMMM");
 const mesAtual = moment().format("MMMM");
@@ -51,24 +40,189 @@ const fillLabels = (numLabels, format) => {
 	}
 };
 
+const fillData = (logs, days, format) => {
+	const record = useSelector((state) => state.record.record);
+	const dailyCigars = record.cigarsDaily.toString();
+	console.log("aqui lu");
+	console.log(dailyCigars);
+	let data = [];
+	let dailyCigarsArray = [];
+	if (format === "week" || format === "month") {
+		for (let i = 0; i < days; i++) {
+			let index = logs.findIndex((l) => moment(l.logDate).isSame(moment(today).subtract(i, "days")));
+			if (index >= 0) {
+				data.unshift(logs[index].cigars);
+			} else {
+				data.unshift(0);
+			}
+			dailyCigarsArray.unshift(Number(dailyCigars));
+		}
+
+		console.log(data);
+		console.log(dailyCigarsArray);
+		return [
+			{data:data},
+			{
+				data:dailyCigarsArray,
+				svg:{
+					stroke: 'transparent'
+				}
+			}];
+	} else if (format === "year") {
+		let reducedLog = logs.reduce((acc, curr) => {
+			let id = moment(curr.logDate).format("WW/YY");
+
+			if (!acc[id]) {
+				acc[id] = { id: id, sumCigars: 0 };
+			}
+			acc[id].sumCigars += curr.cigars;
+			return acc;
+		}, {});
+
+		let reducedObjArr = Object.keys(reducedLog).map((key) => {
+			return reducedLog[key];
+		});
+
+		for (let i = 0; i < 52; i++) {
+			let index = reducedObjArr.findIndex((l) => l.id === moment(today).subtract(i, "weeks").format("WW/YY"));
+			if (index >= 0) {
+				data.unshift(reducedObjArr[index].sumCigars);
+			} else {
+				data.unshift(0);
+			}
+			dailyCigarsArray.unshift(Number(dailyCigars));
+		}
+		
+	}
+	return [
+		{data:data},
+		{
+			data:dailyCigarsArray,
+			svg:{
+				stroke: 'transparent'
+			}
+		}];
+};
+
 const HomeScreen = props => {
 
+	// const handleNotification = (notification) => {
+	// 	//console.log(notification);
+	// 	if (notification.origin === "selected") {
+	// 		props.navigation.navigate({
+	// 			routeName: notification.data.screen,
+	// 		});
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	Notifications.addListener(handleNotification);
+	// }, []);
+
 	const record = useSelector((state) => state.record.record);
+	const dailyLogs = useSelector((state) => state.record.dailyLogs);
 
 	const [isLoading, setIsLoading] = useState(false);
+	const [isRefreshing, setIsRefreshing] = useState(false);
+
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const [selectedPlot, setSelectedPlot] = useState("week");
 	const [definitiveSelectedPlot, setDefinitiveSelectedPlot] = useState("week");
 
 	const [labels, setLabels] = useState(fillLabels(7, "week"));
-	const [goal, setGoal] = useState(5);
+	const [data, setData] = useState(fillData(dailyLogs, 7, "week"));
 
-	const [sumPeriod, setSumPeriod] = useState(11);
+	const [sumPeriod, setSumPeriod] = useState(
+		dailyLogs
+			.filter((log) => moment(log.logDate) > moment().subtract(7, "days") && moment(log.logDate) <= moment())
+			.map((wl) => wl.cigars)
+			.reduce((a, b) => a + b, 0)
+	);
 	const [avgPeriod, setAvgPeriod] = useState((sumPeriod / 7).toFixed(2));
-	const [drinksToday, setDrinksToday] = useState(0);
+	const [cigarsToday, setCigarsToday] = useState(
+		dailyLogs.findIndex((wl) => wl.logDate === today) >= 0 ? dailyLogs.find((wl) => wl.logDate === today).cigars : 0
+	);
 
+	const setPlotType = useCallback(() => {
+		let sum = 0;
+		setCigarsToday(
+			dailyLogs.findIndex((wl) => wl.logDate === today) >= 0
+				? dailyLogs.find((wl) => wl.logDate === today).cigars
+				: 0
+		);
+		switch (selectedPlot) {
+			case "week":
+				console.log("week");
+				//filterDailyLogs(7)
+				setLabels(fillLabels(7, "week"));
+				setData(fillData(dailyLogs, 7, "week"));
+				sum = dailyLogs
+					.filter(
+						(log) => moment(log.logDate) > moment().subtract(7, "days") && moment(log.logDate) <= moment()
+					)
+					.map((wl) => wl.cigars)
+					.reduce((a, b) => a + b, 0);
+				setSumPeriod(sum);
+				setAvgPeriod((sum / 7).toFixed(2));
+				return;
+			case "month":
+				console.log("month");
+				//filterDailyLogs(30)
+				setLabels(fillLabels(30, "month"));
+				setData(fillData(dailyLogs, 30, "month"));
+
+				sum = dailyLogs
+					.filter(
+						(log) => moment(log.logDate) > moment().subtract(30, "days") && moment(log.logDate) <= moment()
+					)
+					.map((wl) => wl.cigars)
+					.reduce((a, b) => a + b, 0);
+				setSumPeriod(sum);
+				setAvgPeriod((sum / 7).toFixed(2));
+				return;
+			case "year":
+				console.log("year");
+				//filterDailyLogs(365)
+				setLabels(fillLabels(52, "year"));
+				setData(fillData(dailyLogs, 365, "year"));
+				sum = dailyLogs
+					.filter(
+						(log) => moment(log.logDate) > moment().subtract(365, "days") && moment(log.logDate) <= moment()
+					)
+					.map((wl) => wl.cigars)
+					.reduce((a, b) => a + b, 0);
+				setSumPeriod(sum);
+				setAvgPeriod((sum / 7).toFixed(2));
+				return;
+			default:
+				return;
+		}
+	}, [dailyLogs, selectedPlot]);
+
+	const resetState = useCallback(async () => {
+		setIsRefreshing(true);
+		setPlotType();
+		setIsRefreshing(false);
+	}, [dailyLogs]);
+
+	useEffect(() => {
+		const subscription = props.navigation.addListener("willFocus", resetState);
+
+		return subscription;
+	}, [resetState]);
+
+	if (isLoading) {
+		return (
+			<View style={styles.loading}>
+				<ActivityIndicator size='large' color={Colors.secondaryColor} />
+			</View>
+		);
+	}
+	
 	// Variáveis de consumo
 	const dailyCigars = record.cigarsDaily.toString();
+	console.log(dailyCigars);
 	const packPrice = record.packPrice.toString();
 	const packAmount = record.packAmount.toString();
 
@@ -79,8 +233,8 @@ const HomeScreen = props => {
 			key={ 'zero-axis' }
 			x1={ '0%' }
 			x2={ '100%' }
-			y1={ y(goal) }
-			y2={ y(goal) } //cigarros fumados no dia
+			y1={ y(dailyCigars) }
+			y2={ y(dailyCigars) } //cigarros fumados no dia antes
 			stroke={ Colors.red }
 			strokeDasharray={ [ 4, 12 ] }
 			strokeWidth={ 2 }
@@ -94,13 +248,13 @@ const HomeScreen = props => {
 	}, []);
 
     return (
-		<ScrollView contentContainerStyle={{flexGrow: 1}}>
+		<ScrollView refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={resetState} />} contentContainerStyle={{flexGrow: 1}}>
 			<View style={styles.background}>
-				<View style={styles.containerTitle}>
-					<DefaultText style={styles.title}>Cigarros fumados na semana</DefaultText>
+				<View style={{marginVertical: 20}}>
+					<DefaultTitle style={styles.title}>Cigarros fumados na semana</DefaultTitle>
 				</View>
-
 				{/* GRÁFICO */}
+				{!isRefreshing && (
 				<View style={styles.chartContainer}>
 					<YAxis 
 						data={data[0].data.concat(data[1].data)}
@@ -134,7 +288,7 @@ const HomeScreen = props => {
 						/>
 					</View>
 				</View>
-
+				)}
 				{/* GRÁFICO LEGENDA */}
 				<View style={{width: '100%', alignItems: 'center', paddingHorizontal: 10}}>
 					{definitiveSelectedPlot === 'year' ?
@@ -170,7 +324,7 @@ const HomeScreen = props => {
 					</View>
 
 					<View style={styles.dados}>
-						<DefaultText style={styles.numeroDados}>{drinksToday}</DefaultText>
+						<DefaultText style={styles.numeroDados}>{cigarsToday}</DefaultText>
 						<DefaultText style={styles.legendaDados}>{'cigarros hoje'}</DefaultText>
 					</View>
 
@@ -299,6 +453,26 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center'
     },
+	centeredModal: {
+		justifyContent: "center",
+		alignItems: "center",
+		marginTop: 22,
+	},
+	modal: {
+		margin: 20,
+		backgroundColor: "white",
+		borderRadius: 20,
+		padding: 35,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84,
+		elevation: 5,
+	},
 });
 
 export const screenOptions = navData => {

@@ -17,6 +17,7 @@ import Constants from "expo-constants";
 import moment from "moment";
 
 import Colors from "../constants/Colors";
+import { cancelAllScheduledNotificationsAsync } from "expo-notifications";
 
 const StartupLogin = (props) => {
 	const today = new Date();
@@ -80,6 +81,8 @@ const StartupLogin = (props) => {
 
 			let token = (await Notifications.getExpoPushTokenAsync()).data;
 
+			cancelAllScheduledNotificationsAsync();
+
 			// configuração notificação cigarro
 			const localCigarNotification = {
 				title: "Lembrete",
@@ -132,6 +135,31 @@ const StartupLogin = (props) => {
 				schedulingAchievementsOptions
 			);
 
+			// configuracao notificacao dicas
+
+			const localTipNotification = {
+				title: "Lembrete",
+				body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+				android: { sound: true }, // Make a sound on Android
+			};
+
+			const schedulingTipOptions = {
+				time: moment(options.tipNotificationTime, "HH:mm").isBefore(
+					moment()
+				)
+					? moment(options.tipNotificationTime, "HH:mm")
+							.add(1, "day")
+							.toDate()
+					: moment(options.tipNotificationTime, "HH:mm").toDate(),
+				// (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+				repeat: "day",
+			};
+
+			const idTipNotification = await Notifications.scheduleLocalNotificationAsync(
+				localTipNotification,
+				schedulingTipOptions
+			);
+
 			//console.log(token);
 			await dispatch(
 				optionsActions.updateOptions(
@@ -153,6 +181,7 @@ const StartupLogin = (props) => {
 
 			await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
 			await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
+			await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
 		} else {
 			await dispatch(
 				optionsActions.updateOptions(
