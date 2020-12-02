@@ -79,7 +79,7 @@ export const signin = (email, password) => {
 		}
 
 		const usr = await responseUser.json();
-		console.log(usr);
+		// console.log(usr);
 
 		/**
 		 * General checks to simplify future service calls

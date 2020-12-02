@@ -14,7 +14,7 @@ import moment from 'moment';
 
 export const fetchOptions = () => {
     return async (dispatch, getState) => {
-        console.log("Fetch options")
+        // console.log("Fetch options")
         const userToken = getState().user.token;
         const userId = getState().user.currentUser.id;
 
@@ -43,7 +43,7 @@ export const fetchOptions = () => {
         moment('13:00', "HH:mmZZ").format("HH:mm"), 'VLz1pJD0g-IacYh3geV8Z2');
 
         // const userOp = getState().options.options;
-        console.log(userOp);
+        // console.log(userOp);
         dispatch({ type: FETCH_OPTIONS, options: userOp });
     }
 
@@ -52,7 +52,7 @@ export const fetchOptions = () => {
 
 export const updateOptions = (allowCigarNotifications, allowTipNotifications, allowAchievementsNotifications, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, notificationToken) => {
     return async (dispatch, getState) => {
-        console.log("Update options")
+        // console.log("Update options")
         const token = getState().user.token;
         const optionsId = getState().options.options.id;
         const userId = getState().user.currentUser.id;

@@ -257,7 +257,7 @@ export const completeTipChallenge = () => {
             const userChallenges =  (getState().challenges.userChallenges).
                                     filter(c => c.challengeId === 3).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
                                                                                 -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted))? 0 : 1);
-            console.log(userChallenges)
+            // console.log(userChallenges)
             const yesterday = moment().add(-1, 'days').format("YYYY-MM-DD");
 
             const lastDay = userChallenges.reduce((acc, curr) => {
@@ -327,7 +327,7 @@ export const completeDailyLogChallenge = () => {
             const userChallenges =  (getState().challenges.userChallenges).
                                     filter(c => c.challengeId === 5).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
                                     -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted))? 0 : 1);
-            console.log(userChallenges)
+            // console.log(userChallenges)
             const yesterday = moment().add(-1, 'days').format("YYYY-MM-DD");
 
             const lastDay = userChallenges.reduce((acc, curr) => {
@@ -397,7 +397,7 @@ export const completeDontSmokeChallenge = (date) => {
             const userChallenges =  (getState().challenges.userChallenges).
                                     filter(c => c.challengeId === 6).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
                                     -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted))? 0 : 1);
-            console.log(userChallenges)
+            // console.log(userChallenges)
             const yesterday = moment(date).add(-1, 'days').format("YYYY-MM-DD");
 
             const lastDay = userChallenges.reduce((acc, curr) => {
@@ -466,12 +466,12 @@ export const checkDontSmokeChallenge = (date) => {
                                     find(c => c.id === 6);
             const userChallenges =  (getState().challenges.userChallenges).
                                     filter(c => c.challengeId === 6).reverse();
-            console.log(userChallenges)
+            // console.log(userChallenges)
 
             const challengeValue = userChallenges.find(c => c.dateCompleted === date)
-            console.log(challengeValue)
+            // console.log(challengeValue)
             if(challengeValue){
-                console.log("aqui2?")
+                // console.log("aqui2?")
                 const currentDate = moment(date).format("YYYY-MM-DD");
 
                 const response = await fetch(`http://${Localhost.address}:${Localhost.port}/aes/webresources/secured/challengeuser/deleteChallenge/${challengeValue.id}`, {
@@ -535,7 +535,7 @@ export const fetchRanking = () => {
 
     try {
         return async (dispatch, getState) => {
-            console.log("aqui")
+            // console.log("aqui")
             const token = getState().user.token;
             const today = moment().format("YYYY-MM-DD").toString();
 
@@ -547,7 +547,7 @@ export const fetchRanking = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            console.log(response.data)
+            // console.log(response.data)
 
             if (!response.ok) {
                 throw new Error('Algo deu errado.');

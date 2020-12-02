@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, StyleSheet, Dimensions, ScrollView, BackHandler, RefreshControl, Modal, Picker, Alert, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Dimensions, ScrollView, RefreshControl } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts';
 import { Line } from 'react-native-svg';
@@ -43,7 +43,7 @@ const fillLabels = (numLabels, format) => {
 const fillData = (logs, days, format) => {
 	const record = useSelector((state) => state.record.record);
 	const dailyCigars = record.cigarsDaily.toString();
-	console.log("aqui lu");
+	console.log("daily cigars: ");
 	console.log(dailyCigars);
 	let data = [];
 	let dailyCigarsArray = [];
@@ -57,13 +57,14 @@ const fillData = (logs, days, format) => {
 			}
 			dailyCigarsArray.unshift(Number(dailyCigars));
 		}
-
+		console.log('data: ')
 		console.log(data);
+		console.log('daily cigars array: ')
 		console.log(dailyCigarsArray);
 		return [
-			{data:data},
+			{data: data},
 			{
-				data:dailyCigarsArray,
+				data: dailyCigarsArray,
 				svg:{
 					stroke: 'transparent'
 				}
@@ -125,8 +126,6 @@ const HomeScreen = props => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isRefreshing, setIsRefreshing] = useState(false);
 
-	const [modalVisible, setModalVisible] = useState(false);
-
 	const [selectedPlot, setSelectedPlot] = useState("week");
 	const [definitiveSelectedPlot, setDefinitiveSelectedPlot] = useState("week");
 
@@ -154,7 +153,6 @@ const HomeScreen = props => {
 		switch (selectedPlot) {
 			case "week":
 				console.log("week");
-				//filterDailyLogs(7)
 				setLabels(fillLabels(7, "week"));
 				setData(fillData(dailyLogs, 7, "week"));
 				sum = dailyLogs
@@ -168,7 +166,6 @@ const HomeScreen = props => {
 				return;
 			case "month":
 				console.log("month");
-				//filterDailyLogs(30)
 				setLabels(fillLabels(30, "month"));
 				setData(fillData(dailyLogs, 30, "month"));
 
@@ -222,6 +219,7 @@ const HomeScreen = props => {
 	
 	// Variáveis de consumo
 	const dailyCigars = record.cigarsDaily.toString();
+	console.log('daily cigars dentro da funcao: ')
 	console.log(dailyCigars);
 	const packPrice = record.packPrice.toString();
 	const packAmount = record.packAmount.toString();
@@ -241,20 +239,27 @@ const HomeScreen = props => {
 		/>
 	));
 
-	useEffect(() => {
-		BackHandler.addEventListener('hardwareBackPress', () => {
-			return true;
-		})
-	}, []);
+	console.log('//////////////////////');
+	console.log('labels: ');
+	console.log(labels);
+	console.log('data: ');
+	console.log(data);
+	console.log('sumPeriod: ');
+	console.log(sumPeriod);
+	console.log('avgPeriod: ');
+	console.log(avgPeriod);
+	console.log('cigarsToday: ');
+	console.log(cigarsToday);
+	console.log('//////////////////////');
 
     return (
-		<ScrollView refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={resetState} />} contentContainerStyle={{flexGrow: 1}}>
+		<ScrollView refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={() => resetState()} />} contentContainerStyle={{flexGrow: 1}}>
 			<View style={styles.background}>
 				<View style={{marginVertical: 20}}>
 					<DefaultTitle style={styles.title}>Cigarros fumados na semana</DefaultTitle>
 				</View>
 				{/* GRÁFICO */}
-				{!isRefreshing && (
+				{/* {!isRefreshing && (
 				<View style={styles.chartContainer}>
 					<YAxis 
 						data={data[0].data.concat(data[1].data)}
@@ -288,7 +293,7 @@ const HomeScreen = props => {
 						/>
 					</View>
 				</View>
-				)}
+				)} */}
 				{/* GRÁFICO LEGENDA */}
 				<View style={{width: '100%', alignItems: 'center', paddingHorizontal: 10}}>
 					{definitiveSelectedPlot === 'year' ?
@@ -310,7 +315,7 @@ const HomeScreen = props => {
 						</View>
 						<View style={styles.subtitleContainer}>
 							<View style={{...styles.circleSubtitle, backgroundColor: Colors.red}} />
-							<DefaultText>{definitiveSelectedPlot === 'year' ? 'Cigarros fumados ao longo de uma semana' : 'Cigarros fumados por dia'}</DefaultText>
+							<DefaultText>{definitiveSelectedPlot === 'year' ? 'Cigarros fumados ao longo de uma semana' : 'Cigarros fumados por dia antes da intervenção'}</DefaultText>
 						</View>
 					</View>
 				</View>

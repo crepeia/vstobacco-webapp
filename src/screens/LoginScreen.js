@@ -92,7 +92,9 @@ const LoginScreen = props => {
 				<ActivityIndicator size='large' color={'white'} />
 			</View>
 		);
-	}
+    }
+    
+    let passwordInput;
 
     return (
         <View style={styles.background}>
