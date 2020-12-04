@@ -10,14 +10,21 @@ import * as optionsActions from '../store/actions/options';
 // import * as messageActions from '../store/actions/message';
 
 
-// import * as Notifications from "expo-notifications";
-import { Notifications } from 'expo';
+import * as Notifications from "expo-notifications";
+// import { Notifications } from 'expo';
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 import moment from "moment";
 
 import Colors from "../constants/Colors";
-import { cancelAllScheduledNotificationsAsync } from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true
+    };
+  }
+});
 
 const StartupLogin = (props) => {
 	const today = new Date();
@@ -81,86 +88,57 @@ const StartupLogin = (props) => {
 
 			let token = (await Notifications.getExpoPushTokenAsync()).data;
 
-			cancelAllScheduledNotificationsAsync();
+			Notifications.cancelAllScheduledNotificationsAsync();
 
 			// configuração notificação cigarro
-			const localCigarNotification = {
-				title: "Lembrete",
-				body: "Informe a quantidade de cigarros fumados hoje!",
-				data: JSON.stringify({ screen: "Cigarros fumados" }),
-				android: { sound: true }, // Make a sound on Android
-			};
 
-			const schedulingCigarOptions = {
-				time: moment(options.cigarNotificationTime, "HH:mm").isBefore(
-					moment()
-				)
-					? moment(options.cigarNotificationTime, "HH:mm")
-							.add(1, "day")
-							.toDate()
-					: moment(options.cigarNotificationTime, "HH:mm").toDate(),
-				// (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-				repeat: "day",
-			};
-
-			const idCigarNotification = await Notifications.scheduleLocalNotificationAsync(
-				localCigarNotification,
-				schedulingCigarOptions
-			);
+			const idCigarNotification = await Notifications.scheduleNotificationAsync({
+				content: {
+					title: "Lembrete",
+					body: "Informe a quantidade de cigarros fumados hoje!",
+					data: JSON.stringify({ screen: "Cigarros fumados" }),
+					sound: true
+				},
+				trigger: {
+					hour: parseInt(options.cigarNotificationTime),
+					minute: 0,
+					repeats: true
+				}
+			});
 
 			// configuracao notificacao conquista
 
-			const localAchievementsNotification = {
-				title: "Conquista",
-				body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
-				: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
-				data: JSON.stringify({ screen: "Conquistas" }),
-				android: { sound: true }, // Make a sound on Android
-			};
-
-			const schedulingAchievementsOptions = {
-				time: moment(options.achievementsNotificationTime, "HH:mm").isBefore(
-					moment()
-				)
-					? moment(options.achievementsNotificationTime, "HH:mm")
-							.add(1, "day")
-							.toDate()
-					: moment(options.achievementsNotificationTime, "HH:mm").toDate(),
-				// (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-				repeat: "day",
-			};
-
-			const idAchievementsNotification = await Notifications.scheduleLocalNotificationAsync(
-				localAchievementsNotification,
-				schedulingAchievementsOptions
-			);
+			const idAchievementsNotification = await Notifications.scheduleNotificationAsync({
+				content: {
+					title: "Conquista =)",
+					body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
+					: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+					data: JSON.stringify({ screen: " Conquistas" }),
+					sound: true
+				},
+				trigger: {
+					hour: parseInt(options.achievementsNotificationTime),
+					minute: 0,
+					repeats: true
+				}
+			});
 
 			// configuracao notificacao dicas
 
-			const localTipNotification = {
-				title: "Lembrete",
-				body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
-				android: { sound: true }, // Make a sound on Android
-			};
+			const idTipNotification = await Notifications.scheduleNotificationAsync({
+				content: {
+					title: "Lembrete",
+					body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+					data: JSON.stringify({ screen: "Dicas" }),
+					sound: true
+				},
+				trigger: {
+					hour: parseInt(options.tipNotificationTime),
+					minute: 0,
+					repeats: true
+				}
+			});
 
-			const schedulingTipOptions = {
-				time: moment(options.tipNotificationTime, "HH:mm").isBefore(
-					moment()
-				)
-					? moment(options.tipNotificationTime, "HH:mm")
-							.add(1, "day")
-							.toDate()
-					: moment(options.tipNotificationTime, "HH:mm").toDate(),
-				// (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-				repeat: "day",
-			};
-
-			const idTipNotification = await Notifications.scheduleLocalNotificationAsync(
-				localTipNotification,
-				schedulingTipOptions
-			);
-
-			//console.log(token);
 			await dispatch(
 				optionsActions.updateOptions(
 					true,
@@ -203,14 +181,14 @@ const StartupLogin = (props) => {
 			alert("Must use physical device for Push Notifications");
 		}
 
-		if (Platform.OS === "android") {
-			Notifications.createChannelAndroidAsync("default", {
-				name: "default",
-				sound: true,
-				priority: "max",
-				vibrate: [0, 250, 250, 250],
+		if (Platform.OS === 'android') {
+			Notifications.setNotificationChannelAsync('default', {
+			  name: 'default',
+			  importance: Notifications.AndroidImportance.MAX,
+			  vibrationPattern: [0, 250, 250, 250],
+			  lightColor: '#FF231F7C',
 			});
-		}
+		}		
     };
 
 	useEffect(() => {

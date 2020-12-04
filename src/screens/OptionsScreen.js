@@ -17,13 +17,21 @@ import * as optionsActions from '../store/actions/options';
 import * as userActions from '../store/actions/user';
 import { useDispatch, useSelector } from "react-redux";
 
-// import * as Notifications from 'expo-notifications';
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
 
 import Colors from '../constants/Colors';
+
+// o que ele faz quando chega notificacao com o app aberto
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true
+    };
+  }
+});
 
 const OptionsScreen = props => {
 	const today = new Date();
@@ -37,6 +45,7 @@ const OptionsScreen = props => {
 	let idCigarNotification = useSelector(state => state.options.idCigarNotification);
 	let idAchievementsNotification = useSelector(state => state.options.idAchievementsNotification);
 	let idTipNotification = useSelector(state => state.options.idTipNotification);
+
 	const options = useSelector(state => state.options.options);
 	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
 	const moneySaved = useSelector(state => state.achievement.moneySaved);
@@ -85,7 +94,6 @@ const OptionsScreen = props => {
 	}, [inRanking])
 	
 	const saveOptions = useCallback(async () => {
-        console.log('aqui lu ta salvando as opcoes');
         let finalStatus = '';
         let token = '';
 		setIsLoading(true);
@@ -104,16 +112,17 @@ const OptionsScreen = props => {
                     setIsLoading(false);
                     return;
                 }
-                token = await Notifications.getExpoPushTokenAsync();
+                token = (await Notifications.getExpoPushTokenAsync()).data;
             } else {
                 alert('Notificações só funcionam em dispositivos físicos!');
-            }
-            if (Platform.OS === "android") {
-				Notifications.createChannelAndroidAsync("default", {
-					name: "default",
-					sound: true,
-					priority: "max",
-					vibrate: [0, 250, 250, 250],
+			}
+			
+            if (Platform.OS === 'android') {
+				Notifications.setNotificationChannelAsync('default', {
+				  name: 'default',
+				  importance: Notifications.AndroidImportance.MAX,
+				  vibrationPattern: [0, 250, 250, 250],
+				  lightColor: '#FF231F7C',
 				});
 			}
 		}
@@ -121,86 +130,68 @@ const OptionsScreen = props => {
 		// notificacao cigarros 
 
         if (cigarNotification) {
-			if (idCigarNotification) {
-				Notifications.cancelScheduledNotificationAsync(idCigarNotification);
-			}
-
-            const localCigarNotification = {
-                title: "Lembrete",
-                body: "Informe a quantidade de cigarros fumados hoje!",
-                data: JSON.stringify({ screen: "Cigarros Fumados" }),
-                android: { sound: true } // Make a sound on Android
-            }
-
-            const schedulingCigarOptions = {
-                time: moment(cigarNotificationTime, "HH:mm").isBefore(moment()) ? moment(cigarNotificationTime, "HH:mm").add(1, 'day').toDate() : moment(cigarNotificationTime, "HH:mm").toDate(),
-                // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-                repeat: 'day'
-            };
-
-            //Notifications.addListener(handleNotification)
-            idCigarNotification = await Notifications.scheduleLocalNotificationAsync(localCigarNotification, schedulingCigarOptions);
+			Notifications.cancelScheduledNotificationAsync(idCigarNotification);
+			
+            idCigarNotification = await Notifications.scheduleNotificationAsync({
+				content: {
+					title: "Lembrete",
+					body: "Informe a quantidade de cigarros fumados hoje!",
+					data: JSON.stringify({ screen: "Cigarros fumados" }),
+					sound: true
+				},
+				trigger: {
+					hour: parseInt(cigarNotificationTime),
+					minute: 0,
+					repeats: true
+				}
+			});
         } else {
-			if (idCigarNotification) {
-				Notifications.cancelScheduledNotificationAsync(idCigarNotification);
-			}
+			Notifications.cancelScheduledNotificationAsync(idCigarNotification);
 		}
 
 		// notificacao conquistas
 		
         if (achievementsNotification) {
-			if (idAchievementsNotification) {
-				Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
-			}
+			Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
 
-            const localAchievementsNotification = {
-                title: "Conquista =)",
-				body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
-				: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
-                data: JSON.stringify({ screen: "Conquistas" }),
-                android: { sound: true } // Make a sound on Android
-            }
-
-            const schedulingAchievementsOptions = {
-                time: moment(achievementsNotificationTime, "HH:mm").isBefore(moment()) ? moment(achievementsNotificationTime, "HH:mm").add(1, 'day').toDate() : moment(achievementsNotificationTime, "HH:mm").toDate(),
-                // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-                repeat: 'day'
-            };
-
-            //Notifications.addListener(handleNotification)
-            idAchievementsNotification = await Notifications.scheduleLocalNotificationAsync(localAchievementsNotification, schedulingAchievementsOptions);
+            idAchievementsNotification = await Notifications.scheduleNotificationAsync({
+				content: {
+					title: "Conquista =)",
+					body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
+					: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+					data: JSON.stringify({ screen: " Conquistas" }),
+					sound: true
+				},
+				trigger: {
+					hour: parseInt(options.achievementsNotificationTime),
+					minute: 0,
+					repeats: true
+				}
+			});
         } else {
-			if (idAchievementsNotification) {
-				Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
-			}
+			Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
 		}
 
 		// notificacao dicas
 
         if (tipNotification) {
-			if (idTipNotification) {
-				Notifications.cancelScheduledNotificationAsync(idTipNotification);
-			}
+			Notifications.cancelScheduledNotificationAsync(idTipNotification);
 
-            const localTipNotification = {
-                title: "Lembrete",
-				body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
-                data: JSON.stringify({ screen: "Dicas" }),
-                android: { sound: true } // Make a sound on Android
-            }
-
-            const schedulingTipOptions = {
-                time: moment(tipNotificationTime, "HH:mm").isBefore(moment()) ? moment(tipNotificationTime, "HH:mm").add(1, 'day').toDate() : moment(tipNotificationTime, "HH:mm").toDate(),
-                // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-                repeat: 'day'
-            };
-
-            //Notifications.addListener(handleNotification)
-            idTipNotification = await Notifications.scheduleLocalNotificationAsync(localTipNotification, schedulingTipOptions);
+            idTipNotification = await Notifications.scheduleNotificationAsync({
+				content: {
+					title: "Lembrete",
+					body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+					data: JSON.stringify({ screen: "Dicas" }),
+					sound: true
+				},
+				trigger: {
+					hour: parseInt(options.tipNotificationTime),
+					minute: 0,
+					repeats: true
+				}
+			});
         } else {
-			if (idTipNotification) {
-				Notifications.cancelScheduledNotificationAsync(idTipNotification);
-			}
+			Notifications.cancelScheduledNotificationAsync(idTipNotification);
 		}
 
 		await dispatch(optionsActions.updateOptions(cigarNotification, tipNotification, achievementsNotification, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, token));
@@ -209,7 +200,6 @@ const OptionsScreen = props => {
 		await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
         await dispatch(userActions.toggleRanking(isInRanking, userNickname));
 
-		console.log("chega aqui lu");
         setIsLoading(false);
         Alert.alert('Opções', 'Alterações salvas com sucesso!', [{ text: 'Ok', style: 'destructive' }])
     }, [dispatch, isInRanking, cigarNotification, cigarNotificationTime, tipNotification, tipNotificationTime, achievementsNotification, achievementsNotificationTime]);

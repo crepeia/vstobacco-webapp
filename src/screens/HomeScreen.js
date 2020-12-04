@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { View, StyleSheet, Dimensions, ScrollView, RefreshControl } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import * as Notifications from 'expo-notifications';
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts';
 import { Line } from 'react-native-svg';
 import moment from 'moment';
@@ -150,52 +151,20 @@ const HomeScreen = props => {
 				? dailyLogs.find((wl) => wl.logDate === today).cigars
 				: 0
 		);
-		switch (selectedPlot) {
-			case "week":
-				console.log("week");
-				setLabels(fillLabels(7, "week"));
-				setData(fillData(dailyLogs, 7, "week"));
-				sum = dailyLogs
-					.filter(
-						(log) => moment(log.logDate) > moment().subtract(7, "days") && moment(log.logDate) <= moment()
-					)
-					.map((wl) => wl.cigars)
-					.reduce((a, b) => a + b, 0);
-				setSumPeriod(sum);
-				setAvgPeriod((sum / 7).toFixed(2));
-				return;
-			case "month":
-				console.log("month");
-				setLabels(fillLabels(30, "month"));
-				setData(fillData(dailyLogs, 30, "month"));
-
-				sum = dailyLogs
-					.filter(
-						(log) => moment(log.logDate) > moment().subtract(30, "days") && moment(log.logDate) <= moment()
-					)
-					.map((wl) => wl.cigars)
-					.reduce((a, b) => a + b, 0);
-				setSumPeriod(sum);
-				setAvgPeriod((sum / 7).toFixed(2));
-				return;
-			case "year":
-				console.log("year");
-				//filterDailyLogs(365)
-				setLabels(fillLabels(52, "year"));
-				setData(fillData(dailyLogs, 365, "year"));
-				sum = dailyLogs
-					.filter(
-						(log) => moment(log.logDate) > moment().subtract(365, "days") && moment(log.logDate) <= moment()
-					)
-					.map((wl) => wl.cigars)
-					.reduce((a, b) => a + b, 0);
-				setSumPeriod(sum);
-				setAvgPeriod((sum / 7).toFixed(2));
-				return;
-			default:
-				return;
-		}
-	}, [dailyLogs, selectedPlot]);
+		// ******** ELE ESTA RECLAMANDO DESSA PARTE ********
+		// setLabels(fillLabels(7, "week"));
+		// setData(fillData(dailyLogs, 7, "week"));
+		// *************************************************
+		sum = dailyLogs
+			.filter(
+				(log) => moment(log.logDate) > moment().subtract(7, "days") && moment(log.logDate) <= moment()
+			)
+			.map((wl) => wl.cigars)
+			.reduce((a, b) => a + b, 0);
+		setSumPeriod(sum);
+		setAvgPeriod((sum / 7).toFixed(2));
+		return;
+	}, [dailyLogs]);
 
 	const resetState = useCallback(async () => {
 		setIsRefreshing(true);
@@ -253,13 +222,19 @@ const HomeScreen = props => {
 	console.log('//////////////////////');
 
     return (
-		<ScrollView refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={() => resetState()} />} contentContainerStyle={{flexGrow: 1}}>
+		<ScrollView 
+			refreshControl={<RefreshControl 
+			refreshing={isRefreshing} 
+			onRefresh={() =>  {
+				resetState();
+			}}/>} 
+			contentContainerStyle={{flexGrow: 1}}>
 			<View style={styles.background}>
 				<View style={{marginVertical: 20}}>
 					<DefaultTitle style={styles.title}>Cigarros fumados na semana</DefaultTitle>
 				</View>
 				{/* GRÁFICO */}
-				{/* {!isRefreshing && (
+				{!isRefreshing && (
 				<View style={styles.chartContainer}>
 					<YAxis 
 						data={data[0].data.concat(data[1].data)}
@@ -293,7 +268,7 @@ const HomeScreen = props => {
 						/>
 					</View>
 				</View>
-				)} */}
+				)}
 				{/* GRÁFICO LEGENDA */}
 				<View style={{width: '100%', alignItems: 'center', paddingHorizontal: 10}}>
 					{definitiveSelectedPlot === 'year' ?

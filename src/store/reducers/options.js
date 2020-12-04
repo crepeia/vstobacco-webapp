@@ -6,9 +6,9 @@ import { FETCH_OPTIONS, UPDATE_OPTIONS, UPDATE_OPTIONS_COMMIT, UPDATE_OPTIONS_RO
 const initialState = {
     options: null,
     needSync: false,
-    idCigarNotification: null,
-    idAchievementsNotification: null,
-    idTipNotification: null,
+    idCigarNotification: '',
+    idAchievementsNotification: '',
+    idTipNotification: '',
 };
 
 export default (state = initialState, action) => {
