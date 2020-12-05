@@ -8,8 +8,6 @@ import moment from 'moment';
 
 import { useSelector } from 'react-redux';
 
-import { Ionicons } from '@expo/vector-icons';
-
 import HeaderButton from '../components/UI/HeaderButton';
 import DefaultText from '../components/DefaultText';
 import DefaultTitle from '../components/DefaultTitle';
@@ -41,9 +39,8 @@ const fillLabels = (numLabels, format) => {
 	}
 };
 
-const fillData = (logs, days, format) => {
-	const record = useSelector((state) => state.record.record);
-	const dailyCigars = record.cigarsDaily.toString();
+
+const fillData = (logs, days, format, dailyCigars) => {
 	console.log("daily cigars: ");
 	console.log(dailyCigars);
 	let data = [];
@@ -151,10 +148,8 @@ const HomeScreen = props => {
 				? dailyLogs.find((wl) => wl.logDate === today).cigars
 				: 0
 		);
-		// ******** ELE ESTA RECLAMANDO DESSA PARTE ********
-		// setLabels(fillLabels(7, "week"));
-		// setData(fillData(dailyLogs, 7, "week"));
-		// *************************************************
+		setLabels(fillLabels(7, "week"));
+		setData(fillData(dailyLogs, 7, "week", record.cigarsDaily));
 		sum = dailyLogs
 			.filter(
 				(log) => moment(log.logDate) > moment().subtract(7, "days") && moment(log.logDate) <= moment()
@@ -173,9 +168,9 @@ const HomeScreen = props => {
 	}, [dailyLogs]);
 
 	useEffect(() => {
-		const subscription = props.navigation.addListener("willFocus", resetState);
-
-		return subscription;
+		const unsubscribe = props.navigation.addListener('focus', resetState);
+	  
+		return unsubscribe;
 	}, [resetState]);
 
 	if (isLoading) {

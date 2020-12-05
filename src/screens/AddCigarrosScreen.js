@@ -87,6 +87,7 @@ const AddCigarrosScreen = props => {
             console.log('erro')
         }
         setIsLoading(false);
+        props.navigation.navigate("Home");
     }, [dispatch, cigarros, date]);
 
     const addCigarro = () => {
