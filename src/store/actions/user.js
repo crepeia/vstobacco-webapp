@@ -7,10 +7,11 @@ export const SET_DID_TRY_LOGIN = 'SET_DID_TRY_LOGIN';
 export const TOGGLE_RANKING = 'TOGGLE_RANKING';
 
 import Localhost from '../../constants/Localhost';
+import moment from 'moment';
 
 const encryptPassword = (senha) => {
 	var CryptoJS = require('crypto-js');
-	var pwhash = CryptoJS.enc.Utf8.parse('ekhilAitcapWarHy');
+	var pwhash = CryptoJS.enc.Utf8.parse(process.env.REACT_NATIVE_KEY);
 	var key = CryptoJS.enc.Hex.parse(pwhash.toString(CryptoJS.enc.Hex).substr(0, 32));
 
 	var encrypted = CryptoJS.AES.encrypt(senha, key, {
@@ -45,9 +46,13 @@ export const authenticate = (token, userId, userName, userEmail, birthDate, gend
 
 export const signin = (email, password) => {
 	return async (dispatch) => {
-		const encryptedPass = encryptPassword(password);
+        const encryptedPass = encryptPassword(password);
+        console.log(encryptedPass)
+        console.log(Localhost.address)
+        console.log(Localhost.port)
+        
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/aes/webresources/authenticate/${email}/${encryptedPass}/`,
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/authenticationtoken/${email}/${encryptedPass}/`,
 			{
 				method: 'GET',
 				headers: {
@@ -56,14 +61,14 @@ export const signin = (email, password) => {
 				},
 			}
 		);
-
+        
 		if (!response.ok) {
 			throw new Error('Email ou senha incorretos!');
 		}
 		const token = await response.text();
-
+        console.log(token)
 		const responseUser = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/aes/webresources/secured/user/login/${token}/`,
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/login/${token}/`,
 			{
 				method: 'GET',
 				headers: {
@@ -73,13 +78,12 @@ export const signin = (email, password) => {
 				},
 			}
 		);
-
 		if (!responseUser.ok) {
 			throw new Error('Não foi possível fazer login. \nErro no servidor!');
 		}
 
 		const usr = await responseUser.json();
-		// console.log(usr);
+		console.log(usr);
 
 		/**
 		 * General checks to simplify future service calls
@@ -91,7 +95,7 @@ export const signin = (email, password) => {
 			//CREATE RECORD
 			console.log('CREATE RECORD');
 			const recordResponse = await fetch(
-				`http://${Localhost.address}:${Localhost.port}/aes/webresources/secured/record/`,
+				`http://${Localhost.address}:${Localhost.port}/wati/webresources/record/`,
 				{
 					method: 'POST',
 					headers: {
@@ -102,7 +106,9 @@ export const signin = (email, password) => {
 					body: JSON.stringify({
 						user: { id: usr.id },
 						dailyGoal: 0,
-						weeklyGoal: 0
+						packPrice: 0.0,
+                        packAmount: 0,
+                        filled: false
 					}),
 				}
 			);
@@ -117,8 +123,8 @@ export const signin = (email, password) => {
 			userId: usr.id,
 			userName: usr.name,
 			userEmail: usr.email,
-			birthDate: '11/11/2020',
-			gender: 'M',
+			birthDate: moment(usr.birth).format('dd/mm/yyyy'),
+			gender: usr.gender,
 			token: token,
 			// isAdmin: usr.admin,
 			// isConsultant: usr.consultant,
@@ -126,7 +132,7 @@ export const signin = (email, password) => {
 			inRanking: false,
 			nickname: ''
 		});
-		saveDataToStorage(token, usr.id, usr.name, usr.email, '11/11/2020', 'M', false, '');
+		saveDataToStorage(token, usr.id, usr.name, usr.email, moment(usr.birth).format('dd/mm/yyyy'), usr.gender, false, '');
 	
 		// dispatch({
 		// 	type: SIGNIN,
@@ -203,8 +209,8 @@ export const toggleRanking = (inRanking, nickname) => {
 
 		if (!response.ok) {
 			throw new Error("Erro ao participar do ranking.");
-		}
-		console.log(response.body)
+        }
+        
 		AsyncStorage.mergeItem(
 			'userData',
 			JSON.stringify({

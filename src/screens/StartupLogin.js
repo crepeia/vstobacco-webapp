@@ -193,15 +193,20 @@ const StartupLogin = (props) => {
 
 	useEffect(() => {
         const tryLogin = async () => {
-            await dispatch(recordActions.fetchRecord());
-            await dispatch(recordActions.fetchDailyLogs());
-            await dispatch(challengeActions.fetchChallenges());
-			await dispatch(challengeActions.fetchUserChallenges());
-			await dispatch(challengeActions.completeLoginChallenge());
-			await dispatch(achievementActions.fetchDailyAchievements());
-            await dispatch(tipActions.fetchTips());
-            await dispatch(tipActions.fetchUserTips());
-            await dispatch(optionsActions.fetchOptions());
+            try{
+                await dispatch(recordActions.fetchRecord());
+                await dispatch(recordActions.fetchDailyLogs());
+                await dispatch(challengeActions.fetchChallenges());
+                await dispatch(challengeActions.fetchUserChallenges());
+                await dispatch(challengeActions.completeLoginChallenge());
+                await dispatch(achievementActions.fetchDailyAchievements());
+                await dispatch(tipActions.fetchTips());
+                await dispatch(tipActions.fetchUserTips());
+                await dispatch(optionsActions.fetchOptions());
+            } catch(e) {
+                console.log(e)
+            }
+            
             setIsLogging(true);
         };
         tryLogin();
