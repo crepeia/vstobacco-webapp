@@ -19,28 +19,28 @@ export const fetchOptions = () => {
         const userId = getState().user.currentUser.id;
 
 
-        // const response = await fetch(`http://${Localhost.address}:${Localhost.port}/aes/webresources/secured/mobileoptions/find/${userId}`, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Accept': 'application/json',
-        //         'Authorization': `Bearer ${userToken}`
-        //     }
-        // });
-        // //console.log(response)
-        // if (!response.ok) {
-        //     throw new Error('Não foi possível obter as suas configurações.');
-        // }
+        const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions/find/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${userToken}`
+            }
+        });
+        //console.log(response)
+        if (!response.ok) {
+            throw new Error('Não foi possível obter as suas configurações.');
+        }
 
-        // const resData = await response.json();
+        const resData = await response.json();
 
 
-        // const userOp = new Options(resData.id, resData.user.id, resData.allowCigarNotifications, resData.allowTipNotifications, resData.allowAchievementsNotifications,
-        //     moment(resData.cigarNotificationTime, "HH:mmZZ").format("HH:mm"), moment(resData.tipNotificationTime, "HH:mmZZ").format("HH:mm"), moment(resData.achievementsNotificationTime, "HH:mmZZ").format("HH:mm"),
-        //     resData.notificationToken)
+        const userOp = new Options(resData.id, resData.user.id, resData.allowCigarNotifications, resData.allowTipNotifications, resData.allowAchievementsNotifications,
+        moment(resData.cigarNotificationTime, "HH:mmZZ").format("HH:mm"), moment(resData.tipNotificationTime, "HH:mmZZ").format("HH:mm"), moment(resData.achievementsNotificationTime, "HH:mmZZ").format("HH:mm"),
+        resData.notificationToken)
 
-        const userOp = new Options (6, 22795, true, true, true, moment('20:00', "HH:mmZZ").format("HH:mm"), moment('20:00', "HH:mmZZ").format("HH:mm"), 
-        moment('20:00', "HH:mmZZ").format("HH:mm"), 'VLz1pJD0g-IacYh3geV8Z2');
+        // const userOp = new Options (6, 22795, true, true, true, moment('20:00', "HH:mmZZ").format("HH:mm"), moment('20:00', "HH:mmZZ").format("HH:mm"), 
+        // moment('20:00', "HH:mmZZ").format("HH:mm"), 'VLz1pJD0g-IacYh3geV8Z2');
 
         // const userOp = getState().options.options;
         // console.log(userOp);
@@ -61,31 +61,31 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
         dispatch({
             type: UPDATE_OPTIONS,
             options: { optionsId, userId, allowCigarNotifications, allowTipNotifications, allowAchievementsNotifications, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, notificationToken},
-            // meta: {
-            //     offline: {
-            //         effect: {
-            //             url: `http://${Localhost.address}:${Localhost.port}/aes/webresources/secured/mobileoptions/edit/${userId}`,
-            //             method: 'PUT',
-            //             headers: {
-            //                 'Content-Type': 'application/json',
-            //                 'Accept': 'application/json',
-            //                 'Authorization': `Bearer ${token}`
-            //             },
-            //             body: JSON.stringify({
-            //                 id: optionsId,
-            //                 allowCigarNotifications: allowCigarNotifications,
-            //                 allowTipNotifications: allowTipNotifications,
-            //                 allowAchievementsNotifications: allowAchievementsNotifications,
-            //                 cigarNotificationTime: moment(CigarNotificationTime, "HH:mm").format("HH:mmZ"),
-            //                 tipNotificationTime: moment(tipNotificationTime, "HH:mm").format("HH:mmZ"),
-            //                 achievementsNotificationTime: moment(tipNotificationTime, "HH:mm").format("HH:mmZ"),
-            //                 notificationToken: notificationToken
-            //             })
-            //         },
-            //         commit: { type: UPDATE_OPTIONS_COMMIT },
-            //         rollback: { type: UPDATE_OPTIONS_ROLLBACK }
-            //     }
-            // }
+            meta: {
+                offline: {
+                    effect: {
+                        url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            id: optionsId,
+                            allowCigarNotifications: allowCigarNotifications,
+                            allowTipNotifications: allowTipNotifications,
+                            allowAchievementsNotifications: allowAchievementsNotifications,
+                            cigarNotificationTime: moment(cigarNotificationTime, "HH:mm").format("HH:mmZ"),
+                            tipNotificationTime: moment(tipNotificationTime, "HH:mm").format("HH:mmZ"),
+                            achievementsNotificationTime: moment(tipNotificationTime, "HH:mm").format("HH:mmZ"),
+                            notificationToken: notificationToken
+                        })
+                    },
+                    commit: { type: UPDATE_OPTIONS_COMMIT },
+                    rollback: { type: UPDATE_OPTIONS_ROLLBACK }
+                }
+            }
 
         });
     }
