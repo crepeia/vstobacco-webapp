@@ -160,7 +160,7 @@ export const signup = (jsonForm) => {
 		//console.log(jsonForm)
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/aes/webresources/secured/user/${encryptedPass}/`,
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/${encryptedPass}/`,
 			{
 				method: 'POST',
 				headers: {
@@ -189,7 +189,7 @@ export const toggleRanking = (inRanking, nickname) => {
 		//console.log(inRanking)
 		//console.log(nickname)
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/aes/webresources/secured/user/setInRanking/`,
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/setInRanking`,
 			{
 				method: 'PUT',
 				headers: {
@@ -229,7 +229,7 @@ export const logout = () => {
 		const token = getState().user.token;
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/aes/webresources/authenticate/secured/logout/${token}/`,
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/authenticationtoken/secured/logout/${token}`,
 			{
 				method: 'DELETE',
 				headers: {
