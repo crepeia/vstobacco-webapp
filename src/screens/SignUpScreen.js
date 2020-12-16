@@ -122,7 +122,7 @@ const SignUpScreen = props => {
         } catch (error) {
             setLoading(false);
             Alert.alert('Não foi possível criar a conta.');
-            // console.error(error)
+            console.log(error);
         }
     };
 

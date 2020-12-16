@@ -83,7 +83,9 @@ export const signin = (email, password) => {
 		}
 
 		const usr = await responseUser.json();
+		console.log("json aqui lu");
 		console.log(usr);
+		console.log("--------------------");
 
 		/**
 		 * General checks to simplify future service calls
@@ -117,38 +119,22 @@ export const signin = (email, password) => {
 				throw new Error('Não foi possível criar o registro!');
 			}
 		}
-
+	
 		dispatch({
 			type: SIGNIN,
 			userId: usr.id,
 			userName: usr.name,
 			userEmail: usr.email,
-			birthDate: moment(usr.birth).format('dd/mm/yyyy'),
+			birthDate: usr.birthDate,
 			gender: usr.gender,
 			token: token,
 			// isAdmin: usr.admin,
 			// isConsultant: usr.consultant,
 			// chatId: chatId,
-			inRanking: false,
-			nickname: ''
+			inRanking: usr.inRanking,
+			nickname: usr.nickname
 		});
-		saveDataToStorage(token, usr.id, usr.name, usr.email, moment(usr.birth).format('dd/mm/yyyy'), usr.gender, false, '');
-	
-		// dispatch({
-		// 	type: SIGNIN,
-		// 	userId: usr.id,
-		// 	userName: usr.name,
-		// 	userEmail: usr.email,
-		// 	birthDate: usr.birthDate,
-		// 	gender: usr.gender,
-		// 	token: token,
-		// 	// isAdmin: usr.admin,
-		// 	// isConsultant: usr.consultant,
-		// 	// chatId: chatId,
-		// 	inRanking: usr.inRanking,
-		// 	nickname: usr.nickname
-		// });
-		// saveDataToStorage(token, usr.id, usr.name, usr.email, usr.birthDate, usr.gender, usr.inRanking, usr.nickname);
+		saveDataToStorage(token, usr.id, usr.name, usr.email, usr.birthDate, usr.gender, usr.inRanking, usr.nickname);
 	};
 };
 
@@ -177,8 +163,7 @@ export const signup = (jsonForm) => {
 		}
 
 		const usr = await response.json();
-
-		// console.log(usr)
+		console.log(usr)
 	};
 };
 

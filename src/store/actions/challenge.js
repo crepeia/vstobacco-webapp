@@ -539,7 +539,7 @@ export const fetchRanking = () => {
             const token = getState().user.token;
             const today = moment().format("YYYY-MM-DD").toString();
 
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/aes/webresources/secured/challengeuser/rank/${today}`, {
+            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/rank/${today}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

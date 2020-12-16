@@ -15,7 +15,7 @@ export const fetchEvaluation = () => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
 
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/aes/webresources/secured/evaluation/find/${userId}`, {
+            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/webresources/prontoparaparar/find/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
