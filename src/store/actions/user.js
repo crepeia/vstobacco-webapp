@@ -47,9 +47,6 @@ export const authenticate = (token, userId, userName, userEmail, birthDate, gend
 export const signin = (email, password) => {
 	return async (dispatch) => {
         const encryptedPass = encryptPassword(password);
-        console.log(encryptedPass)
-        console.log(Localhost.address)
-        console.log(Localhost.port)
         
 		const response = await fetch(
 			`http://${Localhost.address}:${Localhost.port}/wati/webresources/authenticationtoken/${email}/${encryptedPass}/`,
@@ -66,9 +63,10 @@ export const signin = (email, password) => {
 			throw new Error('Email ou senha incorretos!');
 		}
 		const token = await response.text();
-        console.log(token)
+		// console.log("token");
+        // console.log(token)
 		const responseUser = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/login/${token}/`,
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/login/${token}`,
 			{
 				method: 'GET',
 				headers: {
@@ -78,6 +76,8 @@ export const signin = (email, password) => {
 				},
 			}
 		);
+
+
 		if (!responseUser.ok) {
 			throw new Error('Não foi possível fazer login. \nErro no servidor!');
 		}
@@ -107,7 +107,7 @@ export const signin = (email, password) => {
 					},
 					body: JSON.stringify({
 						user: { id: usr.id },
-						dailyGoal: 0,
+						cigarsDaily: 0,
 						packPrice: 0.0,
                         packAmount: 0,
                         filled: false
@@ -118,6 +118,8 @@ export const signin = (email, password) => {
 			if (!recordResponse.ok) {
 				throw new Error('Não foi possível criar o registro!');
 			}
+
+			console.log("registro criado");
 		}
 	
 		dispatch({

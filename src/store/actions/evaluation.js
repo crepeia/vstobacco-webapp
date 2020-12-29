@@ -9,13 +9,14 @@ export const loadEvaluation = (evaluation) => {
 }
 
 export const fetchEvaluation = () => {
-
+    console.log("vem aqui lu");
     try {
         return async (dispatch, getState) => {
             const token = getState().user.token;
+            console.log(token);
             const userId = getState().user.currentUser.id;
-
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/webresources/prontoparaparar/find/${userId}`, {
+            console.log(userId);
+            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/prontoparaparar/find/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

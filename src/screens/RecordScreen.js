@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from 'react';
-import { Dimensions, StyleSheet, View, Alert } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Dimensions, StyleSheet, View, Alert, Button } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as recordActions from '../store/actions/record';
+import * as challengeActions from "../store/actions/challenge";
+import * as optionsActions from "../store/actions/options";
 
 import DefaultText from '../components/DefaultText';
 import DefaultTitle from '../components/DefaultTitle';
@@ -11,10 +13,16 @@ import Card from '../components/UI/Card';
 import NumberInput from '../components/UI/NumberInput';
 import Colors from '../constants/Colors';
 
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
+import moment from "moment";
 
-const TermoConsentimento = props => {
+
+const RecordScreen = props => {
 
     const dispatch = useDispatch();
+    const [error, setError] = useState();
 
     // Variáveis de consumo
     const [dailyCigars, setDailyCigars] = useState('0');
@@ -23,14 +31,198 @@ const TermoConsentimento = props => {
     const [isPriceModified, setIsPriceModified] = useState(false);
     const [packAmount, setPackAmount] = useState('0');
     const [isAmountModified, setIsAmountModified] = useState(false);
+
+    const record = useSelector((state) => state.record.record);
+    const options = useSelector((state) => state.options.options);
+    
+    const loadRecord = useCallback(async () => {
+        console.log(record);
+		setError(null);
+		try {
+			await dispatch(recordActions.fetchRecord());
+			setDailyCigars(record.cigarsDaily.toString());
+			setPackPrice(record.packPrice.toString());
+			setPackAmount(record.packAmount.toString());
+		} catch (err) {
+			setError(err.message);
+		}
+    }, [dispatch, setError]);
+    
+    useEffect(() => {
+		let unmounted = false;
+		if (!unmounted) {
+			loadRecord();
+		}
+		return () => {
+			unmounted = true;
+		};
+    }, [dispatch, loadRecord]);
+    
+    // notifications
+
+    const registerForPushNotificationsAsync = async () => {
+		if (Constants.isDevice) {
+			const { status: existingStatus } = await Permissions.getAsync(
+				Permissions.NOTIFICATIONS
+			);
+			let finalStatus = existingStatus;
+			if (existingStatus !== "granted") {
+				const { status } = await Permissions.askAsync(
+					Permissions.NOTIFICATIONS
+				);
+				finalStatus = status;
+			}
+			if (finalStatus !== "granted") {
+				await dispatch(
+					optionsActions.updateOptions(
+						false,
+						false,
+						false,
+						moment(options.cigarNotificationTime, "HH:mm").format(
+							"HH:mm"
+						),
+						moment(options.tipNotificationTime, "HH:mm").format(
+							"HH:mm"
+						),
+						moment(options.achievementsNotificationTime, "HH:mm").format(
+							"HH:mm"
+						),
+						""
+					)
+				);
+				return;
+			}
+
+			let token = (await Notifications.getExpoPushTokenAsync()).data;
+
+			Notifications.cancelAllScheduledNotificationsAsync();
+
+			// configuração notificação cigarro
+
+			const idCigarNotification = await Notifications.scheduleNotificationAsync({
+				content: {
+					title: "Lembrete",
+					body: "Informe a quantidade de cigarros fumados hoje!",
+					data: JSON.stringify({ screen: "Cigarros fumados" }),
+					sound: true
+				},
+				trigger: {
+					hour: parseInt(options.cigarNotificationTime),
+					minute: 0,
+					repeats: true
+				}
+			});
+
+			// configuracao notificacao conquista
+
+			const idAchievementsNotification = await Notifications.scheduleNotificationAsync({
+				content: {
+					title: "Conquista =)",
+					body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
+					: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+					data: JSON.stringify({ screen: " Conquistas" }),
+					sound: true
+				},
+				trigger: {
+					hour: parseInt(options.achievementsNotificationTime),
+					minute: 0,
+					repeats: true
+				}
+			});
+
+			// configuracao notificacao dicas
+
+			const idTipNotification = await Notifications.scheduleNotificationAsync({
+				content: {
+					title: "Lembrete",
+					body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+					data: JSON.stringify({ screen: "Dicas" }),
+					sound: true
+				},
+				trigger: {
+					hour: parseInt(options.tipNotificationTime),
+					minute: 0,
+					repeats: true
+				}
+			});
+
+			await dispatch(
+				optionsActions.updateOptions(
+					true,
+					true,
+					true,
+					moment(options.cigarNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.tipNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.achievementsNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					token
+				)
+			);
+
+			await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
+			await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
+			await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
+		} else {
+			await dispatch(
+				optionsActions.updateOptions(
+					false,
+					false,
+					false,
+					moment(options.cigarNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.tipNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.achievementsNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					""
+				)
+			);
+			alert("Must use physical device for Push Notifications");
+		}
+
+		if (Platform.OS === 'android') {
+			Notifications.setNotificationChannelAsync('default', {
+			  name: 'default',
+			  importance: Notifications.AndroidImportance.MAX,
+			  vibrationPattern: [0, 250, 250, 250],
+			  lightColor: '#FF231F7C',
+			});
+		}		
+    };
     
     const saveRecordHandler = useCallback(async () => {
 		try {
             await dispatch(recordActions.updateRecord(dailyCigars, packPrice, packAmount));
+            await dispatch(challengeActions.completeLoginChallenge());
+			await registerForPushNotificationsAsync();
+			props.navigation.navigate("Menu");
 		} catch (err) {
 			Alert.alert(err.message);
         }
-	}, [dispatch, dailyCigars, packPrice, packAmount]);
+    }, [dispatch, dailyCigars, packPrice, packAmount]);
+    
+    if (error) {
+		return (
+			<View style={styles.loading}>
+				<DefaultText>Um erro ocorreu!</DefaultText>
+				<DefaultText>{error}</DefaultText>
+
+				<Button
+					title='Tente novamente'
+					onPress={loadRecord}
+					color={Colors.primaryColor}
+				/>
+			</View>
+		);
+	}
 
     return (
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -174,4 +366,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default TermoConsentimento;
+export default RecordScreen;

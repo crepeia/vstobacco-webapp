@@ -4,7 +4,9 @@ import {
     UPDATE_RECORD_ROLLBACK,
     FETCH_DAILY_LOGS,
     SAVE_LOG,
-    SAVE_LOG_ROLLBACK
+    SAVE_LOG_ROLLBACK,
+    LOAD_RECORD,
+	LOAD_DAILY_LOGS,
 } from '../actions/record';
 
 import Record from '../../models/Record';
@@ -19,6 +21,16 @@ export default (state = initialState, action) => {
     let existingIndex = -1;
 	let updatedLogs = [];
     switch (action.type) {
+        case LOAD_RECORD:
+			return {
+				...state,
+				record: new Record(action.recordId, action.dailyCigars, action.packPrice, action.packAmount, action.userId, action.filled),
+			};
+		case LOAD_DAILY_LOGS:
+			return {
+				...state,
+				dailyLogs: action.dailyLogs,
+			};
         case FETCH_RECORD:
             return {
                 ...state,
@@ -46,7 +58,7 @@ export default (state = initialState, action) => {
         case UPDATE_RECORD_ROLLBACK:
             return { 
                 ...state,
-                needSyncs: true 
+                needSync: true 
             };
         case FETCH_DAILY_LOGS:
             return {

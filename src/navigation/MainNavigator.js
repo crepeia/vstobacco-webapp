@@ -380,6 +380,10 @@ export const StartupNavigator = () => {
                     headerShown: false
                 }}
             />
+            <LoginStackNavigator.Screen
+                name='Menu'
+                component={MenuNavigator}
+            />
 
         </StartupStackNavigator.Navigator>
 
