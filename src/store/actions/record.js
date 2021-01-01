@@ -79,6 +79,7 @@ export const updateRecord = (cigarsDaily, packPrice, packAmount) => {
 		console.log(cigarsDaily);
 		console.log(packPrice);
 		console.log(packAmount);
+		console.log(token);
 		console.log("------------------------------");
 
 		dispatch({

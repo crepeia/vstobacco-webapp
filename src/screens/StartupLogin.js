@@ -34,6 +34,8 @@ const StartupLogin = (props) => {
 	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
 	const moneySaved = useSelector(state => state.achievement.moneySaved);
 	const lifeTimeSaved = useSelector(state => state.achievement.lifeTimeSaved);
+
+	const record = useSelector((state) => state.record.record);
 	
 	// calculo tempo vida	
 	const mes = lifeTimeSaved > 43800 ? Math.floor(lifeTimeSaved / 43800) : 0;
@@ -214,8 +216,12 @@ const StartupLogin = (props) => {
     
     useEffect(() => {
         if(isLogging){
-            registerForPushNotificationsAsync();
-            props.navigation.navigate("Record");
+			registerForPushNotificationsAsync();
+			if (record.filled === false) {
+				props.navigation.navigate("Record");
+			} else {
+				props.navigation.navigate("Menu");
+			}
         }
     }, [dispatch, isLogging]);
 
