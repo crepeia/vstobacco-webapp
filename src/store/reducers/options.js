@@ -4,17 +4,7 @@ import moment from 'moment';
 import { FETCH_OPTIONS, UPDATE_OPTIONS, UPDATE_OPTIONS_COMMIT, UPDATE_OPTIONS_ROLLBACK, STORE_ID_CIGAR_NOTIFICATION, STORE_ID_ACHIEVEMENTS_NOTIFICATION, STORE_ID_TIP_NOTIFICATION } from '../actions/options';
 
 const initialState = {
-    options: {
-        id: 0, 
-        userId: 0, 
-        allowCigarNotifications: true, 
-        allowTipNotifications: true, 
-        allowAchievementsNotifications: true, 
-        cigarNotificationTime: '19:00', 
-        tipNotificationTime: '19:00', 
-        achievementsNotificationTime: '19:00', 
-        notificationToken: 'Vshaudhkdhalods'
-    },
+    options: null,
     needSync: false,
     idCigarNotification: '',
     idAchievementsNotification: '',

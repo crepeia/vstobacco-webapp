@@ -45,11 +45,13 @@ export const authenticate = (token, userId, userName, userEmail, birthDate, gend
 };
 
 export const signin = (email, password) => {
+	console.log(email);
+	
 	return async (dispatch) => {
         const encryptedPass = encryptPassword(password);
         
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/authenticationtoken/${email}/${encryptedPass}/`,
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/authenticationtoken/${email}/${encryptedPass}`,
 			{
 				method: 'GET',
 				headers: {
@@ -63,8 +65,7 @@ export const signin = (email, password) => {
 			throw new Error('Email ou senha incorretos!');
 		}
 		const token = await response.text();
-		// console.log("token");
-        // console.log(token)
+		
 		const responseUser = await fetch(
 			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/login/${token}`,
 			{
@@ -121,6 +122,40 @@ export const signin = (email, password) => {
 
 			console.log("registro criado");
 		}
+
+		// options criacao
+
+		// if (usr.options == null) {
+		// 	//CREATE OPTIONS
+		// 	console.log('CREATE OPTIONS');
+		// 	const optionsResponse = await fetch(
+		// 		`http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions`,
+		// 		{
+		// 			method: 'POST',
+		// 			headers: {
+		// 				'Content-Type': 'application/json',
+		// 				Accept: 'application/json',
+		// 				Authorization: `Bearer ${token}`,
+		// 			},
+		// 			body: JSON.stringify({
+		// 				user: { id: usr.id },
+		// 				allowCigarNotifications: false,
+		// 				allowTipNotifications: false,
+		// 				allowAchievmentNotifications: false,
+		// 				cigarNotificationTime: moment().set('hour', 19).set('minute', 0).set('second', 0),
+		// 				tipNotificationTime: moment().set('hour', 19).set('minute', 0).set('second', 0),
+		// 				achievmentNotificationTime: moment().set('hour', 19).set('minute', 0).set('second', 0),
+		// 				notificationToken: "",
+		// 			}),
+		// 		}
+		// 	);
+
+		// 	if (!optionsResponse.ok) {
+		// 		throw new Error('Não foi possível criar as options!');
+		// 	}
+
+		// 	console.log("options criadas");
+		// }
 	
 		dispatch({
 			type: SIGNIN,

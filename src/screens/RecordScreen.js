@@ -200,7 +200,9 @@ const RecordScreen = props => {
     
     const saveRecordHandler = useCallback(async () => {
 		try {
-            await dispatch(recordActions.updateRecord(dailyCigars, packPrice, packAmount));
+			await dispatch(recordActions.updateRecord(dailyCigars, packPrice, packAmount));
+			console.log("Record foi atualizado lu: ");
+			console.log(record);
             await dispatch(challengeActions.completeLoginChallenge());
 			await registerForPushNotificationsAsync();
 			props.navigation.navigate("Menu");

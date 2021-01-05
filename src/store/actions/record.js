@@ -76,46 +76,71 @@ export const updateRecord = (cigarsDaily, packPrice, packAmount) => {
 
 		console.log("updating record");
 		console.log("infos: ");
+		console.log(userId);
 		console.log(cigarsDaily);
 		console.log(packPrice);
 		console.log(packAmount);
 		console.log(token);
 		console.log("------------------------------");
 
+		const response = await fetch(
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/record/edit/`,
+			{
+				method: 'PUT',
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+				body: JSON.stringify({
+					id: recordId,
+					user: { id: userId },
+					cigarsDaily: cigarsDaily,
+					packPrice: packPrice,
+					packAmount: packAmount,
+					filled: true
+				}),
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error("Erro ao registrar record.");
+        }
+
 		dispatch({
             type: UPDATE_RECORD,
-            recordId: recordId,
+            id: recordId,
 			cigarsDaily: cigarsDaily,
             packPrice: packPrice,
             packAmount: packAmount,
 			userId: userId,
 			filled: true,
-			meta: {
-				offline: {
-					// the network action to execute:
-					effect: {
-						url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/record/edit/`,
-						method: "PUT",
-						headers: {
-							"Content-Type": "application/json",
-							Accept: "application/json",
-							Authorization: `Bearer ${token}`,
-						},
-						body: JSON.stringify({
-							recordId: recordId,
-							userId: { id: userId },
-							cigarsDaily: cigarsDaily,
-							packPrice: packPrice,
-							packAmount: packAmount,
-							filled: true
-						}),
-					},
-					// action to dispatch when effect succeeds:
-					// commit: { type: 'UPDATE_RECORD_COMMIT', meta: { log, action } },
-					// action to dispatch if network action fails permanently:
-					rollback: { type: UPDATE_RECORD_ROLLBACK },
-				},
-			},
+			// meta: {
+			// 	offline: {
+			// 		// the network action to execute:
+			// 		effect: {
+			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/record/edit/`,
+			// 			method: "PUT",
+			// 			headers: {
+			// 				"Content-Type": "application/json",
+			// 				Accept: "application/json",
+			// 				Authorization: `Bearer ${token}`,
+			// 			},
+			// 			body: JSON.stringify({
+			// 				id: recordId,
+			// 				user: { id: userId },
+			// 				cigarsDaily: cigarsDaily,
+			// 				packPrice: packPrice,
+			// 				packAmount: packAmount,
+			// 				filled: true
+			// 			}),
+			// 		},
+			// 		// action to dispatch when effect succeeds:
+			// 		// commit: { type: 'UPDATE_RECORD_COMMIT', meta: { log, action } },
+			// 		// action to dispatch if network action fails permanently:
+			// 		rollback: { type: UPDATE_RECORD_ROLLBACK },
+			// 	},
+			// },
 		});
 	};
 };
@@ -165,8 +190,12 @@ export const fetchDailyLogs = () => {
 export const saveLog = (cigars, date) => {
 	return async (dispatch, getState) => {
 		const recordId = getState().record.record.id;
+		console.log("Id do record");
+		console.log(recordId);
 		const token = getState().user.token;
 		let log = getState().record.dailyLogs.find((dl) => dl.logDate === date);
+		console.log("log");
+		console.log(log);
 		let oldLog = null;
 		let action = "";
 		if (log) {
@@ -181,40 +210,69 @@ export const saveLog = (cigars, date) => {
 			oldLog = log;
 			action = "create";
 		}
+
+		console.log("log atualizado");
+		console.log(log);
 		
 		let newDate = moment.utc(date).format();
+		console.log(newDate);
+
+		const response = await fetch(
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/dailylog/editOrCreate`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					recordId: { id: recordId },
+					logDate: newDate,
+					cigars: cigars,
+				}),
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error('Não foi possível salvar o log!');
+		}
+
+		console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA");
+		console.log(logResponse);
+		console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA");
 
 		dispatch({
 			type: SAVE_LOG,
 			payload: log,
-			meta: {
-				offline: {
-					// the network action to execute:
-					effect: {
-						url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/dailylog/editOrCreate`,
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-							Accept: "application/json",
-							Authorization: `Bearer ${token}`,
-						},
-						body: JSON.stringify({
-							record: { id: recordId },
-							logDate: newDate,
-							cigars: cigars,
-							// context: context,
-							// consequences: consequences,
-						}),
-					},
-					// action to dispatch when effect succeeds:
-					// commit: { type: SAVE_LOG_COMMIT, meta: { log, action } },
-					// action to dispatch if network action fails permanently:
-					rollback: {
-						type: SAVE_LOG_ROLLBACK,
-						meta: { oldLog, action },
-					},
-				},
-			},
+			// meta: {
+			// 	offline: {
+			// 		// the network action to execute:
+			// 		effect: {
+			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/dailylog/editOrCreate`,
+			// 			method: "POST",
+			// 			headers: {
+			// 				"Content-Type": "application/json",
+			// 				Accept: "application/json",
+			// 				Authorization: `Bearer ${token}`,
+			// 			},
+			// 			body: JSON.stringify({
+			// 				record: { id: recordId },
+			// 				logDate: newDate,
+			// 				cigars: cigars,
+			// 				// context: context,
+			// 				// consequences: consequences,
+			// 			}),
+			// 		},
+			// 		// action to dispatch when effect succeeds:
+			// 		// commit: { type: SAVE_LOG_COMMIT, meta: { log, action } },
+			// 		// action to dispatch if network action fails permanently:
+			// 		rollback: {
+			// 			type: SAVE_LOG_ROLLBACK,
+			// 			meta: { oldLog, action },
+			// 		},
+			// 	},
+			// },
 		});
 	};
 };

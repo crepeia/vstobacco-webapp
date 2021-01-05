@@ -52,40 +52,76 @@ export const fetchOptions = () => {
 
 export const updateOptions = (allowCigarNotifications, allowTipNotifications, allowAchievementsNotifications, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, notificationToken) => {
     return async (dispatch, getState) => {
-        // console.log("Update options")
+        console.log("Update options")
         const token = getState().user.token;
         const optionsId = getState().options.options.id;
         const userId = getState().user.currentUser.id;
 
+        console.log(cigarNotificationTime);
+        console.log(tipNotificationTime);
+        console.log(achievementsNotificationTime);
+
+        const cigarTime = cigarNotificationTime.split(':');
+        const tipTime = tipNotificationTime.split(':');
+        const achievementTime = achievementsNotificationTime.split(':');
+
+        console.log(achievementTime + " " + tipTime + " " + cigarTime);
+
+        const response = await fetch(
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
+			{
+				method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    id: optionsId,
+                    allowCigarNotifications: allowCigarNotifications,
+                    allowTipNotifications: allowTipNotifications,
+                    allowAchievementsNotifications: allowAchievementsNotifications,
+                    cigarNotificationTime: moment().set('hour', cigarTime[0]).set('minute', cigarTime[1]).set('second', 0),
+                    tipNotificationTime: moment().set('hour', tipTime[0]).set('minute', tipTime[1]).set('second', 0),
+                    achievementsNotificationTime: moment().set('hour', achievementTime[0]).set('minute', achievementTime[1]).set('second', 0),
+                    notificationToken: notificationToken,
+                    user: { id: userId }
+                })
+			}
+		);
+
+		if (!response.ok) {
+            throw new Error('Não foi possível editar as configurações.');
+        }
 
         dispatch({
             type: UPDATE_OPTIONS,
             options: { optionsId, userId, allowCigarNotifications, allowTipNotifications, allowAchievementsNotifications, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, notificationToken},
-            meta: {
-                offline: {
-                    effect: {
-                        url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                            id: optionsId,
-                            allowCigarNotifications: allowCigarNotifications,
-                            allowTipNotifications: allowTipNotifications,
-                            allowAchievementsNotifications: allowAchievementsNotifications,
-                            cigarNotificationTime: moment(cigarNotificationTime, "HH:mm").format("HH:mmZ"),
-                            tipNotificationTime: moment(tipNotificationTime, "HH:mm").format("HH:mmZ"),
-                            achievementsNotificationTime: moment(tipNotificationTime, "HH:mm").format("HH:mmZ"),
-                            notificationToken: notificationToken
-                        })
-                    },
-                    commit: { type: UPDATE_OPTIONS_COMMIT },
-                    rollback: { type: UPDATE_OPTIONS_ROLLBACK }
-                }
-            }
+            // meta: {
+            //     offline: {
+            //         effect: {
+            //             url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
+            //             method: 'PUT',
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //                 'Accept': 'application/json',
+            //                 'Authorization': `Bearer ${token}`
+            //             },
+            //             body: JSON.stringify({
+            //                 id: optionsId,
+            //                 allowCigarNotifications: allowCigarNotifications,
+            //                 allowTipNotifications: allowTipNotifications,
+            //                 allowAchievementsNotifications: allowAchievementsNotifications,
+            //                 cigarNotificationTime: moment(cigarNotificationTime, "HH:mm").format("HH:mmZ"),
+            //                 tipNotificationTime: moment(tipNotificationTime, "HH:mm").format("HH:mmZ"),
+            //                 achievementsNotificationTime: moment(tipNotificationTime, "HH:mm").format("HH:mmZ"),
+            //                 notificationToken: notificationToken
+            //             })
+            //         },
+            //         commit: { type: UPDATE_OPTIONS_COMMIT },
+            //         rollback: { type: UPDATE_OPTIONS_ROLLBACK }
+            //     }
+            // }
 
         });
     }

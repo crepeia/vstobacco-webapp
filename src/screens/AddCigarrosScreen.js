@@ -74,20 +74,22 @@ const AddCigarrosScreen = props => {
             setIsLoading(true);
             // await dispatch(recordActions.saveLog(cigarros, date, '', ''));
             await dispatch(recordActions.saveLog(cigarros, date));
-            await dispatch(achievementActions.saveAchievement(cigarros, date));
+            // await dispatch(achievementActions.saveAchievement(cigarros, date));
+            console.log(dailyLogs);
             await dispatch(challengeActions.completeDailyLogChallenge());
             if(cigarros === 0){
                 await dispatch(challengeActions.completeDontSmokeChallenge(date));
             } else {
                 await dispatch(challengeActions.checkDontSmokeChallenge(date));
             }
-            console.log('try')
+            console.log('correu bem lu');
         } catch (err) {
             setError(err.message);
-            console.log('erro')
+            console.log('erro');
+            console.log(err.message);
         }
         setIsLoading(false);
-        props.navigation.navigate("Home");
+        // props.navigation.navigate("Home");
     }, [dispatch, cigarros, date]);
 
     const addCigarro = () => {

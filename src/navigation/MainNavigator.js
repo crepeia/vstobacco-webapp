@@ -85,6 +85,13 @@ export const LoginNavigator = () => {
                     title: 'Termo de Consentimento',
                 }}
             />
+            <LoginStackNavigator.Screen
+                name='StartupLogin'
+                component={StartupNavigator}
+                options={{
+                    headerShown: false
+                }}
+            />
         </LoginStackNavigator.Navigator>
     )
 }

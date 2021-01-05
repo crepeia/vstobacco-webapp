@@ -64,12 +64,10 @@ const LoginScreen = props => {
 
 	const signinHandler = useCallback(async () => {
 		setError(null);
-
 		try {
 			setLoading(true);
 			await dispatch(userActions.signin(email, password));
-            // props.navigation.navigate('StartupLogin'); está pronta mas ainda temos que acabar o redux
-            // props.navigation.navigate('Menu'); // temporário
+            // props.navigation.navigate('StartupLogin');
 		} catch (err) {
 			setLoading(false);
 			setError(err.message);
