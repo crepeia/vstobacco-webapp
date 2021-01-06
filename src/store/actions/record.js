@@ -227,7 +227,7 @@ export const saveLog = (cigars, date) => {
 					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify({
-					recordId: { id: recordId },
+					record: { id: recordId },
 					logDate: newDate,
 					cigars: cigars,
 				}),
@@ -239,7 +239,7 @@ export const saveLog = (cigars, date) => {
 		}
 
 		console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA");
-		console.log(logResponse);
+		console.log(response);
 		console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA");
 
 		dispatch({

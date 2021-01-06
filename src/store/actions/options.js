@@ -57,7 +57,8 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
         const token = getState().user.token;
         const optionsId = getState().options.options.id;
         const userId = getState().user.currentUser.id;
-
+        console.log(userId)
+        console.log(optionsId)
         console.log(cigarNotificationTime);
         console.log(tipNotificationTime);
         console.log(achievementsNotificationTime);
@@ -86,9 +87,10 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
 			}
         );
         
-        console.dir(response);
 
 		if (!response.ok) {
+            console.log(response.status);
+
             throw new Error('Não foi possível editar as configurações.');
         }
 
