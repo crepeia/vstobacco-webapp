@@ -86,7 +86,7 @@ export const signin = (email, password) => {
 		const usr = await responseUser.json();
 		console.log("json aqui lu");
 		console.log(usr);
-		console.log("--------------------");
+		console.log("------------------");
 
 		/**
 		 * General checks to simplify future service calls
@@ -142,9 +142,9 @@ export const signin = (email, password) => {
 		// 				allowCigarNotifications: false,
 		// 				allowTipNotifications: false,
 		// 				allowAchievmentNotifications: false,
-		// 				cigarNotificationTime: moment().set('hour', 19).set('minute', 0).set('second', 0),
-		// 				tipNotificationTime: moment().set('hour', 19).set('minute', 0).set('second', 0),
-		// 				achievmentNotificationTime: moment().set('hour', 19).set('minute', 0).set('second', 0),
+		// 				cigarNotificationTime: moment("1900", "HH:mm").format("HH:mmZ"),
+		// 				tipNotificationTime: moment("1900", "HH:mm").format("HH:mmZ"),
+		// 				achievmentNotificationTime: moment("1900", "HH:mm").format("HH:mmZ"),
 		// 				notificationToken: "",
 		// 			}),
 		// 		}

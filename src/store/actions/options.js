@@ -14,7 +14,7 @@ import moment from 'moment';
 
 export const fetchOptions = () => {
     return async (dispatch, getState) => {
-        // console.log("Fetch options")
+        console.log("Fetch options");
         const userToken = getState().user.token;
         const userId = getState().user.currentUser.id;
 
@@ -35,15 +35,16 @@ export const fetchOptions = () => {
         const resData = await response.json();
 
 
-        const userOp = new Options(resData.id, resData.user.id, resData.allowCigarNotifications, resData.allowTipNotifications, resData.allowAchievementsNotifications,
-        moment(resData.cigarNotificationTime, "HH:mmZZ").format("HH:mm"), moment(resData.tipNotificationTime, "HH:mmZZ").format("HH:mm"), moment(resData.achievementsNotificationTime, "HH:mmZZ").format("HH:mm"),
-        resData.notificationToken)
+        const userOp = new Options(resData.id, resData.user.id, resData.allowCigarNotifications, resData.allowTipNotifications, resData.allowAchievmentNotifications,
+        moment().hours(resData.cigarNotificationTime.hour).minutes(resData.cigarNotificationTime.minute).format("HH:mm"), moment().hours(resData.tipNotificationTime.hour).minutes(resData.tipNotificationTime.minute).format("HH:mm"), 
+        moment().hours(resData.achievmentNotificationTime.hour).minutes(resData.achievmentNotificationTime.minute).format("HH:mm"), resData.notificationToken);
 
         // const userOp = new Options (6, 22795, true, true, true, moment('20:00', "HH:mmZZ").format("HH:mm"), moment('20:00', "HH:mmZZ").format("HH:mm"), 
         // moment('20:00', "HH:mmZZ").format("HH:mm"), 'VLz1pJD0g-IacYh3geV8Z2');
 
         // const userOp = getState().options.options;
-        // console.log(userOp);
+
+        console.log(userOp);
         dispatch({ type: FETCH_OPTIONS, options: userOp });
     }
 
@@ -61,11 +62,6 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
         console.log(tipNotificationTime);
         console.log(achievementsNotificationTime);
 
-        const cigarTime = cigarNotificationTime.split(':');
-        const tipTime = tipNotificationTime.split(':');
-        const achievementTime = achievementsNotificationTime.split(':');
-
-        console.log(achievementTime + " " + tipTime + " " + cigarTime);
 
         const response = await fetch(
 			`http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
@@ -80,15 +76,17 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
                     id: optionsId,
                     allowCigarNotifications: allowCigarNotifications,
                     allowTipNotifications: allowTipNotifications,
-                    allowAchievementsNotifications: allowAchievementsNotifications,
-                    cigarNotificationTime: moment().set('hour', cigarTime[0]).set('minute', cigarTime[1]).set('second', 0),
-                    tipNotificationTime: moment().set('hour', tipTime[0]).set('minute', tipTime[1]).set('second', 0),
-                    achievementsNotificationTime: moment().set('hour', achievementTime[0]).set('minute', achievementTime[1]).set('second', 0),
+                    allowAchievmentNotifications: allowAchievementsNotifications,
+                    cigarNotificationTime: moment(cigarNotificationTime, "HH:mm").format("HH:mmZ"),
+                    tipNotificationTime: moment(tipNotificationTime, "HH:mm").format("HH:mmZ"),
+                    achievmentNotificationTime: moment(achievementsNotificationTime, "HH:mm").format("HH:mmZ"),
                     notificationToken: notificationToken,
                     user: { id: userId }
                 })
 			}
-		);
+        );
+        
+        console.dir(response);
 
 		if (!response.ok) {
             throw new Error('Não foi possível editar as configurações.');

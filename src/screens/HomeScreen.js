@@ -41,8 +41,6 @@ const fillLabels = (numLabels, format) => {
 
 
 const fillData = (logs, days, format, dailyCigars) => {
-	console.log("daily cigars: ");
-	console.log(dailyCigars);
 	let data = [];
 	let dailyCigarsArray = [];
 	if (format === "week" || format === "month") {
@@ -55,10 +53,7 @@ const fillData = (logs, days, format, dailyCigars) => {
 			}
 			dailyCigarsArray.unshift(Number(dailyCigars));
 		}
-		console.log('data: ')
-		console.log(data);
-		console.log('daily cigars array: ')
-		console.log(dailyCigarsArray);
+		
 		return [
 			{data: data},
 			{
@@ -183,8 +178,6 @@ const HomeScreen = props => {
 	
 	// Variáveis de consumo
 	const dailyCigars = record.cigarsDaily.toString();
-	console.log('daily cigars dentro da funcao: ')
-	console.log(dailyCigars);
 	const packPrice = record.packPrice.toString();
 	const packAmount = record.packAmount.toString();
 
@@ -202,19 +195,6 @@ const HomeScreen = props => {
 			strokeWidth={ 2 }
 		/>
 	));
-
-	console.log('//////////////////////');
-	console.log('labels: ');
-	console.log(labels);
-	console.log('data: ');
-	console.log(data);
-	console.log('sumPeriod: ');
-	console.log(sumPeriod);
-	console.log('avgPeriod: ');
-	console.log(avgPeriod);
-	console.log('cigarsToday: ');
-	console.log(cigarsToday);
-	console.log('//////////////////////');
 
     return (
 		<ScrollView 

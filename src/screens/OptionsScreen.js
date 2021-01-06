@@ -90,7 +90,8 @@ const OptionsScreen = props => {
 	const [isInRanking, setIsInRanking] = useState(true);
 
 	useEffect(() => {
-        setIsInRanking(inRanking);
+		setIsInRanking(inRanking);
+		console.log(options);
 	}, [inRanking])
 	
 	const saveOptions = useCallback(async () => {
