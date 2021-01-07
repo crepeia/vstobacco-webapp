@@ -238,10 +238,6 @@ export const saveLog = (cigars, date) => {
 			throw new Error('Não foi possível salvar o log!');
 		}
 
-		console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA");
-		console.log(response);
-		console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA");
-
 		dispatch({
 			type: SAVE_LOG,
 			payload: log,

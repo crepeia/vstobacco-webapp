@@ -36,8 +36,8 @@ export const fetchOptions = () => {
 
 
         const userOp = new Options(resData.id, resData.user.id, resData.allowCigarNotifications, resData.allowTipNotifications, resData.allowAchievmentNotifications,
-        moment().hours(resData.cigarNotificationTime.hour).minutes(resData.cigarNotificationTime.minute).format("HH:mm"), moment().hours(resData.tipNotificationTime.hour).minutes(resData.tipNotificationTime.minute).format("HH:mm"), 
-        moment().hours(resData.achievmentNotificationTime.hour).minutes(resData.achievmentNotificationTime.minute).format("HH:mm"), resData.notificationToken);
+        moment(resData.cigarNotificationTime, "HH:mmZZ").format("HH:mm"), moment(resData.tipNotificationTime, "HH:mmZZ").format("HH:mm"), 
+        moment(resData.achievmentNotificationTime, "HH:mmZZ").format("HH:mm"), resData.notificationToken);
 
         // const userOp = new Options (6, 22795, true, true, true, moment('20:00', "HH:mmZZ").format("HH:mm"), moment('20:00', "HH:mmZZ").format("HH:mm"), 
         // moment('20:00', "HH:mmZZ").format("HH:mm"), 'VLz1pJD0g-IacYh3geV8Z2');

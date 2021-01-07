@@ -212,7 +212,8 @@ const StartupLogin = (props) => {
             
             setIsLogging(true);
         };
-        tryLogin();
+		tryLogin();
+		
     }, [dispatch]);
     
     useEffect(() => {
