@@ -112,16 +112,19 @@ const PerfilScreen = (props) => {
 						<DefaultText style={styles.textoPlano}>{evaluation.dataParada}</DefaultText>
 
 						<DefaultText style={styles.labelPlano}>Técnicas para a fissura:</DefaultText>
-						<DefaultText style={styles.textoPlano}>{evaluation.beberAgua}</DefaultText>
-						<DefaultText style={styles.textoPlano}>{evaluation.comerAlimentos}</DefaultText>
-						<DefaultText style={styles.textoPlano}>{evaluation.lerCartao}</DefaultText>
-						<DefaultText style={styles.textoPlano}>{evaluation.exercicioRelaxamento}</DefaultText>
+						{evaluation.beberAgua && <DefaultText style={styles.textoPlano}>- Beber um copo de água pausadamente.</DefaultText>}
+						{evaluation.comerAlimentos && <DefaultText style={styles.textoPlano}>- Comer alimentos com baixa quantidade de calorias como frutas cristalizadas, uvas passas, balas e chicletes dietéticos.</DefaultText>}
+						{evaluation.lerCartao && <DefaultText style={styles.textoPlano}>- Ler um cartão com suas razões para ter parado de fumar.</DefaultText>}
+						{evaluation.exercicioRelaxamento && <DefaultText style={styles.textoPlano}>- Fazer um exercício de relaxamento em áudio MP3 (link disponível no site)</DefaultText>}
+						{!evaluation.beberAgua && !evaluation.comerAlimentos && !evaluation.lerCartao && !evaluation.exercicioRelaxamento
+						&& <DefaultText style={styles.textoPlano}>Não há técnicas selecionadas em seu plano.</DefaultText>}
 
 						<DefaultText style={styles.labelPlano}>Técnicas para evitar recaídas:</DefaultText>
-						<DefaultText style={styles.textoPlano}>{evaluation.evitarRecaida}</DefaultText>
+						{evaluation.evitarRecaida1 && <DefaultText style={styles.textoPlano}>{evaluation.evitarRecaida1}</DefaultText>}
+						{evaluation.evitarRecaida2 && <DefaultText style={styles.textoPlano}>{evaluation.evitarRecaida2}</DefaultText>}
+						{evaluation.evitarRecaida3 && <DefaultText style={styles.textoPlano}>{evaluation.evitarRecaida3}</DefaultText>}
+						{!evaluation.evitarRecaida1 && !evaluation.evitarRecaida2 && !evaluation.evitarRecaida3 && <DefaultText style={styles.textoPlano}>Você não escreveu nenhuma técnica para evitar recaídas.</DefaultText>}
 
-						<DefaultText style={styles.labelPlano}>Estratégias para resistir ao cigarro:</DefaultText>
-						<DefaultText style={styles.textoPlano}>{evaluation.estrategiasParaResistir}</DefaultText>
 					</Card>
 				)}
 			</View>

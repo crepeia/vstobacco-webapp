@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
 
                 const ev = new Evaluation(action.evaluation.id, moment(action.evaluation.dataParar).format("YYYY-MM-DD"), action.evaluation.enfrentarFissuraBeberAgua, 
                 action.evaluation.enfrentarFissuraComer, action.evaluation.enfrentarFissuraLerRazoes, action.evaluation.enfrentarFissuraRelaxamento, 
-                action.evaluation.evitarRecaida, action.evaluation.estrategiasParaResistir);
+                action.evaluation.evitarRecaida1, action.evaluation.evitarRecaida2, action.evaluation.evitarRecaida3);
                 /*
                                 AsyncStorage.setItem('evaluationData', JSON.stringify({
                                     evaluation: ev
