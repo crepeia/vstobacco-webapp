@@ -26,7 +26,6 @@ const PerfilScreen = (props) => {
 
 	const user = useSelector((state) => state.user.currentUser);
 	const evaluation = useSelector((state) => state.evaluation.evaluation);
-
 	const options = { email: user.email, secure: true };
 
 	const logout = useCallback(() => {

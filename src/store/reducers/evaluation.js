@@ -15,11 +15,11 @@ export default (state = initialState, action) => {
             }
 
         case FETCH_EVALUATION:
-            if (action.evaluation.dataParada != null) {
+            if (action.evaluation.dataParar != null) {
 
 
-                const ev = new Evaluation(action.evaluation.id, moment(action.evaluation.dataParada).format("YYYY-MM-DD"), action.evaluation.beberAgua, 
-                action.evaluation.comerAlimentos, action.evaluation.lerCartao, action.evaluation.exercicioRelaxamento, 
+                const ev = new Evaluation(action.evaluation.id, moment(action.evaluation.dataParar).format("YYYY-MM-DD"), action.evaluation.enfrentarFissuraBeberAgua, 
+                action.evaluation.enfrentarFissuraComer, action.evaluation.enfrentarFissuraLerRazoes, action.evaluation.enfrentarFissuraRelaxamento, 
                 action.evaluation.evitarRecaida, action.evaluation.estrategiasParaResistir);
                 /*
                                 AsyncStorage.setItem('evaluationData', JSON.stringify({

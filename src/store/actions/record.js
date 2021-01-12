@@ -53,7 +53,10 @@ export const fetchRecord = () => {
         }
         
         let record = await responseRecord.json();
-        
+		
+		console.log("Fetch record");
+		console.log(record);
+
 		dispatch({
 			type: FETCH_RECORD,
 			recordId: record.id,

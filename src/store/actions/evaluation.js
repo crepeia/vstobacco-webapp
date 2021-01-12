@@ -30,6 +30,11 @@ export const fetchEvaluation = () => {
             }
 
             const resData = await response.json();
+
+            console.log("aaaaaaaaaaaaaa");
+            console.log(resData);
+            console.log("aaaaaaaaaaaaaa");
+            
             dispatch({ type: FETCH_EVALUATION, evaluation: resData });
         }
 

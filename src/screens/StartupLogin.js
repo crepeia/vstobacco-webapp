@@ -34,8 +34,6 @@ const StartupLogin = (props) => {
 	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
 	const moneySaved = useSelector(state => state.achievement.moneySaved);
 	const lifeTimeSaved = useSelector(state => state.achievement.lifeTimeSaved);
-
-	const record = useSelector((state) => state.record.record);
 	
 	// calculo tempo vida	
 	const mes = lifeTimeSaved > 43800 ? Math.floor(lifeTimeSaved / 43800) : 0;
@@ -195,26 +193,22 @@ const StartupLogin = (props) => {
 
 	useEffect(() => {
         const tryLogin = async () => {
-            try{
-                await dispatch(recordActions.fetchRecord());
-                // await dispatch(recordActions.fetchDailyLogs());
-                // await dispatch(challengeActions.fetchChallenges());
-                // await dispatch(challengeActions.fetchUserChallenges());
-                // await dispatch(challengeActions.completeLoginChallenge());
-                // await dispatch(achievementActions.fetchDailyAchievements());
-                // await dispatch(tipActions.fetchTips());
-                // await dispatch(tipActions.fetchUserTips());
-				await dispatch(optionsActions.fetchOptions());
-				console.log("Executou tudo");
-            } catch(e) {
-                console.log(e)
-            }
-            
-            setIsLogging(true);
-        };
+			await dispatch(recordActions.fetchRecord());
+			// await dispatch(recordActions.fetchDailyLogs());
+			// await dispatch(challengeActions.fetchChallenges());
+			// await dispatch(challengeActions.fetchUserChallenges());
+			// await dispatch(challengeActions.completeLoginChallenge());
+			// await dispatch(achievementActions.fetchDailyAchievements());
+			// await dispatch(tipActions.fetchTips());
+			// await dispatch(tipActions.fetchUserTips());
+			await dispatch(optionsActions.fetchOptions());
+			setIsLogging(true);
+		};
 		tryLogin();
-		
-    }, [dispatch]);
+
+	}, [dispatch]);
+	
+	const record = useSelector((state) => state.record.record);
     
     useEffect(() => {
         if(isLogging){
@@ -224,7 +218,7 @@ const StartupLogin = (props) => {
 			} else {
 				props.navigation.navigate("Menu");
 			}
-        }
+		}
     }, [dispatch, isLogging]);
 
 	return (
