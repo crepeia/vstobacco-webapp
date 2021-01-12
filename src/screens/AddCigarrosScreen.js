@@ -74,7 +74,7 @@ const AddCigarrosScreen = props => {
             setIsLoading(true);
             // await dispatch(recordActions.saveLog(cigarros, date, '', ''));
             await dispatch(recordActions.saveLog(cigarros, date));
-            // await dispatch(achievementActions.saveAchievement(cigarros, date));
+            await dispatch(achievementActions.saveAchievement(cigarros, date));
             console.log(dailyLogs);
             // await dispatch(challengeActions.completeDailyLogChallenge());
             // if(cigarros === 0){

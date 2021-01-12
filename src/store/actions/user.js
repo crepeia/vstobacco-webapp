@@ -178,9 +178,11 @@ export const signin = (email, password) => {
 export const signup = (jsonForm) => {
 	return async (dispatch) => {
 
-		encryptedPass = encryptPassword(jsonForm.password)
-		jsonForm.password = encryptedPass
-		//console.log(jsonForm)
+		encryptedPass = encryptPassword(jsonForm.password);
+		console.log(encryptedPass);
+		jsonForm.password = encryptedPass;
+		console.log(jsonForm.password);
+		console.log(jsonForm);
 
 		const response = await fetch(
 			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/${encryptedPass}/`,
@@ -200,7 +202,7 @@ export const signup = (jsonForm) => {
 		}
 
 		const usr = await response.json();
-		console.log(usr)
+		console.log(usr);
 	};
 };
 
