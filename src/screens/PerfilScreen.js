@@ -72,6 +72,7 @@ const PerfilScreen = (props) => {
 			</View>
 		);
 	}
+	console.log('evaluation: ' + evaluation)
 
 	return (
 		<ScrollView style={styles.background}>
