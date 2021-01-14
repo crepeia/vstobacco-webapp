@@ -9,6 +9,25 @@ export const TOGGLE_RANKING = 'TOGGLE_RANKING';
 import Localhost from '../../constants/Localhost';
 import moment from 'moment';
 
+const saveDataToStorage = (token, userId, userName, userEmail, birthDate, gender, isAdmin, isConsultant, chatId, inRanking, nickname) => {
+	AsyncStorage.setItem(
+		'userData',
+		JSON.stringify({
+			token: token,
+			userId: userId,
+			userName: userName,
+			userEmail: userEmail,
+			birthDate: birthDate,
+			gender: gender,
+			// isAdmin: isAdmin,
+			// isConsultant: isConsultant,
+			// chatId: chatId,
+			inRanking: inRanking,
+			nickname: nickname
+		})
+	);
+};
+
 const encryptPassword = (senha) => {
 	var CryptoJS = require('crypto-js');
 	var pwhash = CryptoJS.enc.Utf8.parse(process.env.REACT_NATIVE_KEY);
@@ -272,21 +291,4 @@ export const logout = () => {
 };
 
 
-const saveDataToStorage = (token, userId, userName, userEmail, birthDate, gender, isAdmin, isConsultant, chatId, inRanking, nickname) => {
-	AsyncStorage.setItem(
-		'userData',
-		JSON.stringify({
-			token: token,
-			userId: userId,
-			userName: userName,
-			userEmail: userEmail,
-			birthDate: birthDate,
-			gender: gender,
-			// isAdmin: isAdmin,
-			// isConsultant: isConsultant,
-			// chatId: chatId,
-			inRanking: inRanking,
-			nickname: nickname
-		})
-	);
-};
+

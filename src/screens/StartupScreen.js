@@ -9,6 +9,8 @@ import Colors from "../constants/Colors";
 const StartupScreen = (props) => {
 	const dispatch = useDispatch();
 
+	console.log("Dei logout vim para cá");
+
 	useEffect(() => {
 		const tryLogin = async () => {
 			// AsyncStorage.removeItem("userData");

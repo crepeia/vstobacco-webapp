@@ -35,6 +35,7 @@ const PerfilScreen = (props) => {
 			setLoading(true);
 			Notifications.cancelAllScheduledNotificationsAsync();
 			dispatch(userActions.logout());
+			props.navigation.navigate('Login');
 		} catch (err) {
 			setLoading(false);
 			setError(err.message);

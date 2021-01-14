@@ -1,17 +1,17 @@
 class RegisterUser {
-	constructor(name, email, password, receiveEmails, tipsFrequency, phone, birthDate, gender, pregnant, authorizeData, signUpDate, dateCreated, preferedLanguage, ipCreated, app_signup, registration_complete) {
+	constructor(name, email, password, receiveEmails, tipsFrequency, phone, birth, gender, pregnant, authorizeData, signUpDate, dt_cadastro, preferedLanguage, ipCreated, app_signup, registration_complete) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.receiveEmails = receiveEmails;
 		this.tipsFrequency = tipsFrequency;
 		this.phone = phone;
-        this.birthDate = birthDate;
+        this.birth = birth;
         this.gender = gender;
         this.pregnant = pregnant;
         this.authorizeData = authorizeData;
         this.signUpDate = signUpDate;
-        this.dateCreated = dateCreated;
+        this.dt_cadastro = dt_cadastro;
         this.preferedLanguage = preferedLanguage;
         this.ipCreated = ipCreated;
         this.app_signup = app_signup;

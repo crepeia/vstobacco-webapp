@@ -33,6 +33,7 @@ export const loadDailyLogs = (dailyLogs) => {
 
 export const fetchRecord = () => {
 	return async (dispatch, getState) => {
+		console.log("Fetch record");
 		const token = getState().user.token;
 		const userId = getState().user.currentUser.id;
 
@@ -53,8 +54,6 @@ export const fetchRecord = () => {
         }
         
         let record = await responseRecord.json();
-		
-		console.log("Fetch record");
 		console.log(record);
 
 		dispatch({

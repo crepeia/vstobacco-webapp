@@ -1,7 +1,6 @@
 import {
     FETCH_DAILY_ACHIEVEMENTS,
     SAVE_ACHIEVEMENT,
-    SAVE_ACHIEVEMENT_ROLLBACK
 } from '../actions/achievement';
 
 const sumAchievements = (achievements) => {
@@ -32,11 +31,12 @@ export default (state = initialState, action) => {
 	let updatedAchievements = [];
     switch (action.type) {
         case FETCH_DAILY_ACHIEVEMENTS:
+            let updatedData = sumAchievements(action.loadedAchievements);
             return {
                 dailyAchievements: action.loadedAchievements,
-                cigarsNotSmoken: action.loadedCigarsNotSmoken,
-                lifeTimeSaved: action.loadedLifeTimeSaved,
-                moneySaved: action.loadedMoneySaved
+                cigarsNotSmoken: updatedData.objCigarsNotSmoken,
+                lifeTimeSaved: updatedData.objLifeTimeSaved,
+                moneySaved: updatedData.objMoneySaved
             };
         case SAVE_ACHIEVEMENT:
             existingIndex = state.dailyAchievements.findIndex((log) => log.logDate === action.payload.logDate);
@@ -65,25 +65,6 @@ export default (state = initialState, action) => {
                     moneySaved: updatedVariables.objMoneySaved
                 };
             }
-        case SAVE_ACHIEVEMENT_ROLLBACK:
-            existingIndex = state.dailyAchievements.findIndex((log) => log.logDate === action.meta.oldLog.logDate);
-
-            if (action.meta.action === 'edit') {
-                updatedAchievements = [...state.dailyAchievements];
-                updatedAchievements[existingIndex] = action.meta.oldLog;
-                return { 
-                    ...state,
-                    dailyAchievements: updatedAchievements
-                };
-            } else if (action.meta.action === 'create') {
-                updatedAchievements = [...state.dailyAchievements];
-                updatedAchievements.splice(existingIndex, 1);
-                return { 
-                    ...state, 
-                    dailyAchievements: updatedAchievements 
-                };
-            }
-            return state;
         default:
             return state;
     }

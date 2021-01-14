@@ -2,17 +2,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { MenuNavigator, LoginNavigator, StartupNavigator } from '../navigation/MainNavigator';
+import { LoginNavigator, StartupNavigator } from '../navigation/MainNavigator';
 import StartupScreen from '../screens/StartupScreen';
 
 const AppNavigator = props => {
     const isAuth = useSelector(state => state.user.token);
     const didTryAutoLogin = useSelector(state => state.user.didTryAutoLogin);
-    const recordIsFilled = useSelector(state => state.record.record ? state.record.record.filled : false);
 
     return (
         <NavigationContainer>
-            {/* {isAuth && recordIsFilled && <MenuNavigator />} */}
             {isAuth && <StartupNavigator />}
             {!isAuth && didTryAutoLogin && <LoginNavigator />}
             {!isAuth && !didTryAutoLogin && <StartupScreen />}
