@@ -43,6 +43,8 @@ const OptionsScreen = props => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	let idCigarNotification = useSelector(state => state.options.idCigarNotification);
+	console.log("Aqui lu a id");
+	console.log(idCigarNotification);
 	let idAchievementsNotification = useSelector(state => state.options.idAchievementsNotification);
 	let idTipNotification = useSelector(state => state.options.idTipNotification);
 
@@ -68,7 +70,7 @@ const OptionsScreen = props => {
     const userNickname = useSelector((state) => state.user.currentUser.nickname);
 
 	// Variáveis para o Modal
-	const hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '16:30', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+	const hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
 	const [modalCigarVisible, setModalCigarVisible] = useState(false);
 	const [modalTipVisible, setModalTipVisible] = useState(false);
 	const [modalAchievementsVisible, setModalAchievementsVisible] = useState(false);

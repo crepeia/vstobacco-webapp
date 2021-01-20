@@ -95,12 +95,12 @@ const SignUpScreen = props => {
         receiveEmails: false,
         tipsFrequency: 0,
         phone: '',
-        birthDate: '',
+        birth: '',
         gender: null,
         pregnant: null,
         authorizeData: false,
         termsUse: false,
-        signUpDate: '', //automatico
+        dt_cadastro: '', //automatico
         dateCreated: '', //automatico
         preferedLanguage: '', //automatico
         ipCreated: '', //automatico
@@ -111,7 +111,7 @@ const SignUpScreen = props => {
     const onSubmit = async (values, actions) => {
         console.log('values: ')
         console.log(values);
-        const registerValues = new RegisterUser(values.name, values.email, values.password, values.receiveEmails, values.tipsFrequency, values.phone, values.birthDate, values.gender, values.pregnant, values.authorizeData, moment(), moment(), adjustedLanguage, values.ipCreated, values.app_signup, values.registration_complete)
+        const registerValues = new RegisterUser(values.name, values.email, values.password, values.receiveEmails, values.phone, values.birthDate, values.gender, values.authorizeData, moment(), adjustedLanguage, values.app_signup);
         
         setLoading(true);
         try {

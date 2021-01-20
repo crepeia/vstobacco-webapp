@@ -28,14 +28,13 @@ const PerfilScreen = (props) => {
 	const evaluation = useSelector((state) => state.evaluation.evaluation);
 	const options = { email: user.email, secure: true };
 
-	const logout = useCallback(() => {
+	const logout = useCallback(async () => {
 		setError(null);
 
 		try {
 			setLoading(true);
 			Notifications.cancelAllScheduledNotificationsAsync();
-			dispatch(userActions.logout());
-			props.navigation.navigate('Login');
+			await dispatch(userActions.logout());
 		} catch (err) {
 			setLoading(false);
 			setError(err.message);

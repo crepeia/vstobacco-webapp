@@ -83,7 +83,10 @@ export const signin = (email, password) => {
 		if (!response.ok) {
 			throw new Error('Email ou senha incorretos!');
 		}
+
 		const token = await response.text();
+
+		console.log(token);
 		
 		const responseUser = await fetch(
 			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/login/${token}`,
@@ -198,9 +201,8 @@ export const signup = (jsonForm) => {
 	return async (dispatch) => {
 
 		encryptedPass = encryptPassword(jsonForm.password);
-		console.log(encryptedPass);
 		jsonForm.password = encryptedPass;
-		console.log(jsonForm.password);
+		console.log("O que vai para a requisição: ");
 		console.log(jsonForm);
 
 		const response = await fetch(

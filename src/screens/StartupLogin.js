@@ -53,6 +53,7 @@ const StartupLogin = (props) => {
     const [isLogging, setIsLogging] = useState(false);
 
 	const options = useSelector((state) => state.options.options);
+
     const registerForPushNotificationsAsync = async () => {
 		if (Constants.isDevice) {
 			const { status: existingStatus } = await Permissions.getAsync(
@@ -86,80 +87,92 @@ const StartupLogin = (props) => {
 				return;
 			}
 
+			Alert.alert('Sobre as notificações: ', 'Você pode alterar o horário de notificação em Opções no menu.', [
+				{ text: "Ok", style: "destructive" },
+			]);
+
 			let token = (await Notifications.getExpoPushTokenAsync()).data;
 
 			Notifications.cancelAllScheduledNotificationsAsync();
 
 			// configuração notificação cigarro
 
-			const idCigarNotification = await Notifications.scheduleNotificationAsync({
-				content: {
-					title: "Lembrete",
-					body: "Informe a quantidade de cigarros fumados hoje!",
-					data: JSON.stringify({ screen: "Cigarros fumados" }),
-					sound: true
-				},
-				trigger: {
-					hour: parseInt(options.cigarNotificationTime),
-					minute: 0,
-					repeats: true
-				}
-			});
+			if (options.allowCigarNotifications) {
+				let idCigarNotification = await Notifications.scheduleNotificationAsync({
+					content: {
+						title: "Lembrete",
+						body: "Informe a quantidade de cigarros fumados hoje!",
+						data: JSON.stringify({ screen: "Cigarros fumados" }),
+						sound: true
+					},
+					trigger: {
+						hour: parseInt(options.cigarNotificationTime),
+						minute: 0,
+						repeats: true
+					}
+				});
 
+				await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
+        	}
 			// configuracao notificacao conquista
 
-			const idAchievementsNotification = await Notifications.scheduleNotificationAsync({
-				content: {
-					title: "Conquista =)",
-					body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
-					: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
-					data: JSON.stringify({ screen: " Conquistas" }),
-					sound: true
-				},
-				trigger: {
-					hour: parseInt(options.achievementsNotificationTime),
-					minute: 0,
-					repeats: true
-				}
-			});
+			if (options.allowAchievementsNotifications) {
+				let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
+					content: {
+						title: "Conquista =)",
+						body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
+						: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+						data: JSON.stringify({ screen: " Conquistas" }),
+						sound: true
+					},
+					trigger: {
+						hour: parseInt(options.achievementsNotificationTime),
+						minute: 0,
+						repeats: true
+					}
+				});
+
+				await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
+			}
 
 			// configuracao notificacao dicas
 
-			const idTipNotification = await Notifications.scheduleNotificationAsync({
-				content: {
-					title: "Lembrete",
-					body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
-					data: JSON.stringify({ screen: "Dicas" }),
-					sound: true
-				},
-				trigger: {
-					hour: parseInt(options.tipNotificationTime),
-					minute: 0,
-					repeats: true
-				}
-			});
+			if (options.allowTipNotifications) {
+				let idTipNotification = await Notifications.scheduleNotificationAsync({
+					content: {
+						title: "Lembrete",
+						body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+						data: JSON.stringify({ screen: "Dicas" }),
+						sound: true
+					},
+					trigger: {
+						hour: parseInt(options.tipNotificationTime),
+						minute: 0,
+						repeats: true
+					}
+				});
 
-			await dispatch(
-				optionsActions.updateOptions(
-					true,
-					true,
-					true,
-					moment(options.cigarNotificationTime, "HH:mm").format(
-						"HH:mm"
-					),
-					moment(options.tipNotificationTime, "HH:mm").format(
-						"HH:mm"
-					),
-					moment(options.achievementsNotificationTime, "HH:mm").format(
-						"HH:mm"
-					),
-					token
-				)
-			);
+				await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
+			}
 
-			await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
-			await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
-			await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
+			// await dispatch(
+			// 	optionsActions.updateOptions(
+			// 		options.allowCigarNotifications,
+			// 		options.allowTipNotifications,
+			// 		options.allowAchievementsNotifications,
+			// 		moment(options.cigarNotificationTime, "HH:mm").format(
+			// 			"HH:mm"
+			// 		),
+			// 		moment(options.tipNotificationTime, "HH:mm").format(
+			// 			"HH:mm"
+			// 		),
+			// 		moment(options.achievementsNotificationTime, "HH:mm").format(
+			// 			"HH:mm"
+			// 		),
+			// 		token
+			// 	)
+			// );
+
 		} else {
 			await dispatch(
 				optionsActions.updateOptions(
@@ -192,6 +205,7 @@ const StartupLogin = (props) => {
     };
 
 	useEffect(() => {
+		console.log("Vim aqui lu, verifique se é depois do logout");
         const tryLogin = async () => {
 			await dispatch(recordActions.fetchRecord());
 			await dispatch(recordActions.fetchDailyLogs());

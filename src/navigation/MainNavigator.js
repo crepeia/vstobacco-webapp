@@ -44,17 +44,6 @@ const defaultNavOptionsStack = {
 
 // const SignUpStackNavigator = createStackNavigator();
 
-// const SignUpNavigator = () => {
-//     return (
-//         <SignUpStackNavigator.Navigator screenOptions={defaultNavOptionsStack}>
-//             <SignUpStackNavigator.Screen
-//                 name='SignUp'
-//                 component={SignUpScreen}
-//             />
-//         </SignUpStackNavigator.Navigator>
-//     )
-// }
-
 const LoginStackNavigator = createStackNavigator();
 
 export const LoginNavigator = () => {
@@ -85,13 +74,13 @@ export const LoginNavigator = () => {
                     title: 'Termo de Consentimento',
                 }}
             />
-            <LoginStackNavigator.Screen
+            {/* <LoginStackNavigator.Screen
                 name='StartupLogin'
                 component={StartupNavigator}
                 options={{
                     headerShown: false
                 }}
-            />
+            /> */}
         </LoginStackNavigator.Navigator>
     )
 }
@@ -373,21 +362,21 @@ export const StartupNavigator = () => {
     return (
 
         <StartupStackNavigator.Navigator>
-            <LoginStackNavigator.Screen
+            <StartupStackNavigator.Screen
                 name='StartupLogin'
                 component={StartupLogin}
                 options={{
                     headerShown: false
                 }}
             />
-            <LoginStackNavigator.Screen
+            <StartupStackNavigator.Screen
                 name='Record'
                 component={RecordScreen}
                 options={{
                     headerShown: false
                 }}
             />
-            <LoginStackNavigator.Screen
+            <StartupStackNavigator.Screen
                 name='Menu'
                 component={MenuNavigator}
                 options={{

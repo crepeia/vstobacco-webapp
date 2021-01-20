@@ -203,7 +203,7 @@ const RecordScreen = props => {
 			await dispatch(recordActions.updateRecord(dailyCigars, packPrice, packAmount));
 			console.log("Record foi atualizado lu: ");
 			console.log(record);
-            await dispatch(challengeActions.completeLoginChallenge());
+            // await dispatch(challengeActions.completeLoginChallenge());
 			await registerForPushNotificationsAsync();
 			props.navigation.navigate("Menu");
 		} catch (err) {

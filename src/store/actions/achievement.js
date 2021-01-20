@@ -2,6 +2,8 @@ export const FETCH_DAILY_ACHIEVEMENTS = "FETCH_DAILY_ACHIEVEMENTS";
 export const SAVE_ACHIEVEMENT = "SAVE_ACHIEVEMENT";
 
 import Achievement from '../../models/Achievement';
+import Localhost from "../../constants/Localhost";
+import moment from 'moment';
 
 export const fetchDailyAchievements = () => {
     return async (dispatch, getState) => {
@@ -9,7 +11,7 @@ export const fetchDailyAchievements = () => {
 		const token = getState().user.token;
 
 		const responseDailyAchievements = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/secured/achievement/find/${userId}`,
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/achievement/find/${userId}`,
 			{
 				method: "GET",
 				headers: {
@@ -49,6 +51,8 @@ export const fetchDailyAchievements = () => {
 
 export const saveAchievement = (cigars, date) => {
 	return async (dispatch, getState) => {
+		
+		const userId = getState().user.currentUser.id;
 
         const token = getState().user.token;
         const cigarsDaily = getState().record.record.cigarsDaily;
@@ -87,7 +91,7 @@ export const saveAchievement = (cigars, date) => {
 		let newDate = moment.utc(date).format();
 
 		const saveAchievementResponse = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/secured/achievement/editOrCreate`,
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/achievement/editOrCreate`,
 			{
 				method: "POST",
 				headers: {
