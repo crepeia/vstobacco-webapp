@@ -205,6 +205,7 @@ export const fetchUserTips = () => {
 				);
 			}
 
+			console.log(loadedTips);
 			dispatch({ type: FETCH_USER_TIPS, tips: loadedTips });
 		};
 	} catch (err) {
@@ -236,6 +237,8 @@ export const fetchTips = () => {
 				loadedTips.push(new Tip(resData[key].id, resData[key].title, resData[key].description));
 			}
 
+			console.log("Aqui lu - tips");
+			console.log(loadedTips);
 			dispatch({ type: FETCH_TIPS, tips: loadedTips });
 		};
 	} catch (err) {

@@ -34,6 +34,7 @@ const RankingJoin = props => {
 
 
     useEffect(() => {
+        console.log("Aq lu");
         console.log(inRanking);
         if(inRanking){
             props.navigation.navigate('Ranking');

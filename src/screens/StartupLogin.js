@@ -174,6 +174,7 @@ const StartupLogin = (props) => {
 			// );
 
 		} else {
+			console.log("Se estou no emulador cai aqui");
 			await dispatch(
 				optionsActions.updateOptions(
 					false,
@@ -209,12 +210,12 @@ const StartupLogin = (props) => {
         const tryLogin = async () => {
 			await dispatch(recordActions.fetchRecord());
 			await dispatch(recordActions.fetchDailyLogs());
-			// await dispatch(challengeActions.fetchChallenges());
-			// await dispatch(challengeActions.fetchUserChallenges());
-			// await dispatch(challengeActions.completeLoginChallenge());
+			await dispatch(challengeActions.fetchChallenges());
+			await dispatch(challengeActions.fetchUserChallenges());
+			await dispatch(challengeActions.completeLoginChallenge());
 			await dispatch(achievementActions.fetchDailyAchievements());
-			// await dispatch(tipActions.fetchTips());
-			// await dispatch(tipActions.fetchUserTips());
+			await dispatch(tipActions.fetchTips());
+			await dispatch(tipActions.fetchUserTips());
 			await dispatch(optionsActions.fetchOptions());
 			setIsLogging(true);
 		};
