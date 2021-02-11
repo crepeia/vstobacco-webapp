@@ -30,9 +30,8 @@ export const fetchChallenges = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
-
             if (!response.ok) {
-                throw new Error('Algo deu errado.');
+                throw new Error('Algo deu errado ao carregar os desafios.');
             }
 
             const resData = await response.json();
@@ -48,6 +47,7 @@ export const fetchChallenges = () => {
         }
 
     } catch (err) {
+        console.log(err)
         throw err;
     };
 
@@ -69,7 +69,7 @@ export const fetchUserChallenges = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Algo deu errado.');
+                throw new Error('Algo deu errado ao carregar os desafios do usuário.');
             }
 
             let loadedChallenges = []
@@ -91,7 +91,7 @@ export const fetchUserChallenges = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Algo deu errado.');
+                throw new Error('Algo deu errado ao carregar os pontos do usuário.');
             }
 
             const resDataScore = await responseScore.json();
@@ -135,7 +135,7 @@ export const completeLoginChallenge = () => {
 
             if (!response.ok) {
                 if(response.status !== 304) {
-                    throw new Error('Algo deu errado.');
+                    throw new Error('Algo deu errado ao completar o desafio.');
                 }
             } else {
                 const resData = await response.json();
@@ -181,54 +181,7 @@ export const completePlanChallenge = () => {
 
             if (!response.ok) {
                 if(response.status !== 304) {
-                    throw new Error('Algo deu errado.');
-                }
-            } else {
-                const resData = await response.json();
-                //console.log(resData)
-
-                const newChUser = new ChallengeUser(resData.id, resData.challenge.id, resData.user.id,
-                    resData.score, resData.dateCreated, resData.dateCompleted)
-                dispatch({ type: COMPLETE_CHALLENGE, challenge: newChUser, challengeUserId: resData.id, score: challenge.baseValue, dateCompleted: resData.dateCompleted });
-            }
-            
-        }
-
-    } catch (err) {
-        throw err;
-    };
-
-}
-
-export const completeSiteChallenge = () => {
-    try {
-        return async (dispatch, getState) => {
-            const token = getState().user.token;
-            const userId = getState().user.currentUser.id;
-            const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 4);
-            //console.log(challenge)
-            const currentDate = moment(new Date()).format("YYYY-MM-DD");
-
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    user: {id: userId},
-                    challenge: {id: challenge.id},
-                    dateCreated: currentDate,
-                    dateCompleted: currentDate,
-                    score: challenge.baseValue,
-                })
-            });
-
-            if (!response.ok) {
-                if(response.status !== 304) {
-                    throw new Error('Algo deu errado.');
+                    throw new Error('Algo deu errado ao completar o desafio do plano.');
                 }
             } else {
                 const resData = await response.json();
@@ -298,7 +251,7 @@ export const completeTipChallenge = () => {
 
             if (!response.ok) {
                 if(response.status !== 304) {
-                    throw new Error('Algo deu errado.');
+                    throw new Error('Algo deu errado ao completar o desafio de dicas.');
                 }
             } else {
                 const resData = await response.json();
@@ -323,9 +276,9 @@ export const completeDailyLogChallenge = () => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
             const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 5);
+                                    find(c => c.id === 4);
             const userChallenges =  (getState().challenges.userChallenges).
-                                    filter(c => c.challengeId === 5).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
+                                    filter(c => c.challengeId === 4).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
                                     -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted))? 0 : 1);
             // console.log(userChallenges)
             const yesterday = moment().add(-1, 'days').format("YYYY-MM-DD");
@@ -368,7 +321,7 @@ export const completeDailyLogChallenge = () => {
 
             if (!response.ok) {
                 if(response.status !== 304) {
-                    throw new Error('Algo deu errado.');
+                    throw new Error('Algo deu errado ao completar o desafio de informar cigarros.');
                 }
             } else {
                 const resData = await response.json();
@@ -393,9 +346,9 @@ export const completeDontSmokeChallenge = (date) => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
             const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 6);
+                                    find(c => c.id === 5);
             const userChallenges =  (getState().challenges.userChallenges).
-                                    filter(c => c.challengeId === 6).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
+                                    filter(c => c.challengeId === 5).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
                                     -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted))? 0 : 1);
             // console.log(userChallenges)
             const yesterday = moment(date).add(-1, 'days').format("YYYY-MM-DD");
@@ -438,7 +391,7 @@ export const completeDontSmokeChallenge = (date) => {
 
             if (!response.ok) {
                 if(response.status !== 304) {
-                    throw new Error('Algo deu errado.');
+                    throw new Error('Algo deu errado ao completar o desafio de não fumar.');
                 }
             } else {
                 const resData = await response.json();
@@ -463,9 +416,9 @@ export const checkDontSmokeChallenge = (date) => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
             const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 6);
+                                    find(c => c.id === 5);
             const userChallenges =  (getState().challenges.userChallenges).
-                                    filter(c => c.challengeId === 6).reverse();
+                                    filter(c => c.challengeId === 5).reverse();
             // console.log(userChallenges)
 
             const challengeValue = userChallenges.find(c => c.dateCompleted === date)
@@ -484,7 +437,7 @@ export const checkDontSmokeChallenge = (date) => {
                 });
                 console.log(response.body)
                 if (!response.ok) {
-                    throw new Error('Algo deu errado.');
+                    throw new Error('Algo deu errado ao conferir desafio de não fumar.');
                 } 
                 
 
@@ -517,7 +470,7 @@ export const computePoints = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Algo deu errado.');
+                throw new Error('Algo deu errado ao computar pontos.');
             }
 
             const resDataScore = await responseScore.json();
@@ -550,7 +503,7 @@ export const fetchRanking = () => {
             // console.log(response.data)
 
             if (!response.ok) {
-                throw new Error('Algo deu errado.');
+                throw new Error('Algo deu errado ao carregar ranking.');
             }
 
             const resData = await response.json();

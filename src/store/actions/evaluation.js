@@ -26,7 +26,7 @@ export const fetchEvaluation = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Algo deu errado.');
+                throw new Error('Algo deu errado ao carregar avaliação.');
             }
 
             const resData = await response.json();
