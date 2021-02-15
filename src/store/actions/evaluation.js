@@ -9,7 +9,6 @@ export const loadEvaluation = (evaluation) => {
 }
 
 export const fetchEvaluation = () => {
-    console.log("vem aqui lu");
     try {
         return async (dispatch, getState) => {
             const token = getState().user.token;
@@ -29,12 +28,9 @@ export const fetchEvaluation = () => {
                 throw new Error('Algo deu errado ao carregar avaliação.');
             }
 
-            const resData = await response.json();
 
-            console.log("aaaaaaaaaaaaaa");
-            console.log(resData);
-            console.log("aaaaaaaaaaaaaa");
-            
+            const resData = JSON.stringify(response);
+            // console.log(resData);
             dispatch({ type: FETCH_EVALUATION, evaluation: resData });
         }
 

@@ -261,7 +261,8 @@ export const toggleRanking = (inRanking, nickname) => {
 			JSON.stringify({
 				inRanking: inRanking,
 				nickname: nickname
-			}))
+			})
+		);
 
 		// dispatch({ type: TOGGLE_RANKING, inRanking: true, nickname: 'lucytest' });
 

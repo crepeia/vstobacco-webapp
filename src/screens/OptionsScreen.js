@@ -133,6 +133,7 @@ const OptionsScreen = props => {
 		// notificacao cigarros 
 
         if (cigarNotification) {
+			console.log("Veio na not de cigarro lu");
 			Notifications.cancelScheduledNotificationAsync(idCigarNotification);
 			
             idCigarNotification = await Notifications.scheduleNotificationAsync({
@@ -155,6 +156,7 @@ const OptionsScreen = props => {
 		// notificacao conquistas
 		
         if (achievementsNotification) {
+			console.log("Veio na not de conquista lu");
 			Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
 
             idAchievementsNotification = await Notifications.scheduleNotificationAsync({
@@ -178,6 +180,7 @@ const OptionsScreen = props => {
 		// notificacao dicas
 
         if (tipNotification) {
+			console.log("Veio na not de dica lu");
 			Notifications.cancelScheduledNotificationAsync(idTipNotification);
 
             idTipNotification = await Notifications.scheduleNotificationAsync({

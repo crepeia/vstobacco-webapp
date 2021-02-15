@@ -98,6 +98,7 @@ const StartupLogin = (props) => {
 			// configuração notificação cigarro
 
 			if (options.allowCigarNotifications) {
+				console.log("Veio na not de cigarro lu");
 				let idCigarNotification = await Notifications.scheduleNotificationAsync({
 					content: {
 						title: "Lembrete",
@@ -117,6 +118,7 @@ const StartupLogin = (props) => {
 			// configuracao notificacao conquista
 
 			if (options.allowAchievementsNotifications) {
+				console.log("Veio na not de conq lu");
 				let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 					content: {
 						title: "Conquista =)",
@@ -138,6 +140,7 @@ const StartupLogin = (props) => {
 			// configuracao notificacao dicas
 
 			if (options.allowTipNotifications) {
+				console.log("Veio na not de dica lu");
 				let idTipNotification = await Notifications.scheduleNotificationAsync({
 					content: {
 						title: "Lembrete",
@@ -155,23 +158,23 @@ const StartupLogin = (props) => {
 				await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
 			}
 
-			// await dispatch(
-			// 	optionsActions.updateOptions(
-			// 		options.allowCigarNotifications,
-			// 		options.allowTipNotifications,
-			// 		options.allowAchievementsNotifications,
-			// 		moment(options.cigarNotificationTime, "HH:mm").format(
-			// 			"HH:mm"
-			// 		),
-			// 		moment(options.tipNotificationTime, "HH:mm").format(
-			// 			"HH:mm"
-			// 		),
-			// 		moment(options.achievementsNotificationTime, "HH:mm").format(
-			// 			"HH:mm"
-			// 		),
-			// 		token
-			// 	)
-			// );
+			await dispatch(
+				optionsActions.updateOptions(
+					options.allowCigarNotifications,
+					options.allowTipNotifications,
+					options.allowAchievementsNotifications,
+					moment(options.cigarNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.tipNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.achievementsNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					token
+				)
+			);
 
 		} else {
 			console.log("Se estou no emulador cai aqui");

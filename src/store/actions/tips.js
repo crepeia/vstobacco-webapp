@@ -25,31 +25,50 @@ export const readTip = (tipId) => {
 		const userId = getState().user.currentUser.id;
 		const token = getState().user.token;
 
+		const response = await fetch(
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/read`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					id: { tipId, userId },
+				}),
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error('Não foi possível marcar a dica como lida');
+		}
+
 		dispatch({
 			type: READ_TIP,
 			tipId: tipId,
 			userId: userId,
-			meta: {
-				offline: {
-					// the network action to execute:
-					effect: {
-						url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/read`,
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json',
-							Accept: 'application/json',
-							Authorization: `Bearer ${token}`,
-						},
-						body: JSON.stringify({
-							id: { tipId, userId },
-						}),
-					},
-					// action to dispatch when effect succeeds:
-					// commit: { type: 'UPDATE_RECORD_COMMIT', meta: { log, action } },
-					// action to dispatch if network action fails permanently:
-					rollback: { type: READ_TIP_ROLLBACK, meta: { tipId, userId } },
-				},
-			},
+			// meta: {
+			// 	offline: {
+			// 		// the network action to execute:
+			// 		effect: {
+			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/read`,
+			// 			method: 'PUT',
+			// 			headers: {
+			// 				'Content-Type': 'application/json',
+			// 				Accept: 'application/json',
+			// 				Authorization: `Bearer ${token}`,
+			// 			},
+			// 			body: JSON.stringify({
+			// 				id: { tipId, userId },
+			// 			}),
+			// 		},
+			// 		// action to dispatch when effect succeeds:
+			// 		// commit: { type: 'UPDATE_RECORD_COMMIT', meta: { log, action } },
+			// 		// action to dispatch if network action fails permanently:
+			// 		rollback: { type: READ_TIP_ROLLBACK, meta: { tipId, userId } },
+			// 	},
+			// },
 		});
 	};
 };
@@ -92,36 +111,56 @@ export const toggleLikeTip = (tipId, oldLiked) => {
 		const token = getState().user.token;
 		const newLiked = oldLiked !== null && oldLiked ? null : true;
 
+		const response = await fetch(
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/like`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					id: { tipId, userId },
+					liked: newLiked,
+				}),
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error('Não foi possível curtir a dica');
+		}
+
 		dispatch({
 			type: LIKE_TIP,
 			tipId: tipId,
 			userId: userId,
 			liked: newLiked,
-			meta: {
-				offline: {
-					// the network action to execute:
-					effect: {
-						url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/like`,
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json',
-							Accept: 'application/json',
-							Authorization: `Bearer ${token}`,
-						},
-						body: JSON.stringify({
-							id: { tipId, userId },
-							liked: newLiked,
-						}),
-					},
-					// action to dispatch when effect succeeds:
-					// commit: { type: 'UPDATE_RECORD_COMMIT', meta: { log, action } },
-					// action to dispatch if network action fails permanently:
-					rollback: {
-						type: LIKE_TIP_ROLLBACK,
-						meta: { tipId, userId, oldLiked },
-					},
-				},
-			},
+			// meta: {
+			// 	offline: {
+			// 		// the network action to execute:
+			// 		effect: {
+			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/like`,
+			// 			method: 'PUT',
+			// 			headers: {
+			// 				'Content-Type': 'application/json',
+			// 				Accept: 'application/json',
+			// 				Authorization: `Bearer ${token}`,
+			// 			},
+			// 			body: JSON.stringify({
+			// 				id: { tipId, userId },
+			// 				liked: newLiked,
+			// 			}),
+			// 		},
+			// 		// action to dispatch when effect succeeds:
+			// 		// commit: { type: 'UPDATE_RECORD_COMMIT', meta: { log, action } },
+			// 		// action to dispatch if network action fails permanently:
+			// 		rollback: {
+			// 			type: LIKE_TIP_ROLLBACK,
+			// 			meta: { tipId, userId, oldLiked },
+			// 		},
+			// 	},
+			// },
 		});
 	};
 };
@@ -132,36 +171,56 @@ export const toggleDislikeTip = (tipId, oldLiked) => {
 		const token = getState().user.token;
 		const newLiked = oldLiked !== null && !oldLiked ? null : false;
 
+		const response = await fetch(
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/dislike`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					id: { tipId, userId },
+					liked: newLiked,
+				}),
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error('Não foi possível não-curtir a dica');
+		}
+
 		dispatch({
 			type: DISLIKE_TIP,
 			tipId: tipId,
 			userId: userId,
 			liked: newLiked,
-			meta: {
-				offline: {
-					// the network action to execute:
-					effect: {
-						url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/dislike`,
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json',
-							Accept: 'application/json',
-							Authorization: `Bearer ${token}`,
-						},
-						body: JSON.stringify({
-							id: { tipId, userId },
-							liked: newLiked,
-						}),
-					},
-					// action to dispatch when effect succeeds:
-					// commit: { type: 'UPDATE_RECORD_COMMIT', meta: { log, action } },
-					// action to dispatch if network action fails permanently:
-					rollback: {
-						type: DISLIKE_TIP_ROLLBACK,
-						meta: { tipId, userId, oldLiked },
-					},
-				},
-			},
+			// meta: {
+			// 	offline: {
+			// 		// the network action to execute:
+			// 		effect: {
+			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/dislike`,
+			// 			method: 'PUT',
+			// 			headers: {
+			// 				'Content-Type': 'application/json',
+			// 				Accept: 'application/json',
+			// 				Authorization: `Bearer ${token}`,
+			// 			},
+			// 			body: JSON.stringify({
+			// 				id: { tipId, userId },
+			// 				liked: newLiked,
+			// 			}),
+			// 		},
+			// 		// action to dispatch when effect succeeds:
+			// 		// commit: { type: 'UPDATE_RECORD_COMMIT', meta: { log, action } },
+			// 		// action to dispatch if network action fails permanently:
+			// 		rollback: {
+			// 			type: DISLIKE_TIP_ROLLBACK,
+			// 			meta: { tipId, userId, oldLiked },
+			// 		},
+			// 	},
+			// },
 		});
 	};
 };

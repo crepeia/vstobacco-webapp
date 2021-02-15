@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "viva-sem-tabaco",
+    "name": "Viva sem Tabaco",
     "slug": "viva-sem-tabaco",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,6 +10,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#4375b4"
     },
+    "notification": {
+      "icon": "./assets/images/logo_sobre.png"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -17,12 +20,18 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "br.com.vivasemtabaco",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
+      "package": "br.com.vivasemtabaco",
+      "permissions": [
+        "USE_FINGERPRINT"
+      ],
       "useNextNotificationsApi": true
     }
   }

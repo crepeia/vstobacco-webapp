@@ -58,153 +58,153 @@ const RecordScreen = props => {
 		};
     }, [dispatch, loadRecord]);
     
-    // notifications
+    // // notifications
 
-    const registerForPushNotificationsAsync = async () => {
-		if (Constants.isDevice) {
-			const { status: existingStatus } = await Permissions.getAsync(
-				Permissions.NOTIFICATIONS
-			);
-			let finalStatus = existingStatus;
-			if (existingStatus !== "granted") {
-				const { status } = await Permissions.askAsync(
-					Permissions.NOTIFICATIONS
-				);
-				finalStatus = status;
-			}
-			if (finalStatus !== "granted") {
-				await dispatch(
-					optionsActions.updateOptions(
-						false,
-						false,
-						false,
-						moment(options.cigarNotificationTime, "HH:mm").format(
-							"HH:mm"
-						),
-						moment(options.tipNotificationTime, "HH:mm").format(
-							"HH:mm"
-						),
-						moment(options.achievementsNotificationTime, "HH:mm").format(
-							"HH:mm"
-						),
-						""
-					)
-				);
-				return;
-			}
+    // const registerForPushNotificationsAsync = async () => {
+	// 	if (Constants.isDevice) {
+	// 		const { status: existingStatus } = await Permissions.getAsync(
+	// 			Permissions.NOTIFICATIONS
+	// 		);
+	// 		let finalStatus = existingStatus;
+	// 		if (existingStatus !== "granted") {
+	// 			const { status } = await Permissions.askAsync(
+	// 				Permissions.NOTIFICATIONS
+	// 			);
+	// 			finalStatus = status;
+	// 		}
+	// 		if (finalStatus !== "granted") {
+	// 			await dispatch(
+	// 				optionsActions.updateOptions(
+	// 					false,
+	// 					false,
+	// 					false,
+	// 					moment(options.cigarNotificationTime, "HH:mm").format(
+	// 						"HH:mm"
+	// 					),
+	// 					moment(options.tipNotificationTime, "HH:mm").format(
+	// 						"HH:mm"
+	// 					),
+	// 					moment(options.achievementsNotificationTime, "HH:mm").format(
+	// 						"HH:mm"
+	// 					),
+	// 					""
+	// 				)
+	// 			);
+	// 			return;
+	// 		}
 
-			let token = (await Notifications.getExpoPushTokenAsync()).data;
+	// 		let token = (await Notifications.getExpoPushTokenAsync()).data;
 
-			Notifications.cancelAllScheduledNotificationsAsync();
+	// 		Notifications.cancelAllScheduledNotificationsAsync();
 
-			// configuração notificação cigarro
+	// 		// configuração notificação cigarro
 
-			const idCigarNotification = await Notifications.scheduleNotificationAsync({
-				content: {
-					title: "Lembrete",
-					body: "Informe a quantidade de cigarros fumados hoje!",
-					data: JSON.stringify({ screen: "Cigarros fumados" }),
-					sound: true
-				},
-				trigger: {
-					hour: parseInt(options.cigarNotificationTime),
-					minute: 0,
-					repeats: true
-				}
-			});
+	// 		const idCigarNotification = await Notifications.scheduleNotificationAsync({
+	// 			content: {
+	// 				title: "Lembrete",
+	// 				body: "Informe a quantidade de cigarros fumados hoje!",
+	// 				data: JSON.stringify({ screen: "Cigarros fumados" }),
+	// 				sound: true
+	// 			},
+	// 			trigger: {
+	// 				hour: parseInt(options.cigarNotificationTime),
+	// 				minute: 0,
+	// 				repeats: true
+	// 			}
+	// 		});
 
-			// configuracao notificacao conquista
+	// 		// configuracao notificacao conquista
 
-			const idAchievementsNotification = await Notifications.scheduleNotificationAsync({
-				content: {
-					title: "Conquista =)",
-					body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
-					: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
-					data: JSON.stringify({ screen: " Conquistas" }),
-					sound: true
-				},
-				trigger: {
-					hour: parseInt(options.achievementsNotificationTime),
-					minute: 0,
-					repeats: true
-				}
-			});
+	// 		const idAchievementsNotification = await Notifications.scheduleNotificationAsync({
+	// 			content: {
+	// 				title: "Conquista =)",
+	// 				body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
+	// 				: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+	// 				data: JSON.stringify({ screen: " Conquistas" }),
+	// 				sound: true
+	// 			},
+	// 			trigger: {
+	// 				hour: parseInt(options.achievementsNotificationTime),
+	// 				minute: 0,
+	// 				repeats: true
+	// 			}
+	// 		});
 
-			// configuracao notificacao dicas
+	// 		// configuracao notificacao dicas
 
-			const idTipNotification = await Notifications.scheduleNotificationAsync({
-				content: {
-					title: "Lembrete",
-					body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
-					data: JSON.stringify({ screen: "Dicas" }),
-					sound: true
-				},
-				trigger: {
-					hour: parseInt(options.tipNotificationTime),
-					minute: 0,
-					repeats: true
-				}
-			});
+	// 		const idTipNotification = await Notifications.scheduleNotificationAsync({
+	// 			content: {
+	// 				title: "Lembrete",
+	// 				body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+	// 				data: JSON.stringify({ screen: "Dicas" }),
+	// 				sound: true
+	// 			},
+	// 			trigger: {
+	// 				hour: parseInt(options.tipNotificationTime),
+	// 				minute: 0,
+	// 				repeats: true
+	// 			}
+	// 		});
 
-			await dispatch(
-				optionsActions.updateOptions(
-					true,
-					true,
-					true,
-					moment(options.cigarNotificationTime, "HH:mm").format(
-						"HH:mm"
-					),
-					moment(options.tipNotificationTime, "HH:mm").format(
-						"HH:mm"
-					),
-					moment(options.achievementsNotificationTime, "HH:mm").format(
-						"HH:mm"
-					),
-					token
-				)
-			);
+	// 		await dispatch(
+	// 			optionsActions.updateOptions(
+	// 				true,
+	// 				true,
+	// 				true,
+	// 				moment(options.cigarNotificationTime, "HH:mm").format(
+	// 					"HH:mm"
+	// 				),
+	// 				moment(options.tipNotificationTime, "HH:mm").format(
+	// 					"HH:mm"
+	// 				),
+	// 				moment(options.achievementsNotificationTime, "HH:mm").format(
+	// 					"HH:mm"
+	// 				),
+	// 				token
+	// 			)
+	// 		);
 
-			await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
-			await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
-			await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
-		} else {
-			await dispatch(
-				optionsActions.updateOptions(
-					false,
-					false,
-					false,
-					moment(options.cigarNotificationTime, "HH:mm").format(
-						"HH:mm"
-					),
-					moment(options.tipNotificationTime, "HH:mm").format(
-						"HH:mm"
-					),
-					moment(options.achievementsNotificationTime, "HH:mm").format(
-						"HH:mm"
-					),
-					""
-				)
-			);
-			alert("Must use physical device for Push Notifications");
-		}
+	// 		await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
+	// 		await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
+	// 		await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
+	// 	} else {
+	// 		await dispatch(
+	// 			optionsActions.updateOptions(
+	// 				false,
+	// 				false,
+	// 				false,
+	// 				moment(options.cigarNotificationTime, "HH:mm").format(
+	// 					"HH:mm"
+	// 				),
+	// 				moment(options.tipNotificationTime, "HH:mm").format(
+	// 					"HH:mm"
+	// 				),
+	// 				moment(options.achievementsNotificationTime, "HH:mm").format(
+	// 					"HH:mm"
+	// 				),
+	// 				""
+	// 			)
+	// 		);
+	// 		alert("Must use physical device for Push Notifications");
+	// 	}
 
-		if (Platform.OS === 'android') {
-			Notifications.setNotificationChannelAsync('default', {
-			  name: 'default',
-			  importance: Notifications.AndroidImportance.MAX,
-			  vibrationPattern: [0, 250, 250, 250],
-			  lightColor: '#FF231F7C',
-			});
-		}		
-    };
+	// 	if (Platform.OS === 'android') {
+	// 		Notifications.setNotificationChannelAsync('default', {
+	// 		  name: 'default',
+	// 		  importance: Notifications.AndroidImportance.MAX,
+	// 		  vibrationPattern: [0, 250, 250, 250],
+	// 		  lightColor: '#FF231F7C',
+	// 		});
+	// 	}		
+    // };
     
     const saveRecordHandler = useCallback(async () => {
 		try {
 			await dispatch(recordActions.updateRecord(dailyCigars, packPrice, packAmount));
 			console.log("Record foi atualizado lu: ");
 			console.log(record);
-            // await dispatch(challengeActions.completeLoginChallenge());
-			await registerForPushNotificationsAsync();
+            await dispatch(challengeActions.completeLoginChallenge());
+			// await registerForPushNotificationsAsync();
 			props.navigation.navigate("Menu");
 		} catch (err) {
 			Alert.alert(err.message);
@@ -232,9 +232,9 @@ const RecordScreen = props => {
                 <Card style={styles.card}>
                     <DefaultTitle style={styles.title}>Bem-Vindo ao Viva sem Tabaco!</DefaultTitle>
                     <View style={styles.content}>
-                        <DefaultText style={styles.text}>Aqui é onde você irá definir como se encontra o seu consumo de cigarros antes de começar a intervenção do <DefaultText style={{color: Colors.primaryColor, fontWeight: 'bold'}}>Viva sem Tabaco.</DefaultText></DefaultText>
-                        <DefaultText style={styles.text}>Você sabia que uma pessoa - que fuma um maço de cigarros de 6 reais - gasta, em cinco anos, <DefaultText style={{fontWeight: 'bold'}}>R$10.950,00</DefaultText> com cigarros? Isso sem contar as despesas com a saúde.</DefaultText>
-                        <DefaultText style={styles.text}>Insira abaixo suas informações :)</DefaultText>
+                        <DefaultText style={styles.text}>Aqui é onde você irá definir o seu consumo de cigarros antes de começar a intervenção do <DefaultText style={{color: Colors.primaryColor, fontWeight: 'bold'}}>Viva sem Tabaco.</DefaultText></DefaultText>
+                        <DefaultText style={styles.text}>Você sabia que uma pessoa - que fuma um maço de cigarros de 6 reais - gasta, em cinco anos, <DefaultText style={{fontWeight: 'bold'}}>R$10.950,00</DefaultText> com o uso? Isso sem contar as despesas com a saúde.</DefaultText>
+                        <DefaultText style={styles.text}>Insira abaixo suas informações: </DefaultText>
 
                         {/* DADOS DE CONSUMO */}
                         <View style={styles.colunaConsumo}>
