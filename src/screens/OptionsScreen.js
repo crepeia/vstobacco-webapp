@@ -42,11 +42,11 @@ const OptionsScreen = props => {
 
 	const [isLoading, setIsLoading] = useState(false);
 
-	let idCigarNotification = useSelector(state => state.options.idCigarNotification);
-	console.log("Aqui lu a id");
-	console.log(idCigarNotification);
-	let idAchievementsNotification = useSelector(state => state.options.idAchievementsNotification);
-	let idTipNotification = useSelector(state => state.options.idTipNotification);
+	//let idCigarNotification = useSelector(state => state.options.idCigarNotification);
+	//console.log("Aqui lu a id");
+	//console.log(idCigarNotification);
+	//let idAchievementsNotification = useSelector(state => state.options.idAchievementsNotification);
+	//let idTipNotification = useSelector(state => state.options.idTipNotification);
 
 	const options = useSelector(state => state.options.options);
 	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
@@ -129,14 +129,16 @@ const OptionsScreen = props => {
 				});
 			}
 		}
+
+		Notifications.cancelAllScheduledNotificationsAsync();
 		
 		// notificacao cigarros 
 
         if (cigarNotification) {
-			console.log("Veio na not de cigarro lu");
-			Notifications.cancelScheduledNotificationAsync(idCigarNotification);
+			//console.log("Veio na not de cigarro lu");
+			// Notifications.cancelScheduledNotificationAsync(idCigarNotification);
 			
-            idCigarNotification = await Notifications.scheduleNotificationAsync({
+            let idCigarNotification = await Notifications.scheduleNotificationAsync({
 				content: {
 					title: "Lembrete",
 					body: "Informe a quantidade de cigarros fumados hoje!",
@@ -149,17 +151,18 @@ const OptionsScreen = props => {
 					repeats: true
 				}
 			});
-        } else {
-			Notifications.cancelScheduledNotificationAsync(idCigarNotification);
-		}
+
+        } //else {
+			// Notifications.cancelScheduledNotificationAsync(idCigarNotification);
+		//}
 
 		// notificacao conquistas
 		
         if (achievementsNotification) {
-			console.log("Veio na not de conquista lu");
-			Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
+			//console.log("Veio na not de conquista lu");
+			// Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
 
-            idAchievementsNotification = await Notifications.scheduleNotificationAsync({
+            let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 				content: {
 					title: "Conquista =)",
 					body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
@@ -173,17 +176,18 @@ const OptionsScreen = props => {
 					repeats: true
 				}
 			});
-        } else {
-			Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
-		}
+
+        } //else {
+			// Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
+		//}
 
 		// notificacao dicas
 
         if (tipNotification) {
-			console.log("Veio na not de dica lu");
-			Notifications.cancelScheduledNotificationAsync(idTipNotification);
+			//console.log("Veio na not de dica lu");
+			// Notifications.cancelScheduledNotificationAsync(idTipNotification);
 
-            idTipNotification = await Notifications.scheduleNotificationAsync({
+            let idTipNotification = await Notifications.scheduleNotificationAsync({
 				content: {
 					title: "Lembrete",
 					body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
@@ -196,24 +200,22 @@ const OptionsScreen = props => {
 					repeats: true
 				}
 			});
-        } else {
-			Notifications.cancelScheduledNotificationAsync(idTipNotification);
-		}
+
+			
+        } //else {
+			// Notifications.cancelScheduledNotificationAsync(idTipNotification);
+		//}
 
 		await dispatch(optionsActions.updateOptions(cigarNotification, tipNotification, achievementsNotification, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, token));
-		await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
-		await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
-		await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
+		//await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
+		//await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
+		//await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
         await dispatch(userActions.toggleRanking(isInRanking, userNickname));
 
         setIsLoading(false);
         Alert.alert('Opções', 'Alterações salvas com sucesso!', [{ text: 'Ok', style: 'destructive' }])
     }, [dispatch, isInRanking, cigarNotification, cigarNotificationTime, tipNotification, tipNotificationTime, achievementsNotification, achievementsNotificationTime]);
     
-    // useEffect(()=> {
-    //     props.navigation.setParams({ modified: isModified })
-    //     props.navigation.setParams({ saveFunc: saveOptions })
-    // }, [dispatch, isModified, isInRanking, cigarNotification, cigarNotificationTime, tipNotification, tipNotificationTime, achievementsNotification, achievementsNotificationTime])
 
     return (
         <ScrollView contentContainerStyle={{flexGrow: 1}}>

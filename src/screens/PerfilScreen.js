@@ -60,11 +60,11 @@ const PerfilScreen = (props) => {
 		});
 	}, [dispatch, loadEvaluation]);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		if (error) {
 			Alert.alert('Um erro ocorreu!', error, [{ text: 'Ok' }]);
 		}
-	}, [error]);
+	}, [error]); */
 
 	if (loading) {
 		return (
@@ -73,7 +73,6 @@ const PerfilScreen = (props) => {
 			</View>
 		);
 	}
-	console.log('evaluation: ' + evaluation)
 
 	return (
 		<ScrollView style={styles.background}>

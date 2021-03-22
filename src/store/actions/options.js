@@ -128,7 +128,7 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
 
 }
 
-export const storeIdCigarNotification = (idCigarNotification) => {
+/*export const storeIdCigarNotification = (idCigarNotification) => {
     return async (dispatch) => {
         dispatch({ type: STORE_ID_CIGAR_NOTIFICATION, idCigarNotification });
     }
@@ -144,4 +144,4 @@ export const storeIdTipNotification = (idTipNotification) => {
     return async (dispatch) => {
         dispatch({ type: STORE_ID_TIP_NOTIFICATION, idTipNotification });
     }
-}
+} */

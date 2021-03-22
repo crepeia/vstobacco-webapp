@@ -6,9 +6,9 @@ import { FETCH_OPTIONS, UPDATE_OPTIONS, UPDATE_OPTIONS_COMMIT, UPDATE_OPTIONS_RO
 const initialState = {
     options: null,
     needSync: false,
-    idCigarNotification: '',
-    idAchievementsNotification: '',
-    idTipNotification: '',
+    //idCigarNotification: '',
+    //idAchievementsNotification: '',
+    //idTipNotification: '',
 };
 
 export default (state = initialState, action) => {
@@ -23,12 +23,12 @@ export default (state = initialState, action) => {
             return { ...state, needSync: false }
         case UPDATE_OPTIONS_ROLLBACK:
             return { ...state, needSync: true }
-        case STORE_ID_CIGAR_NOTIFICATION:
+        /*case STORE_ID_CIGAR_NOTIFICATION:
             return { ...state, idCigarNotification: action.idCigarNotification}
         case STORE_ID_ACHIEVEMENTS_NOTIFICATION:
             return { ...state, idAchievementsNotification: action.idAchievementsNotification}
         case STORE_ID_TIP_NOTIFICATION:
-            return { ...state, idTipNotification: action.idTipNotification}
+            return { ...state, idTipNotification: action.idTipNotification} */
         default:
             return state;
     }

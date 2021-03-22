@@ -100,15 +100,11 @@ export const signin = (email, password) => {
 			}
 		);
 
-
 		if (!responseUser.ok) {
-			throw new Error('Não foi possível fazer login. \nErro no servidor!');
+			throw new Error('Não foi possível fazer login. \nErro no servidor - não foi possível buscar as informações.');
 		}
 
 		const usr = await responseUser.json();
-		console.log("json aqui lu");
-		console.log(usr);
-		console.log("------------------");
 
 		/**
 		 * General checks to simplify future service calls
@@ -144,40 +140,6 @@ export const signin = (email, password) => {
 
 			console.log("registro criado");
 		}
-
-		// options criacao
-
-		// if (usr.options == null) {
-		// 	//CREATE OPTIONS
-		// 	console.log('CREATE OPTIONS');
-		// 	const optionsResponse = await fetch(
-		// 		`http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions`,
-		// 		{
-		// 			method: 'POST',
-		// 			headers: {
-		// 				'Content-Type': 'application/json',
-		// 				Accept: 'application/json',
-		// 				Authorization: `Bearer ${token}`,
-		// 			},
-		// 			body: JSON.stringify({
-		// 				user: { id: usr.id },
-		// 				allowCigarNotifications: false,
-		// 				allowTipNotifications: false,
-		// 				allowAchievmentNotifications: false,
-		// 				cigarNotificationTime: moment("1900", "HH:mm").format("HH:mmZ"),
-		// 				tipNotificationTime: moment("1900", "HH:mm").format("HH:mmZ"),
-		// 				achievmentNotificationTime: moment("1900", "HH:mm").format("HH:mmZ"),
-		// 				notificationToken: "",
-		// 			}),
-		// 		}
-		// 	);
-
-		// 	if (!optionsResponse.ok) {
-		// 		throw new Error('Não foi possível criar as options!');
-		// 	}
-
-		// 	console.log("options criadas");
-		// }
 	
 		dispatch({
 			type: SIGNIN,

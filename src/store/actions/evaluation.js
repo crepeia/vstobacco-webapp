@@ -29,8 +29,9 @@ export const fetchEvaluation = () => {
             }
 
 
-            const resData = JSON.stringify(response);
-            // console.log(resData);
+            const resData = await response.json();
+            console.log("Response em JSON: ");
+            console.log(resData);
             dispatch({ type: FETCH_EVALUATION, evaluation: resData });
         }
 

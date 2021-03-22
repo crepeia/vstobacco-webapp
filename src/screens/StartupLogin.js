@@ -66,6 +66,7 @@ const StartupLogin = (props) => {
 				);
 				finalStatus = status;
 			}
+
 			if (finalStatus !== "granted") {
 				await dispatch(
 					optionsActions.updateOptions(
@@ -113,7 +114,7 @@ const StartupLogin = (props) => {
 					}
 				});
 
-				await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
+				//await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
         	}
 			// configuracao notificacao conquista
 
@@ -134,7 +135,7 @@ const StartupLogin = (props) => {
 					}
 				});
 
-				await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
+				//await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
 			}
 
 			// configuracao notificacao dicas
@@ -155,7 +156,7 @@ const StartupLogin = (props) => {
 					}
 				});
 
-				await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
+				//await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
 			}
 
 			await dispatch(
@@ -205,7 +206,8 @@ const StartupLogin = (props) => {
 			  vibrationPattern: [0, 250, 250, 250],
 			  lightColor: '#FF231F7C',
 			});
-		}		
+		}	
+		
     };
 
 	useEffect(() => {
