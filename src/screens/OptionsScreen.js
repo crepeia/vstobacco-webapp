@@ -42,12 +42,6 @@ const OptionsScreen = props => {
 
 	const [isLoading, setIsLoading] = useState(false);
 
-	//let idCigarNotification = useSelector(state => state.options.idCigarNotification);
-	//console.log("Aqui lu a id");
-	//console.log(idCigarNotification);
-	//let idAchievementsNotification = useSelector(state => state.options.idAchievementsNotification);
-	//let idTipNotification = useSelector(state => state.options.idTipNotification);
-
 	const options = useSelector(state => state.options.options);
 	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
 	const moneySaved = useSelector(state => state.achievement.moneySaved);
@@ -78,7 +72,7 @@ const OptionsScreen = props => {
     const deviceHeight = Dimensions.get('window').height;
 
 	const [cigarNotification, setCigarNotification] = useState(options.allowCigarNotifications);
-	const [cigarNotificationTime, setCigarNotificationTime] = useState(moment(options.tipNotificationTime, "HH:mm").format("HH:mm"));
+	const [cigarNotificationTime, setCigarNotificationTime] = useState(moment(options.cigarNotificationTime, "HH:mm").format("HH:mm"));
     const [cigarNotificationTimeString, setCigarNotificationTimeString] = useState();
 
 	const [tipNotification, setTipNotification] = useState(options.allowTipNotifications);
@@ -135,9 +129,6 @@ const OptionsScreen = props => {
 		// notificacao cigarros 
 
         if (cigarNotification) {
-			//console.log("Veio na not de cigarro lu");
-			// Notifications.cancelScheduledNotificationAsync(idCigarNotification);
-			
             let idCigarNotification = await Notifications.scheduleNotificationAsync({
 				content: {
 					title: "Lembrete",
@@ -151,17 +142,11 @@ const OptionsScreen = props => {
 					repeats: true
 				}
 			});
-
-        } //else {
-			// Notifications.cancelScheduledNotificationAsync(idCigarNotification);
-		//}
+        } 
 
 		// notificacao conquistas
 		
         if (achievementsNotification) {
-			//console.log("Veio na not de conquista lu");
-			// Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
-
             let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 				content: {
 					title: "Conquista =)",
@@ -171,22 +156,16 @@ const OptionsScreen = props => {
 					sound: true
 				},
 				trigger: {
-					hour: parseInt(options.achievementsNotificationTime),
+					hour: parseInt(achievementsNotificationTime),
 					minute: 0,
 					repeats: true
 				}
 			});
-
-        } //else {
-			// Notifications.cancelScheduledNotificationAsync(idAchievementsNotification);
-		//}
+        }
 
 		// notificacao dicas
 
         if (tipNotification) {
-			//console.log("Veio na not de dica lu");
-			// Notifications.cancelScheduledNotificationAsync(idTipNotification);
-
             let idTipNotification = await Notifications.scheduleNotificationAsync({
 				content: {
 					title: "Lembrete",
@@ -195,21 +174,14 @@ const OptionsScreen = props => {
 					sound: true
 				},
 				trigger: {
-					hour: parseInt(options.tipNotificationTime),
+					hour: parseInt(tipNotificationTime),
 					minute: 0,
 					repeats: true
 				}
 			});
-
-			
-        } //else {
-			// Notifications.cancelScheduledNotificationAsync(idTipNotification);
-		//}
+        } 
 
 		await dispatch(optionsActions.updateOptions(cigarNotification, tipNotification, achievementsNotification, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, token));
-		//await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
-		//await dispatch(optionsActions.storeIdAchievementsNotification(idAchievementsNotification));
-		//await dispatch(optionsActions.storeIdTipNotification(idTipNotification));
         await dispatch(userActions.toggleRanking(isInRanking, userNickname));
 
         setIsLoading(false);

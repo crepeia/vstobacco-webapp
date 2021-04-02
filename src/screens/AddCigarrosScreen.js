@@ -14,8 +14,21 @@ import { useDispatch, useSelector } from "react-redux";
 import * as recordActions from '../store/actions/record';
 import * as challengeActions from '../store/actions/challenge';
 import * as achievementActions from '../store/actions/achievement';
+import * as optionsActions from '../store/actions/options';
+
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
 
 import Colors from '../constants/Colors';
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => {
+      return {
+        shouldShowAlert: true
+      };
+    }
+  });
 
 const AddCigarrosScreen = props => {
 

@@ -1,17 +1,22 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { View, StyleSheet, Dimensions, ScrollView, RefreshControl } from 'react-native';
+import { View, StyleSheet, Dimensions, ScrollView, RefreshControl, Alert } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import * as Notifications from 'expo-notifications';
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts';
 import { Line } from 'react-native-svg';
 import moment from 'moment';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import HeaderButton from '../components/UI/HeaderButton';
 import DefaultText from '../components/DefaultText';
 import DefaultTitle from '../components/DefaultTitle';
 import Colors from '../constants/Colors';
+
+import * as optionsActions from '../store/actions/options';
+
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
 
 const mesPassado = moment().add(-31, 'days').format("MMMM");
 const mesAtual = moment().format("MMMM");
@@ -100,6 +105,183 @@ const fillData = (logs, days, format, dailyCigars) => {
 
 const HomeScreen = props => {
 
+	const dispatch = useDispatch();
+
+	// Para atualização das notificações de conquistas
+	const today = new Date();
+	const day = today.getDate();
+	const isEven = day % 2;
+
+	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
+	const moneySaved = useSelector(state => state.achievement.moneySaved);
+	const lifeTimeSaved = useSelector(state => state.achievement.lifeTimeSaved);
+
+	const options = useSelector((state) => state.options.options);
+
+	const registerForPushNotificationsAsync = useCallback(async () => {
+
+		// calculo tempo vida	
+		const mes = lifeTimeSaved > 43800 ? Math.floor(lifeTimeSaved / 43800) : 0;
+		const mesPercent = mes >= 1 ? lifeTimeSaved % 43800 : lifeTimeSaved;
+
+		const dia = mesPercent > 1440 ? Math.floor(mesPercent / 1440) : 0;
+		const diaPercent = dia >= 1 ? mesPercent % 1440 : mesPercent;
+
+		const hora = diaPercent > 60 ? Math.floor(diaPercent / 60) : 0;
+		const horaPercent = hora >= 1 ? diaPercent % 60 : diaPercent; //minutos
+
+		const lifeTimeSavedText = `${mes === 1 ? `${mes} mês` : `${mes} meses`}, ${dia === 1 ? `${dia} dia` : `${dia} dias`}, ${hora === 1 ? `${hora} hora` : `${hora} horas`} e ${horaPercent === 1 ? `${horaPercent} minuto` : `${horaPercent} minutos`}`;
+		// fim calculo tempo vida
+
+		if (Constants.isDevice) {
+			const { status: existingStatus } = await Permissions.getAsync(
+				Permissions.NOTIFICATIONS
+			);
+			let finalStatus = existingStatus;
+			if (existingStatus !== "granted") {
+				const { status } = await Permissions.askAsync(
+					Permissions.NOTIFICATIONS
+				);
+				finalStatus = status;
+			}
+
+			if (finalStatus !== "granted") {
+				await dispatch(
+					optionsActions.updateOptions(
+						false,
+						false,
+						false,
+						moment(options.cigarNotificationTime, "HH:mm").format(
+							"HH:mm"
+						),
+						moment(options.tipNotificationTime, "HH:mm").format(
+							"HH:mm"
+						),
+						moment(options.achievementsNotificationTime, "HH:mm").format(
+							"HH:mm"
+						),
+						""
+					)
+				);
+				return;
+			}
+
+			Alert.alert('Sobre as notificações: ', 'Você pode alterar o horário de notificação em Opções no menu.', [
+				{ text: "Ok", style: "destructive" },
+			]);
+
+			let token = (await Notifications.getExpoPushTokenAsync()).data;
+
+			Notifications.cancelAllScheduledNotificationsAsync();
+
+			// configuração notificação cigarro
+
+			if (options.allowCigarNotifications) {
+				let idCigarNotification = await Notifications.scheduleNotificationAsync({
+					content: {
+						title: "Lembrete",
+						body: "Informe a quantidade de cigarros fumados hoje!",
+						data: JSON.stringify({ screen: "Cigarros fumados" }),
+						sound: true
+					},
+					trigger: {
+						hour: parseInt(options.cigarNotificationTime),
+						minute: 0,
+						repeats: true
+					}
+				});
+			}
+
+			// configuracao notificacao conquista
+
+			if (options.allowAchievementsNotifications) {
+				let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
+					content: {
+						title: "Conquista =)",
+						body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
+						: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+						data: JSON.stringify({ screen: " Conquistas" }),
+						sound: true
+					},
+					trigger: {
+						hour: parseInt(options.achievementsNotificationTime),
+						minute: 0,
+						repeats: true
+					}
+				});
+			}
+
+			// configuracao notificacao dicas
+
+			if (options.allowTipNotifications) {
+				let idTipNotification = await Notifications.scheduleNotificationAsync({
+					content: {
+						title: "Lembrete",
+						body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+						data: JSON.stringify({ screen: "Dicas" }),
+						sound: true
+					},
+					trigger: {
+						hour: parseInt(options.tipNotificationTime),
+						minute: 0,
+						repeats: true
+					}
+				});
+			}
+
+			await dispatch(
+				optionsActions.updateOptions(
+					options.allowCigarNotifications,
+					options.allowTipNotifications,
+					options.allowAchievementsNotifications,
+					moment(options.cigarNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.tipNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.achievementsNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					token
+				)
+			);
+
+		} else {
+			console.log("Se estou no emulador cai aqui");
+			await dispatch(
+				optionsActions.updateOptions(
+					false,
+					false,
+					false,
+					moment(options.cigarNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.tipNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					moment(options.achievementsNotificationTime, "HH:mm").format(
+						"HH:mm"
+					),
+					""
+				)
+			);
+			alert("Must use physical device for Push Notifications");
+		}
+
+		if (Platform.OS === 'android') {
+			Notifications.setNotificationChannelAsync('default', {
+				name: 'default',
+				importance: Notifications.AndroidImportance.MAX,
+				vibrationPattern: [0, 250, 250, 250],
+				lightColor: '#FF231F7C',
+			});
+		}	
+		
+	}, [cigarsNotSmoken, lifeTimeSaved, moneySaved]);
+
+	// Para atualização das notificações de conquistas
+
 	// const handleNotification = (notification) => {
 	// 	//console.log(notification);
 	// 	if (notification.origin === "selected") {
@@ -159,8 +341,9 @@ const HomeScreen = props => {
 	const resetState = useCallback(async () => {
 		setIsRefreshing(true);
 		setPlotType();
+		registerForPushNotificationsAsync();
 		setIsRefreshing(false);
-	}, [dailyLogs]);
+	}, [dailyLogs, cigarsNotSmoken, lifeTimeSaved, moneySaved]);
 
 	useEffect(() => {
 		const unsubscribe = props.navigation.addListener('focus', resetState);

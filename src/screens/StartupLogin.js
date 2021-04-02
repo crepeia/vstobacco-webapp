@@ -99,7 +99,6 @@ const StartupLogin = (props) => {
 			// configuração notificação cigarro
 
 			if (options.allowCigarNotifications) {
-				console.log("Veio na not de cigarro lu");
 				let idCigarNotification = await Notifications.scheduleNotificationAsync({
 					content: {
 						title: "Lembrete",
@@ -116,10 +115,10 @@ const StartupLogin = (props) => {
 
 				//await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
         	}
+
 			// configuracao notificacao conquista
 
 			if (options.allowAchievementsNotifications) {
-				console.log("Veio na not de conq lu");
 				let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 					content: {
 						title: "Conquista =)",
@@ -141,7 +140,6 @@ const StartupLogin = (props) => {
 			// configuracao notificacao dicas
 
 			if (options.allowTipNotifications) {
-				console.log("Veio na not de dica lu");
 				let idTipNotification = await Notifications.scheduleNotificationAsync({
 					content: {
 						title: "Lembrete",
@@ -211,7 +209,6 @@ const StartupLogin = (props) => {
     };
 
 	useEffect(() => {
-		console.log("Vim aqui lu, verifique se é depois do logout");
         const tryLogin = async () => {
 			await dispatch(recordActions.fetchRecord());
 			await dispatch(recordActions.fetchDailyLogs());
@@ -232,7 +229,7 @@ const StartupLogin = (props) => {
     
     useEffect(() => {
         if(isLogging){
-			registerForPushNotificationsAsync();
+			// registerForPushNotificationsAsync();
 			if (record.filled === false) {
 				props.navigation.navigate("Record");
 			} else {
