@@ -22,6 +22,7 @@ import DefaultText from '../components/DefaultText';
 import HeaderButton from '../components/UI/HeaderButton';
 import ChallengeCard from '../components/UI/ChallengeCard';
 import { LineChart } from 'react-native-chart-kit';
+import Traducao from '../components/Traducao/Traducao';
 
 // dados fictícios
 import { availableChallengesArray } from '../dummyData/availableChallenges';
@@ -152,10 +153,10 @@ const DesafiosScreen = props => {
     if (error) {
         return (
             <View style={styles.loading}>
-                <DefaultText>{'Um erro ocorreu!'}</DefaultText>
+                <DefaultText>{Traducao.t('error')}</DefaultText>
                 <DefaultText style={{textAlign: 'center', marginVertical: 5}}>{error}</DefaultText>
 
-                <Button title={'Tente novamente.'} onPress={loadChallenges} color={Colors.primaryColor} />
+                <Button title={Traducao.t('tryAgain')} onPress={loadChallenges} color={Colors.primaryColor} />
             </View>
         );
     }
@@ -171,7 +172,7 @@ const DesafiosScreen = props => {
     if (!isLoading && availableChallenges.length === 0) {
         return (
             <View style={styles.loading}>
-                <DefaultText style={{paddingHorizontal: 5}}>{'Você ainda não recebeu nenhum desafio!'}</DefaultText>
+                <DefaultText style={{paddingHorizontal: 5}}>{Traducao.t('noChallenge')}</DefaultText>
             </View>
         );
     }
@@ -190,7 +191,7 @@ const DesafiosScreen = props => {
                             setShowGraphic(false);
                         }}
                     >
-                        <DefaultTitle style={isDaily ? styles.filterTitle : styles.filterTitleInactive}>Diários</DefaultTitle>
+                        <DefaultTitle style={isDaily ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('daily')}</DefaultTitle>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.filterBox}
@@ -201,7 +202,7 @@ const DesafiosScreen = props => {
                             setShowGraphic(false);
                         }}
                     >
-                        <DefaultTitle style={isOnce ? styles.filterTitle : styles.filterTitleInactive}>Únicos</DefaultTitle>
+                        <DefaultTitle style={isOnce ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('unique')}</DefaultTitle>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.filterBox}
@@ -213,12 +214,12 @@ const DesafiosScreen = props => {
                             
                         }}
                     >
-                        <DefaultTitle style={showGraphic ? styles.filterTitle : styles.filterTitleInactive}>Gráfico</DefaultTitle>
+                        <DefaultTitle style={showGraphic ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('graphics')}</DefaultTitle>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.titleContainer}>
-                    <DefaultTitle style={styles.scoreText}>Pontos: {points}</DefaultTitle>
-                    <DefaultTitle style={styles.scoreText}>Pontos na última semana</DefaultTitle>
+                    <DefaultTitle style={styles.scoreText}>{Traducao.t('points')} {points}</DefaultTitle>
+                    <DefaultTitle style={styles.scoreText}>{Traducao.t('lastWeekPoints')}</DefaultTitle>
                 </View>
                 {
                     <LineChart
@@ -265,7 +266,7 @@ const DesafiosScreen = props => {
                                     setShowGraphic(false);
                                 }}
                             >
-                                <DefaultTitle style={isDaily ? styles.filterTitle : styles.filterTitleInactive}>Diários</DefaultTitle>
+                                <DefaultTitle style={isDaily ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('daily')}</DefaultTitle>
                             </TouchableOpacity>
                             <TouchableOpacity 
                                 style={styles.filterBox}
@@ -276,7 +277,7 @@ const DesafiosScreen = props => {
                                     setShowGraphic(false);
                                 }}
                             >
-                                <DefaultTitle style={isOnce ? styles.filterTitle : styles.filterTitleInactive}>Únicos</DefaultTitle>
+                                <DefaultTitle style={isOnce ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('unique')}</DefaultTitle>
                             </TouchableOpacity>
                             <TouchableOpacity 
                                 style={styles.filterBox}
@@ -289,11 +290,11 @@ const DesafiosScreen = props => {
                                     setLabels(fillLabels(7, "week"));
                                 }}
                             >
-                                <DefaultTitle style={showGraphic ? styles.filterTitle : styles.filterTitleInactive}>Gráfico</DefaultTitle>
+                                <DefaultTitle style={showGraphic ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('graphics')}</DefaultTitle>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.titleContainer}>
-                            <DefaultTitle style={styles.scoreText}>Pontos: {points}</DefaultTitle>
+                            <DefaultTitle style={styles.scoreText}>{Traducao.t('points')} {points}</DefaultTitle>
                         </View>
                     </View>
                 }

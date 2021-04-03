@@ -21,6 +21,7 @@ import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 
 import Colors from '../constants/Colors';
+import Traducao from '../components/Traducao/Traducao';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => {
@@ -128,7 +129,7 @@ const AddCigarrosScreen = props => {
                             <Ionicons name='md-calendar' style={styles.calendarIcon}/>
                             <Text style={styles.calendarData}>{date}</Text>
                         </View>
-                        <Text style={styles.calendarChangeText}>alterar data</Text>
+                        <Text style={styles.calendarChangeText}>{Traducao.t('changeDate')}</Text>
                     </TouchableOpacity>
                     {showDatePicker &&
                     <DateTimePicker
@@ -164,7 +165,7 @@ const AddCigarrosScreen = props => {
                         </View>
 
                         <Text style={{ fontSize: 15, color: '#ccc', alignSelf: 'center', marginTop: 5 }}>
-                            Cigarros fumados
+                            {Traducao.t('smokedCigarettes')}
                         </Text>
                     </View>
 
@@ -176,12 +177,12 @@ const AddCigarrosScreen = props => {
 
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity activeOpacity={0.4} onPress={saveLogHandler} style={styles.button}>
-                        <Text style={styles.buttonText}>Salvar</Text>
+                        <Text style={styles.buttonText}>{Traducao.t('save')}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.informeCigarrosContainer}>
                     <Text style={styles.informeCigarrosTxt}>
-                        Informe a quantidade de cigarros fumados acima.
+                        {Traducao.t('amountCigarettesSmoked')}
                     </Text>
                 </View>
             </View>

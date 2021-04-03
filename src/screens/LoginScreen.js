@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Colors from '../constants/Colors';
 import DefaultText from '../components/DefaultText';
+import Traducao from '../components/Traducao/Traducao';
 
 import { useDispatch } from 'react-redux';
 import * as userActions from '../store/actions/user';
@@ -80,7 +81,7 @@ const LoginScreen = props => {
 
 	useEffect(() => {
 		if (error) {
-			Alert.alert('Um erro ocorreu!', error, [{ text: 'Ok' }]);
+			Alert.alert(Traducao.t('loginError'), error, [{ text: 'Ok' }]);
 		}
 	}, [error]);
 
@@ -102,14 +103,14 @@ const LoginScreen = props => {
             </View>
             <View style={styles.formContainer}>
                 <View style={{marginTop: 20, marginBottom: 10}}>
-                    <DefaultText style={styles.labelForm}>Informe seus dados</DefaultText>
+                    <DefaultText style={styles.labelForm}>{Traducao.t('date')}</DefaultText>
                 </View>
                 <KeyboardAvoidingView enabled behavior={'height'}>
-                    <DefaultText style={styles.inputTitle}>E-mail</DefaultText>
+                    <DefaultText style={styles.inputTitle}>{Traducao.t('email')}</DefaultText>
                     <View style={styles.inputContainer}>
                         <TextInput
                         style={styles.input}
-                        placeholder='email@dominio.com'
+                        placeholder={Traducao.t('placeHolderEmail')}
                         placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
                         onSubmitEditing={() => passwordInput.focus()}
                         keyboardType='email-address'
@@ -124,15 +125,15 @@ const LoginScreen = props => {
                     </View>
                     {!isEmailValid && touchedEmail && (
                         <View style={styles.errorContainer}>
-                            <DefaultText style={styles.errorText}>{'Informe um e-mail válido!'}</DefaultText>
+                            <DefaultText style={styles.errorText}>{Traducao.t('validEmail')}</DefaultText>
                         </View>
                     )}
 
-                    <DefaultText style={styles.inputTitle}>Senha</DefaultText>
+                    <DefaultText style={styles.inputTitle}>{Traducao.t('password')}</DefaultText>
                     <View style={styles.inputContainer}>
                         <TextInput
                         style={styles.input}
-                        placeholder='Sua senha no Viva sem Tabaco'
+                        placeholder={Traducao.t('placeHolderPassword')}
                         placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
                         secureTextEntry
                         autoCapitalize='none'
@@ -146,7 +147,7 @@ const LoginScreen = props => {
                     </View>
                     {!isPasswordValid && touchedPassword && (
                         <View style={styles.errorContainer}>
-                            <DefaultText style={styles.errorText}>{'Informe uma senha válida!'}</DefaultText>
+                            <DefaultText style={styles.errorText}>{Traducao.t('validPassword')}</DefaultText>
                         </View>
                     )}
                 </KeyboardAvoidingView>
@@ -157,7 +158,7 @@ const LoginScreen = props => {
                 >
                     <View>
                         <DefaultText style={styles.labelAuth}>
-                            Entrar
+                            {Traducao.t('login')}
                         </DefaultText>
                     </View>
                 </TouchableOpacity>
@@ -167,7 +168,7 @@ const LoginScreen = props => {
                         style={styles.buttonSignUp}
                         onPress={() => props.navigation.navigate('Cadastro')}
                     >
-                        <DefaultText style={styles.labelForm}>Não possui conta?</DefaultText>
+                        <DefaultText style={styles.labelForm}>{Traducao.t('createAccount')}</DefaultText>
                     </TouchableOpacity>
                 </View>
             </View>

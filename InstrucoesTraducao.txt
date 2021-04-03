@@ -1,0 +1,21 @@
+A traducao eh feita atraves do componente 'Traducao.js' e implementada em dois 
+arquivos: no arquivo de idioma 'en.js' ou 'pt.js' e no arquivo em que esta contida
+a pagina que se quer traduzir.
+
+Vamos colocar como exemplo a mensagem 'Gastos com bebida por mes', da pagina 'Home'
+do aplicativo. Para que a mensagem seja traduzida de acordo com o idioma nativo
+do android, usaremos a biblioteca i18n, que esta sendo executada no componente
+'Traducao.js'. Na pagina 'Home' o componente 'Traducao' eh chamado e acrescentamos
+'.t' para adicionarmos a mensagem que recebera a traducao, como mostrado a seguir:
+
+<Text style={styles.chartTitle}>
+      {Traducao.t('gasto')}
+</Text>
+
+A palavra 'gasto' eh uma constante que fica armazenada nos arquivos 'en.js' e 
+'pt.js', em cada arquivo ela tera sua mensagem no seu respectivo idioma.
+  
+Sendo assim, todas as mensagens que precisam ser traduzidas precisam passar por 
+esse processo.
+
+lib usada: npm i react-native-i18n
