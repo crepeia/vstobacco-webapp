@@ -326,7 +326,7 @@ const DesafiosScreen = props => {
 
 export const screenOptions = navData => {
   return {
-    headerTitle: 'Desafios',
+    headerTitle: Traducao.t('desafiosScreen'),
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item 

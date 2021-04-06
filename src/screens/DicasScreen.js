@@ -12,6 +12,7 @@ import TipCard from '../components/UI/TipCard';
 import Colors from '../constants/Colors';
 import DefaultText from '../components/DefaultText';
 import OfflineWarning from '../components/OfflineWarning';
+import Traducao from '../components/Traducao/Traducao';
 
 // const dicas = [
 // 	{
@@ -77,8 +78,8 @@ const DicasScreen = props => {
     if (error) {
         return (
             <View style={styles.loading}>
-                <DefaultText>{'Um erro ocorreu!'}</DefaultText>
-                <Button title={'Tente novamente'} onPress={loadTips} color={Colors.primaryColor} />
+                <DefaultText>{Traducao.t('error')}</DefaultText>
+                <Button title={Traducao.t('tryAgain')} onPress={loadTips} color={Colors.primaryColor} />
             </View>
         );
     }
@@ -94,7 +95,7 @@ const DicasScreen = props => {
     if (!isLoading && tips && tips.length === 0) {
         return (
             <View style={styles.loading}>
-                <DefaultText style={{paddingHorizontal: 5}}>{'Você ainda não recebeu nenhuma dica!'}</DefaultText>
+                <DefaultText style={{paddingHorizontal: 5}}>{Traducao.t('noTips')}</DefaultText>
             </View>
         );
 	}
@@ -131,7 +132,7 @@ const DicasScreen = props => {
 
 export const screenOptions = navData => {
     return {
-		headerTitle: 'Dicas',
+		headerTitle: Traducao.t('dicasScreen'),
 		headerLeft: () => (
 			<HeaderButtons HeaderButtonComponent={HeaderButton}>
 				<Item 

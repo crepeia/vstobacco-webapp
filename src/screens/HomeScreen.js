@@ -12,6 +12,7 @@ import HeaderButton from '../components/UI/HeaderButton';
 import DefaultText from '../components/DefaultText';
 import DefaultTitle from '../components/DefaultTitle';
 import Colors from '../constants/Colors';
+import Traducao from '../components/Traducao/Traducao';
 
 import * as optionsActions from '../store/actions/options';
 
@@ -130,7 +131,7 @@ const HomeScreen = props => {
 		const hora = diaPercent > 60 ? Math.floor(diaPercent / 60) : 0;
 		const horaPercent = hora >= 1 ? diaPercent % 60 : diaPercent; //minutos
 
-		const lifeTimeSavedText = `${mes === 1 ? `${mes} mês` : `${mes} meses`}, ${dia === 1 ? `${dia} dia` : `${dia} dias`}, ${hora === 1 ? `${hora} hora` : `${hora} horas`} e ${horaPercent === 1 ? `${horaPercent} minuto` : `${horaPercent} minutos`}`;
+		const lifeTimeSavedText = `${mes === 1 ? `${mes} ${Traducao.t('months')}` : `${mes} ${Traducao.t('month')}`}, ${dia === 1 ? `${dia} ${Traducao.t('day')}` : `${dia} ${Traducao.t('days')}`}, ${hora === 1 ? `${hora} ${Traducao.t('hour')}` : `${hora} ${Traducao.t('hours')}`} e ${horaPercent === 1 ? `${horaPercent} ${Traducao.t('minute')}` : `${horaPercent} ${Traducao.t('minutes')}`}`;
 		// fim calculo tempo vida
 
 		if (Constants.isDevice) {
@@ -166,7 +167,7 @@ const HomeScreen = props => {
 				return;
 			}
 
-			Alert.alert('Sobre as notificações: ', 'Você pode alterar o horário de notificação em Opções no menu.', [
+			Alert.alert(Traducao.t('aboutNotifications'), Traducao.t('changeTime'), [
 				{ text: "Ok", style: "destructive" },
 			]);
 
@@ -179,8 +180,8 @@ const HomeScreen = props => {
 			if (options.allowCigarNotifications) {
 				let idCigarNotification = await Notifications.scheduleNotificationAsync({
 					content: {
-						title: "Lembrete",
-						body: "Informe a quantidade de cigarros fumados hoje!",
+						title: Traducao.t('reminder'),
+						body: Traducao.t('informQuantity'),
 						data: JSON.stringify({ screen: "Cigarros fumados" }),
 						sound: true
 					},
@@ -197,9 +198,9 @@ const HomeScreen = props => {
 			if (options.allowAchievementsNotifications) {
 				let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 					content: {
-						title: "Conquista =)",
-						body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
-						: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+						title: Traducao.t('conquest'),
+						body: isEven === 0 ? `${Traducao.t('conquestPhrasePart1')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart2')} ${lifeTimeSavedText} ${Traducao.t('conquestPhrasePart3')}` 
+						: `${Traducao.t('conquestPhrasePart4')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart5')}${moneySaved.toFixed(2)}!`,
 						data: JSON.stringify({ screen: " Conquistas" }),
 						sound: true
 					},
@@ -216,8 +217,8 @@ const HomeScreen = props => {
 			if (options.allowTipNotifications) {
 				let idTipNotification = await Notifications.scheduleNotificationAsync({
 					content: {
-						title: "Lembrete",
-						body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+						title: Traducao.t('reminder'),
+						body: Traducao.t('reminderTip'),
 						data: JSON.stringify({ screen: "Dicas" }),
 						sound: true
 					},
@@ -389,7 +390,7 @@ const HomeScreen = props => {
 			contentContainerStyle={{flexGrow: 1}}>
 			<View style={styles.background}>
 				<View style={{marginVertical: 20}}>
-					<DefaultTitle style={styles.title}>Cigarros fumados na semana</DefaultTitle>
+					<DefaultTitle style={styles.title}>{Traducao.t('smokedCigarettesInWeek')}</DefaultTitle>
 				</View>
 				{/* GRÁFICO */}
 				{!isRefreshing && (
@@ -431,12 +432,12 @@ const HomeScreen = props => {
 				<View style={{width: '100%', alignItems: 'center', paddingHorizontal: 10}}>
 					{definitiveSelectedPlot === 'year' ?
 						<View style={{marginBottom: 2}}>
-							<DefaultText style={{fontSize: 11}}>{'Números acima correspondem às semanas e cada ano tem 52 semanas'}</DefaultText>
+							<DefaultText style={{fontSize: 11}}>{Traducao.t('weeksInYear')}</DefaultText>
 						</View>
 						:
 						definitiveSelectedPlot === 'month' ?
 						<View style={{marginBottom: 2}}>
-							<DefaultText style={{fontSize: 11}}>{'Números acima correspondem aos dias de' + mesAtual + ' e ' + mesPassado}</DefaultText>
+							<DefaultText style={{fontSize: 11}}>{Traducao.t('numberADay') + mesAtual + Traducao.t('and') + mesPassado}</DefaultText>
 						</View>
 						:
 						null
@@ -444,11 +445,11 @@ const HomeScreen = props => {
 					<View style={styles.chartSubtitle}>
 						<View style={styles.subtitleContainer}>
 							<View style={{...styles.circleSubtitle, backgroundColor: Colors.primaryColor}} />
-							<DefaultText>{definitiveSelectedPlot === 'year' ? 'Cigarros na semana' : 'Cigarros'}</DefaultText>
+							<DefaultText>{definitiveSelectedPlot === 'year' ? Traducao.t('cigarettesAWeek') : Traducao.t('cigarettes')}</DefaultText>
 						</View>
 						<View style={styles.subtitleContainer}>
 							<View style={{...styles.circleSubtitle, backgroundColor: Colors.red}} />
-							<DefaultText>{definitiveSelectedPlot === 'year' ? 'Cigarros fumados ao longo de uma semana' : 'Cigarros fumados por dia antes da intervenção'}</DefaultText>
+							<DefaultText>{definitiveSelectedPlot === 'year' ? Traducao.t('smokedCigarettesAWeek') : Traducao.t('smokedCigarettesBefore')}</DefaultText>
 						</View>
 					</View>
 				</View>
@@ -457,34 +458,34 @@ const HomeScreen = props => {
 				<View style={styles.linhaDados}>
 					<View style={styles.dados}>
 						<DefaultText style={styles.numeroDados}>{avgPeriod}</DefaultText>
-						<DefaultText style={styles.legendaDados}>{'média'}</DefaultText>
-						<DefaultText style={styles.legendaDados}>{'cigarros/dia'}</DefaultText>
+						<DefaultText style={styles.legendaDados}>{Traducao.t('average')}</DefaultText>
+						<DefaultText style={styles.legendaDados}>{Traducao.t('cigarettesADay')}</DefaultText>
 					</View>
 
 					<View style={styles.dados}>
 						<DefaultText style={styles.numeroDados}>{cigarsToday}</DefaultText>
-						<DefaultText style={styles.legendaDados}>{'cigarros hoje'}</DefaultText>
+						<DefaultText style={styles.legendaDados}>{Traducao.t('cigarettesToday')}</DefaultText>
 					</View>
 
 					<View style={styles.dados}>
 						<DefaultText style={styles.numeroDados}>{sumPeriod}</DefaultText>
-						<DefaultText style={styles.legendaDados}>{'total de cigarros'}</DefaultText>
-						<DefaultText style={styles.legendaDados}>{'no período'}</DefaultText>
+						<DefaultText style={styles.legendaDados}>{Traducao.t('smokedCigarettesTotal')}</DefaultText>
+						<DefaultText style={styles.legendaDados}>{Traducao.t('smokedCigarettesPeriod')}</DefaultText>
 					</View>
 				</View>
 
 				{/* DADOS DE CONSUMO */}
 				<View style={styles.colunaConsumo}>
 					<View style={{...styles.consumoContainer, marginBottom: 10}}>
-						<DefaultText style={styles.consumoText}>{'Cigarros fumados por dia antes'}</DefaultText>
+						<DefaultText style={styles.consumoText}>{Traducao.t('smokedCigarettesADay')}</DefaultText>
 						<DefaultTitle style={styles.numberHighlight}>{dailyCigars}</DefaultTitle>
 					</View>
 					<View style={{...styles.consumoContainer, borderTopWidth: 0.8, borderBottomWidth: 0.8, borderColor: Colors.primaryColor, paddingVertical: 10}}>
-						<DefaultText style={styles.consumoText}>{'Preço do maço de cigarros'}</DefaultText>
+						<DefaultText style={styles.consumoText}>{Traducao.t('packPrice')}</DefaultText>
 						<DefaultTitle style={styles.numberHighlight}>R$ {packPrice}</DefaultTitle>
 					</View>
 					<View style={{...styles.consumoContainer, marginTop: 10}}>
-						<DefaultText style={styles.consumoText}>{'Quantidade de cigarros no maço'}</DefaultText>
+						<DefaultText style={styles.consumoText}>{Traducao.t('quantityCigarette')}</DefaultText>
 						<DefaultTitle style={styles.numberHighlight}>{packAmount}</DefaultTitle>
 					</View>
 				</View>
@@ -630,7 +631,7 @@ export const screenOptions = navData => {
 		headerRight: () => (
 			<HeaderButtons HeaderButtonComponent={HeaderButton}>
 				<Item 
-					title='Cigarros fumados'
+					title={Traducao.t('smokedCigarettes')}
 					iconName={'md-add-circle'}
 					onPress={() => {
 					navData.navigation.navigate('Cigarros fumados');

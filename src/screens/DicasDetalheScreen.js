@@ -14,6 +14,7 @@ import Card from '../components/UI/Card';
 import DefaultText from '../components/DefaultText';
 import DefaultTitle from '../components/DefaultTitle';
 import Colors from '../constants/Colors';
+import Traducao from '../components/Traducao/Traducao';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleDislikeTip, toggleLikeTip, readTip } from '../store/actions/tips';
@@ -59,7 +60,7 @@ const DicasDetalheScreen = props => {
 
     useEffect(() => {
         if (error) {
-            Alert.alert('Um erro ocorreu!', error, [{ text: 'Ok' }])
+            Alert.alert(Traducao.t('error'), error, [{ text: 'Ok' }])
         }
     }, [error]);
 
@@ -73,7 +74,7 @@ const DicasDetalheScreen = props => {
                     <DefaultTitle style={styles.data}>{selectedTip.dateSent}</DefaultTitle>
                 </Card>
                 <View style={styles.toggleContainer} >
-                    <DefaultText style={styles.likeText}>Você gostou dessa dica?</DefaultText>
+                    <DefaultText style={styles.likeText}>{Traducao.t('likedTip')}</DefaultText>
                     <View style={styles.iconsContainer}>
                         <TouchableOpacity onPress={toggleDislikedHandler}>
                             <FontAwesome name={selectedTip.liked != null && !selectedTip.liked ? 'thumbs-down' : 'thumbs-o-down'} size={38} color={'#aaa'} />
@@ -155,7 +156,7 @@ export const screenOptions = navData => {
     const routeParams = navData.route.params ? navData.route.params : {};
 
     return {
-		headerTitle: routeParams.title ? routeParams.title : 'Detalhes',
+		headerTitle: routeParams.title ? routeParams.title : Traducao.t('dicasDetalheScreenDetails'),
     }
 };
 

@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = navData => {
     return {
-      headerTitle: 'Cigarros fumados',
+      headerTitle: Traducao.t('addCigarrosScreen'),
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item 

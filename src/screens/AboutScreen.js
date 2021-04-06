@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = navData => {
     return {
-      headerTitle: 'Sobre',
+      headerTitle: Traducao.t('aboutScreen'),
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item 
