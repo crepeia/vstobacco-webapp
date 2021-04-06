@@ -11,11 +11,12 @@ import Colors from '../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import * as userActions from '../store/actions/user';
 import HelpButtonModal from '../components/HelpButtonModal.js';
+import Traducao from '../components/Traducao/Traducao';
 
 const validationSchema = yup.object({
     nickname: yup.string()
-        .max(16, 'Apelido muito grande, no máximo 16 caracteres')
-        .required('Digite seu apelido')
+        .max(16, Traducao.t('nicknameMax'))
+        .required(Traducao.t('registerNickname'))
         .nullable(),
 });
 
@@ -64,23 +65,23 @@ const RankingJoin = props => {
     return (
         <ScrollView style={{backgroundColor: 'white'}}>
             <View style={styles.containerTitle}>
-                <DefaultText style={styles.title}>Participe do nosso Ranking!</DefaultText>
+                <DefaultText style={styles.title}>{Traducao.t('rankingInvitation')}</DefaultText>
             </View>
             <View style={styles.background}>
                 <View style={styles.textContainer}>
-                    <DefaultText style={styles.text}>Ganhe pontos completando desafios e suba no Ranking!</DefaultText>
-                    <DefaultText style={styles.text}>Escreva um apelido abaixo e comece a competir!</DefaultText>
+                    <DefaultText style={styles.text}>{Traducao.t('earnPoints')}</DefaultText>
+                    <DefaultText style={styles.text}>{Traducao.t('startCompeting')}</DefaultText>
                     <View style={styles.learnMoreBox}>
-                        <DefaultText style={styles.bellowText}>Estamos esperando por você :)</DefaultText>
+                        <DefaultText style={styles.bellowText}>{Traducao.t('waitYou')}</DefaultText>
                         <HelpButtonModal showLink={true} title={"Ranking"}>
                             <DefaultText style={styles.helpText}>
-                                Nosso ranking garante o anonimato e permite que você valide seu progresso em relação a outros usuários do aplicativo.
+                                {Traducao.t('anonymousRankingInfo')}
                             </DefaultText>
                             <DefaultText style={styles.helpText}>
-                                Basta informar um apelido para ser mostrado no ranking e confirmar.
+                                {Traducao.t('justEnter')}
                             </DefaultText>
                             <DefaultText style={styles.helpText}>
-                                Você pode sair do ranking a qualquer momento no menu de Opções.
+                                {Traducao.t('justDrop')}
                             </DefaultText>
                         </HelpButtonModal>
                     </View>
@@ -95,8 +96,8 @@ const RankingJoin = props => {
                         <View style={styles.inputContainer}>
                             
                             <FormTextInput
-                                placeholder={'Digite seu apelido'}
-                                title={'Apelido'}
+                                placeholder={Traducao.t('registerNickname')}
+                                title={Traducao.t('nickname')}
                                 titleColor={Colors.primaryColor}
                                 onChangeText={formikProps.handleChange('nickname')}
                                 onBlur={formikProps.handleBlur('nickname')}
@@ -112,7 +113,7 @@ const RankingJoin = props => {
                                 }}
                                 activeOpacity={0.4}
                             >
-                                <DefaultText style={styles.buttonText}>Entrar no Ranking</DefaultText>
+                                <DefaultText style={styles.buttonText}>{Traducao.t('EnterTheRanking')}</DefaultText>
                             </TouchableOpacity>
                         </View>
                     )}

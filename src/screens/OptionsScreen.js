@@ -23,6 +23,7 @@ import Constants from 'expo-constants';
 
 
 import Colors from '../constants/Colors';
+import Traducao from '../components/Traducao/Traducao';
 
 // o que ele faz quando chega notificacao com o app aberto
 Notifications.setNotificationHandler({
@@ -57,7 +58,7 @@ const OptionsScreen = props => {
 	const hora = diaPercent > 60 ? Math.floor(diaPercent / 60) : 0;
 	const horaPercent = hora >= 1 ? diaPercent % 60 : diaPercent; //minutos
 
-	const lifeTimeSavedText = `${mes === 1 ? `${mes} mês` : `${mes} meses`}, ${dia === 1 ? `${dia} dia` : `${dia} dias`}, ${hora === 1 ? `${hora} hora` : `${hora} horas`} e ${horaPercent === 1 ? `${horaPercent} minuto` : `${horaPercent} minutos`}`;
+	const lifeTimeSavedText = `${mes === 1 ? `${mes} ${Traducao.t('month')}` : `${mes} ${Traducao.t('months')}`}, ${dia === 1 ? `${dia} ${Traducao.t('day')}` : `${dia} ${Traducao.t('days')}`}, ${hora === 1 ? `${hora} ${Traducao.t('hour')}` : `${hora} ${Traducao.t('hours')}`} e ${horaPercent === 1 ? `${horaPercent} ${Traducao.t('minute')}` : `${horaPercent} ${Traducao.t('minutes')}`}`;
 	// fim calculo tempo vida
 
     const inRanking = useSelector((state) => state.user.currentUser.inRanking);
@@ -100,18 +101,18 @@ const OptionsScreen = props => {
                 finalStatus = existingStatus;
 
                 if (existingStatus !== 'granted') {
-                    alert('Olá! Permita que o aplicativo te envie notificações para receber os lembretes!');
+                    alert(Traducao.t('notificationPermission'));
                     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
                     finalStatus = status;
                 }
                 if (finalStatus !== 'granted') {
-                    alert('Não foi possível obter o token de notificações!');
+                    alert(Traducao.t('nonTokenPermission'));
                     setIsLoading(false);
                     return;
                 }
                 token = (await Notifications.getExpoPushTokenAsync()).data;
             } else {
-                alert('Notificações só funcionam em dispositivos físicos!');
+                alert(Traducao.t('notificationsDevices'));
 			}
 			
             if (Platform.OS === 'android') {
@@ -131,8 +132,8 @@ const OptionsScreen = props => {
         if (cigarNotification) {
             let idCigarNotification = await Notifications.scheduleNotificationAsync({
 				content: {
-					title: "Lembrete",
-					body: "Informe a quantidade de cigarros fumados hoje!",
+					title: Traducao.t('reminder'),
+					body: Traducao.t('informQuantity'),
 					data: JSON.stringify({ screen: "Cigarros fumados" }),
 					sound: true
 				},
@@ -149,9 +150,9 @@ const OptionsScreen = props => {
         if (achievementsNotification) {
             let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 				content: {
-					title: "Conquista =)",
-					body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
-					: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+					title: Traducao.t('conquest'),
+					body: isEven === 0 ? `${Traducao.t('conquestPhrasePart1')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart2')} ${lifeTimeSavedText} ${Traducao.t('conquestPhrasePart3')}` 
+					: `${Traducao.t('conquestPhrasePart4')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart5')}${moneySaved.toFixed(2)}!`,
 					data: JSON.stringify({ screen: " Conquistas" }),
 					sound: true
 				},
@@ -168,8 +169,8 @@ const OptionsScreen = props => {
         if (tipNotification) {
             let idTipNotification = await Notifications.scheduleNotificationAsync({
 				content: {
-					title: "Lembrete",
-					body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+					title: Traducao.t('reminder'),
+					body: Traducao.t('reminderTip'),
 					data: JSON.stringify({ screen: "Dicas" }),
 					sound: true
 				},
@@ -185,7 +186,7 @@ const OptionsScreen = props => {
         await dispatch(userActions.toggleRanking(isInRanking, userNickname));
 
         setIsLoading(false);
-        Alert.alert('Opções', 'Alterações salvas com sucesso!', [{ text: 'Ok', style: 'destructive' }])
+        Alert.alert(Traducao.t('options'), Traducao.t('savedChanges'), [{ text: 'Ok', style: 'destructive' }])
     }, [dispatch, isInRanking, cigarNotification, cigarNotificationTime, tipNotification, tipNotificationTime, achievementsNotification, achievementsNotificationTime]);
     
 
@@ -195,22 +196,22 @@ const OptionsScreen = props => {
 
 				{/* HEADER DAS NOTIFICAÇÕES */}
 				<OptionsHeader
-					title='Notificações'
+					title={Traducao.t('notifications')}
 				>
-					<HelpButtonModal title='Notificações'>
-						<DefaultText style={styles.helpText}>{'Estas opções controlam o envio de notificações para seu dispositivo.'}</DefaultText>
+					<HelpButtonModal title={Traducao.t('notifications')}>
+						<DefaultText style={styles.helpText}>{Traducao.t('sendingNotifications')}</DefaultText>
 						
 						<DefaultText style={styles.helpText}>
-							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{'Lembrete de registro de cigarros'}</DefaultText>
-							{': notificação para lembrar de informar o número de cigarros fumados no dia.'}
+							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{Traducao.t('registerCigarettes')}</DefaultText>
+							{Traducao.t('explanationRegisterCigarettes')}
 						</DefaultText>
 						<DefaultText style={styles.helpText}>
-							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{'Lembrete de dicas'}</DefaultText>
-							{': notificação para lembrar a leitura das dicas recebidas automaticamente.'}
+							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{Traducao.t('registerReminderTips')}</DefaultText>
+							{Traducao.t('explanationReminderTips')}
 						</DefaultText>
 						<DefaultText style={styles.helpText}>
-							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{'Lembrete de conquistas'}</DefaultText>
-							{': notificação para lembrar as suas conquistas diariamente.'}
+							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{Traducao.t('registerReminderConquests')}</DefaultText>
+							{Traducao.t('explanationReminderConquests')}
 						</DefaultText>
                 	</HelpButtonModal>
 				</OptionsHeader>
@@ -218,7 +219,7 @@ const OptionsScreen = props => {
 				{/* SWITCH -> REGISTRO CIGARROS */}
 				<View style={styles.line}>
 					<View style={styles.textContainer}>
-						<DefaultText style={styles.optionText}>{'Lembretes de registro de cigarros'}</DefaultText>
+						<DefaultText style={styles.optionText}>{Traducao.t('registerCigarettes')}</DefaultText>
 					</View>
 				
 					<View style={styles.toggleContainer}>
@@ -238,7 +239,7 @@ const OptionsScreen = props => {
 				{/* HORÁRIO -> REGISTRO CIGARROS */}
 				<View style={styles.line}>
 					<View style={styles.textContainer}>
-						<DefaultText style={styles.optionText}>{'Horário do lembrete'}</DefaultText>
+						<DefaultText style={styles.optionText}>{Traducao.t('reminderTime')}</DefaultText>
 					</View>
 					<View style={styles.toggleContainer}>
 						<Modal
@@ -294,7 +295,7 @@ const OptionsScreen = props => {
 				{/* SWITCH -> NOVAS DICAS */}
 				<View style={styles.line}>
 					<View style={styles.textContainer}>
-						<DefaultText style={styles.optionText}>{'Lembrete de novas dicas'}</DefaultText>
+						<DefaultText style={styles.optionText}>{Traducao.t('reminderNewTips')}</DefaultText>
 					</View>
 					<View style={styles.toggleContainer}>
 						<Switch
@@ -313,7 +314,7 @@ const OptionsScreen = props => {
 				{/* HORÁRIO -> NOVAS DICAS */}
 				<View style={styles.line}>
 					<View style={styles.textContainer}>
-						<DefaultText style={styles.optionText}>{'Horário do lembrete'}</DefaultText>
+						<DefaultText style={styles.optionText}>{Traducao.t('reminderTime')}</DefaultText>
 					</View>
 					<View style={styles.toggleContainer}>
 						<Modal
@@ -369,7 +370,7 @@ const OptionsScreen = props => {
 				{/* SWITCH -> CONQUISTAS */}
 				<View style={styles.line}>
 					<View style={styles.textContainer}>
-						<DefaultText style={styles.optionText}>{'Informações de suas conquistas'}</DefaultText>
+						<DefaultText style={styles.optionText}>{Traducao.t('conquestsInfo')}</DefaultText>
 					</View>
 				
 					<View style={styles.toggleContainer}>
@@ -390,7 +391,7 @@ const OptionsScreen = props => {
 				{/* HORÁRIO -> CONQUISTAS */}
 				<View style={styles.line}>
 					<View style={styles.textContainer}>
-						<DefaultText style={styles.optionText}>{'Horário do lembrete'}</DefaultText>
+						<DefaultText style={styles.optionText}>{Traducao.t('reminderTime')}</DefaultText>
 					</View>
 					<View style={styles.toggleContainer}>
 						<Modal
@@ -445,17 +446,17 @@ const OptionsScreen = props => {
 
 				{/* HEADER RANKING */}
 				<OptionsHeader
-					title='Ranking'
+					title={Traducao.t('ranking')}
 				>
-					<HelpButtonModal title='Ranking'>
+					<HelpButtonModal title={Traducao.t('ranking')}>
 						<DefaultText style={styles.helpText}>
-							{'Você pode optar por não aparecer no ranking de desafios através desta configuração.'}
+							{Traducao.t('notAppearInRankingInfo')}
 						</DefaultText>
 						<DefaultText style={styles.helpText}>
-							{'Se você deseja participar do ranking, visite a tela de Ranking pelo menu lateral.'}
+							{Traducao.t('participateRankInfo')}
 						</DefaultText>
 						<DefaultText style={styles.helpText}>
-							{'Nosso ranking garante o anonimato e permite que você valide seu progresso em relação a outros usuários do aplicativo.'}
+							{Traducao.t('anonymousRankingInfo')}
 						</DefaultText>
                 	</HelpButtonModal>
 				</OptionsHeader>
@@ -463,7 +464,7 @@ const OptionsScreen = props => {
 				{/* SWITCH -> RANKING */}
 				<View style={styles.line}>
 					<View style={styles.textContainer}>
-						<DefaultText style={styles.optionText}>{'Participar do ranking'}</DefaultText>
+						<DefaultText style={styles.optionText}>{Traducao.t('participateRanking')}</DefaultText>
 					</View>
 					<View style={styles.toggleContainer}>
 						<Switch
@@ -490,7 +491,7 @@ const OptionsScreen = props => {
 					{isLoading ? 
 						<ActivityIndicator size={27} color='white' />
 						:
-						<DefaultText style={styles.buttonText}>{'Salvar'}</DefaultText>
+						<DefaultText style={styles.buttonText}>{Traducao.t('save')}</DefaultText>
 					}
 				</TouchableOpacity>
 
@@ -569,7 +570,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = navData => {
     return {
-		headerTitle: 'Opções',
+		headerTitle: Traducao.t('optionsScreen'),
 		headerLeft: () => (
 			<HeaderButtons HeaderButtonComponent={HeaderButton}>
 				<Item 

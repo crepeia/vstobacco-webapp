@@ -6,6 +6,7 @@ import HeaderButton from '../components/UI/HeaderButton';
 import DefaultTitle from '../components/DefaultTitle';
 import RankingCard from '../components/UI/RankingCard';
 import Colors from '../constants/Colors';
+import Traducao from '../components/Traducao/Traducao';
 
 // //temporário:
 // import { currentRank } from '../dummyData/currentRank';
@@ -99,7 +100,7 @@ const RankingScreen = props => {
                                         setIsYearly(false);
                                     }}
                                 >
-                                    <DefaultTitle style={isWeekly ? styles.filterTitle : styles.filterTitleInactive}>Semanal</DefaultTitle>
+                                    <DefaultTitle style={isWeekly ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('weekly')}</DefaultTitle>
                                 </TouchableOpacity>
                                 <TouchableOpacity 
                                     style={styles.filterBox}
@@ -111,7 +112,7 @@ const RankingScreen = props => {
                                         setIsYearly(false);
                                     }}
                                 >
-                                    <DefaultTitle style={isMonthly ? styles.filterTitle : styles.filterTitleInactive}>Mensal</DefaultTitle>
+                                    <DefaultTitle style={isMonthly ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('monthly')}</DefaultTitle>
                                 </TouchableOpacity>
                                 <TouchableOpacity 
                                     style={styles.filterBox}
@@ -123,7 +124,7 @@ const RankingScreen = props => {
                                         setIsYearly(true);
                                     }}
                                 >
-                                    <DefaultTitle style={isYearly ? styles.filterTitle : styles.filterTitleInactive}>Anual</DefaultTitle>
+                                    <DefaultTitle style={isYearly ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('yearly')}</DefaultTitle>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -152,8 +153,8 @@ const RankingScreen = props => {
     } else {
         return (
             <View style={styles.container}>
-                <DefaultText>Você não está mais participando do ranking.</DefaultText>
-                <DefaultButton onPress={() => {props.navigation.goBack()}}>Voltar</DefaultButton>
+                <DefaultText>{Traducao.t('withoutRanking')}</DefaultText>
+                <DefaultButton onPress={() => {props.navigation.goBack()}}>{Traducao.t('return')}</DefaultButton>
             </View>
         )
     }

@@ -29,7 +29,7 @@ const LifeAndMoneyScreen = props => {
 	const hora = diaPercent > 60 ? Math.floor(diaPercent / 60) : 0;
 	const horaPercent = hora >= 1 ? diaPercent % 60 : diaPercent; //minutos
 
-	const lifeTimeSavedText = `${mes === 1 ? `${mes} ${Traducao.t('months')}` : `${mes} ${Traducao.t('month')}`}, ${dia === 1 ? `${dia} ${Traducao.t('day')}` : `${dia} ${Traducao.t('days')}`}, ${hora === 1 ? `${hora} ${Traducao.t('hour')}` : `${hora} ${Traducao.t('hours')}`} e ${horaPercent === 1 ? `${horaPercent} ${Traducao.t('minute')}` : `${horaPercent} ${Traducao.t('minutes')}`}`;
+	const lifeTimeSavedText = `${mes === 1 ? `${mes} ${Traducao.t('month')}` : `${mes} ${Traducao.t('months')}`}, ${dia === 1 ? `${dia} ${Traducao.t('day')}` : `${dia} ${Traducao.t('days')}`}, ${hora === 1 ? `${hora} ${Traducao.t('hour')}` : `${hora} ${Traducao.t('hours')}`} e ${horaPercent === 1 ? `${horaPercent} ${Traducao.t('minute')}` : `${horaPercent} ${Traducao.t('minutes')}`}`;
 
 	//EM MÉDIA :	
 	//1 hora = 60 minutos

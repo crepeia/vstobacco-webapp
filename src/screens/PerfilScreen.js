@@ -15,6 +15,7 @@ import HeaderButton from '../components/UI/HeaderButton';
 import DefaultTitle from '../components/DefaultTitle';
 import Card from '../components/UI/Card';
 import Localhost from '../constants/Localhost';
+import Traducao from '../components/Traducao/Traducao';
 
 import { AntDesign } from '@expo/vector-icons'; 
 
@@ -89,7 +90,7 @@ const PerfilScreen = (props) => {
         {/* Caso a pessoa não tenha plano preenchido: */}
 				{!evaluation && (
 					<View style={styles.containerEval}>
-						<DefaultText style={styles.createPlanText}>Você ainda não preencheu seu plano para diminuir o consumo!</DefaultText>
+						<DefaultText style={styles.createPlanText}>{Traducao.t('withoutPlan')}</DefaultText>
 						<TouchableOpacity
 							onPress={() =>
 								Linking.openURL(
@@ -98,7 +99,7 @@ const PerfilScreen = (props) => {
 							}
 							style={styles.button}
 						>
-							<DefaultText style={styles.buttonText}>Criar plano</DefaultText>
+							<DefaultText style={styles.buttonText}>{Traducao.t('createPlan')}</DefaultText>
 						</TouchableOpacity>
 						
 					</View>
@@ -107,24 +108,24 @@ const PerfilScreen = (props) => {
         {/* Caso a pessoa tenha plano preenchido: */}
 				{evaluation && (
 					<Card style={styles.plano}>
-						<DefaultTitle style={styles.tituloPlano}>Seu plano de parada</DefaultTitle>
+						<DefaultTitle style={styles.tituloPlano}>{Traducao.t('yourPlan')}</DefaultTitle>
 
-						<DefaultText style={styles.labelPlano}>Data de parada:</DefaultText>
+						<DefaultText style={styles.labelPlano}>{Traducao.t('stopDate')}</DefaultText>
 						<DefaultText style={styles.textoPlano}>{evaluation.dataParada}</DefaultText>
 
-						<DefaultText style={styles.labelPlano}>Técnicas para a fissura:</DefaultText>
-						{evaluation.beberAgua && <DefaultText style={styles.textoPlano}>- Beber um copo de água pausadamente.</DefaultText>}
-						{evaluation.comerAlimentos && <DefaultText style={styles.textoPlano}>- Comer alimentos com baixa quantidade de calorias como frutas cristalizadas, uvas passas, balas e chicletes dietéticos.</DefaultText>}
-						{evaluation.lerCartao && <DefaultText style={styles.textoPlano}>- Ler um cartão com suas razões para ter parado de fumar.</DefaultText>}
-						{evaluation.exercicioRelaxamento && <DefaultText style={styles.textoPlano}>- Fazer um exercício de relaxamento em áudio MP3 (link disponível no site)</DefaultText>}
+						<DefaultText style={styles.labelPlano}>{Traducao.t('fissureTechniques')}</DefaultText>
+						{evaluation.beberAgua && <DefaultText style={styles.textoPlano}>{Traducao.t('drinkWater')}</DefaultText>}
+						{evaluation.comerAlimentos && <DefaultText style={styles.textoPlano}>{Traducao.t('eatFruits')}</DefaultText>}
+						{evaluation.lerCartao && <DefaultText style={styles.textoPlano}>{Traducao.t('readYourCard')}</DefaultText>}
+						{evaluation.exercicioRelaxamento && <DefaultText style={styles.textoPlano}>{Traducao.t('doExercises')}</DefaultText>}
 						{!evaluation.beberAgua && !evaluation.comerAlimentos && !evaluation.lerCartao && !evaluation.exercicioRelaxamento
-						&& <DefaultText style={styles.textoPlano}>Não há técnicas selecionadas em seu plano.</DefaultText>}
+						&& <DefaultText style={styles.textoPlano}>{Traducao.t('withoutFissureTechniques')}</DefaultText>}
 
-						<DefaultText style={styles.labelPlano}>Técnicas para evitar recaídas:</DefaultText>
+						<DefaultText style={styles.labelPlano}>{Traducao.t('preventRelapse')}</DefaultText>
 						{evaluation.evitarRecaida1 && <DefaultText style={styles.textoPlano}>{evaluation.evitarRecaida1}</DefaultText>}
 						{evaluation.evitarRecaida2 && <DefaultText style={styles.textoPlano}>{evaluation.evitarRecaida2}</DefaultText>}
 						{evaluation.evitarRecaida3 && <DefaultText style={styles.textoPlano}>{evaluation.evitarRecaida3}</DefaultText>}
-						{!evaluation.evitarRecaida1 && !evaluation.evitarRecaida2 && !evaluation.evitarRecaida3 && <DefaultText style={styles.textoPlano}>Você não escreveu nenhuma técnica para evitar recaídas.</DefaultText>}
+						{!evaluation.evitarRecaida1 && !evaluation.evitarRecaida2 && !evaluation.evitarRecaida3 && <DefaultText style={styles.textoPlano}>{Traducao.t('withoutTechniquesToRelapse')}</DefaultText>}
 
 					</Card>
 				)}
@@ -135,7 +136,7 @@ const PerfilScreen = (props) => {
 
 export const screenOptions = navData => {
   return {
-    headerTitle: 'Perfil',
+    headerTitle: Traducao.t('perfilScreen'),
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item 

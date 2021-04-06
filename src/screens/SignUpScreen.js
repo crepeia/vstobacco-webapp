@@ -19,6 +19,7 @@ import FormButton from '../components/Form/FormButton';
 import Colors from '../constants/Colors';
 import Localhost from '../constants/Localhost';
 import RegisterUser from '../models/RegisterUser';
+import Traducao from '../components/Traducao/Traducao';
 
 
 import * as userActions from '../store/actions/user';

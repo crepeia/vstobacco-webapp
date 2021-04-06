@@ -12,6 +12,7 @@ import DefaultTitle from '../components/DefaultTitle';
 import Card from '../components/UI/Card';
 import NumberInput from '../components/UI/NumberInput';
 import Colors from '../constants/Colors';
+import Traducao from '../components/Traducao/Traducao';
 
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
@@ -214,11 +215,11 @@ const RecordScreen = props => {
     if (error) {
 		return (
 			<View style={styles.loading}>
-				<DefaultText>Um erro ocorreu!</DefaultText>
+				<DefaultText>{Traducao.t('error')}</DefaultText>
 				<DefaultText>{error}</DefaultText>
 
 				<Button
-					title='Tente novamente'
+					title={Traducao.t('tryAgain')}
 					onPress={loadRecord}
 					color={Colors.primaryColor}
 				/>
@@ -230,16 +231,16 @@ const RecordScreen = props => {
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
             <View style={styles.container}>
                 <Card style={styles.card}>
-                    <DefaultTitle style={styles.title}>Bem-Vindo ao Viva sem Tabaco!</DefaultTitle>
+                    <DefaultTitle style={styles.title}>{Traducao.t('welcome')}</DefaultTitle>
                     <View style={styles.content}>
-                        <DefaultText style={styles.text}>Aqui é onde você irá definir o seu consumo de cigarros antes de começar a intervenção do <DefaultText style={{color: Colors.primaryColor, fontWeight: 'bold'}}>Viva sem Tabaco.</DefaultText></DefaultText>
-                        <DefaultText style={styles.text}>Você sabia que uma pessoa - que fuma um maço de cigarros de 6 reais - gasta, em cinco anos, <DefaultText style={{fontWeight: 'bold'}}>R$10.950,00</DefaultText> com o uso? Isso sem contar as despesas com a saúde.</DefaultText>
-                        <DefaultText style={styles.text}>Insira abaixo suas informações: </DefaultText>
+                        <DefaultText style={styles.text}>{Traducao.t('defineConsumption')}<DefaultText style={{color: Colors.primaryColor, fontWeight: 'bold'}}>Viva sem Tabaco.</DefaultText></DefaultText>
+                        <DefaultText style={styles.text}>{Traducao.t('didYouKnow')}<DefaultText style={{fontWeight: 'bold'}}>{Traducao.t('cash')}</DefaultText>{Traducao.t('expenditure')}</DefaultText>
+                        <DefaultText style={styles.text}>{Traducao.t('information')}</DefaultText>
 
                         {/* DADOS DE CONSUMO */}
                         <View style={styles.colunaConsumo}>
                             <View style={{...styles.consumoContainer, marginBottom: 10}}>
-                                <DefaultText style={styles.consumoText}>{'Cigarros fumados por dia'}</DefaultText>
+                                <DefaultText style={styles.consumoText}>{Traducao.t('cigarettesInfo')}</DefaultText>
                                 <NumberInput
                                     type={'int'}
                                     maxLength={2}
@@ -255,7 +256,7 @@ const RecordScreen = props => {
                                 />
                             </View>
                             <View style={{...styles.consumoContainer, borderTopWidth: 0.8, borderBottomWidth: 0.8, borderColor: Colors.primaryColor, paddingVertical: 10}}>
-                                <DefaultText style={styles.consumoText}>{'Preço do maço de cigarros'}</DefaultText>
+                                <DefaultText style={styles.consumoText}>{Traducao.t('packPrice')}</DefaultText>
                                 <NumberInput 
                                     type={'float'}
                                     maxLength={5}
@@ -271,7 +272,7 @@ const RecordScreen = props => {
                                 />
                             </View>
                             <View style={{...styles.consumoContainer, marginTop: 10}}>
-                                <DefaultText style={styles.consumoText}>{'Quantidade de cigarros no maço'}</DefaultText>
+                                <DefaultText style={styles.consumoText}>{Traducao.t('quantityCigarette')}</DefaultText>
                                 <NumberInput 
                                     type={'int'}
                                     maxLength={2}
@@ -296,7 +297,7 @@ const RecordScreen = props => {
                             style={styles.button}
                             activeOpacity={0.6}
                         >
-                            <DefaultText style={styles.buttonText}>{'PROSSEGUIR'}</DefaultText>
+                            <DefaultText style={styles.buttonText}>{Traducao.t('proceed')}</DefaultText>
                         </TouchableOpacity>
                         }
 
