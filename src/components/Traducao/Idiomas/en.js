@@ -101,7 +101,7 @@ const en = {
         placeHolderPassword: "Your password on Viva sem Tabaco",
         validPassword: "Please enter a valid password!",
         login: "Log in",
-        createAccount: "Don\'t have an account?",
+        dontHaveAccount: "Don\'t have an account?",
 
         // OptionsScreen:
         optionsScreen: "Options",
@@ -171,7 +171,51 @@ const en = {
         cigarettesInfo: "Cigarettes smoked per day",
         // packPrice
         // quantityCigarette
-        proceed: "PROCEED"
+        proceed: "PROCEED",
+
+        // SignUpScreen:
+        never: "Never",
+        frequencyDaily: "Daily",
+        frequencyTwoDays: "Every two days",
+        frequencyThreeDays: "Every three days",
+        frequencyFourDays: "Every four days",
+        frequencyFiveDays: "Every five days",
+        frequencyWeekly: "Weekly",
+        typeName: "Enter your name",
+        minName: "Please enter your full name",
+        requireGender: "Choose a gender option",
+        requirePregnant: "This field is required",
+        requireBirthDate: "Please enter your date of birth",
+        // validEmail
+        typeEmail: "Enter your email",
+        typePassword: "Enter a password",
+        minPassword: "The password must contain at least 6 characters",
+        requireTermsUse: "You need to accept the terms of use to create an account",
+        frequency: "Choose a frequency option",
+        receiveEmails: "This field is required",
+        accountCreated: "Account created successfully",
+        accountNotCreated: "The account could not be created",
+        personalData: "Personal Data",
+        // typeName
+        completeName: "Full name",
+        gender: "Gender",
+        isPregnant: "Are you pregnant?",
+        birthDate: "Date of birth",
+        typeNumber: "Enter your number",
+        phone: "Phone (optional)",
+        invalidPhone: "Invalid phone number",
+        acessData: "Access Data",
+        typeEmail: "Enter your email",
+        //email
+        // typePassword
+        // password
+        finishing: "Finished",
+        receiveTips: "Do you want to receive our tips by email?",
+        frequencyTips: "Frequency of receiving tips for reducing tobacco consumption",
+        end: "Phew! Now it's over :)",
+        createAccount: "Create Account",
+        formError: "Error in the form",
+        formErrorMessage: "There is an error in the form, please correct it in order to create your account :)",
 }
 
 export default en;

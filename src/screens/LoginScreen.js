@@ -168,7 +168,7 @@ const LoginScreen = props => {
                         style={styles.buttonSignUp}
                         onPress={() => props.navigation.navigate('Cadastro')}
                     >
-                        <DefaultText style={styles.labelForm}>{Traducao.t('createAccount')}</DefaultText>
+                        <DefaultText style={styles.labelForm}>{Traducao.t('dontHaveAccount')}</DefaultText>
                     </TouchableOpacity>
                 </View>
             </View>

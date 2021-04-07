@@ -25,13 +25,13 @@ import Traducao from '../components/Traducao/Traducao';
 import * as userActions from '../store/actions/user';
 
 const tipsFrequencyData = [
-    { frequency: 'Nunca', id: 0 },
-    { frequency: 'Diariamente', id: 1 },
-    { frequency: 'A cada dois dias', id: 2 },
-    { frequency: 'A cada três dias', id: 3 },
-    { frequency: 'A cada quatro dias', id: 4 },
-    { frequency: 'A cada cinco dias', id: 5 },
-    { frequency: 'Semanalmente', id: 6 },
+    { frequency: Traducao.t('never'), id: 0 },
+    { frequency: Traducao.t('frequencyDaily'), id: 1 },
+    { frequency: Traducao.t('frequencyTwoDays'), id: 2 },
+    { frequency: Traducao.t('frequencyThreeDays'), id: 3 },
+    { frequency: Traducao.t('frequencyFourDays'), id: 4 },
+    { frequency: Traducao.t('frequencyFiveDays'), id: 5 },
+    { frequency: Traducao.t('frequencyWeekly'), id: 6 },
 ]
 
 const validationSchema = yup.object({

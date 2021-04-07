@@ -101,7 +101,7 @@ const pt = {
         placeHolderPassword: "Sua senha no Viva sem Tabaco",
         validPassword: "Informe uma senha válida!",
         login: "Entrar",
-        createAccount: "Não possui conta?",
+        dontHaveAccount: "Não possui conta?",
 
         // OptionsScreen
         optionsScreen: "Opções",
@@ -171,7 +171,53 @@ const pt = {
         cigarettesInfo: "Cigarros fumados por dia",
         //packPrice
         //quantityCigarette
-        proceed: "PROSSEGUIR"
+        proceed: "PROSSEGUIR",
+
+        // SignUpScreen:
+        never: "Nunca",
+        frequencyDaily: "Diariamente",
+        frequencyTwoDays: "A cada dois dias",
+        frequencyThreeDays: "A cada três dias",
+        frequencyFourDays: "A cada quatro dias",
+        frequencyFiveDays: "A cada cinco dias",
+        frequencyWeekly: "Semanalmente",
+        typeName: "Digite seu nome",
+        minName: "Digite seu nome completo",
+        requireGender: "Escolha uma opção de sexo",
+        requirePregnant: "Este campo é requerido",
+        requireBirthDate: "Insira sua data de nascimento",
+        //validEmail
+        typeEmail: "Digite o seu e-mail",
+        typePassword: "Digite uma senha",
+        minPassword: "A senha deve conter no mínimo 6 caracteres",
+        requireTermsUse: "Você precisa aceitar os termos de uso para criar uma conta",
+        frequency: "Escolha uma opção de frequência",
+        receiveEmails: "Este campo é requerido",
+        accountCreated: "Conta criada com sucesso",
+        accountNotCreated: "Não foi possível criar a conta",
+        personalData: "Dados Pessoais",
+        //typeName
+        completeName: "Nome completo",
+        gender: "Gênero",
+        isPregnant: "Você se encontra grávida?",
+        birthDate: "Data de nascimento",
+        typeNumber: "Digite seu número",
+        phone: "Telefone (opcional)",
+        invalidPhone: "Número de telefone inválido",
+        acessData: "Dados de Acesso",
+        typeEmail: "Digite seu e-mail",
+        //email
+        //typePassword
+        //password
+        finishing: "Finalizado",
+        receiveTips: "Deseja receber nossas dicas por email?",
+        frequencyTips: "Frequência de recebimento das dicas para redução de consumo de tabaco",
+        end: "Ufa! Agora acabou :)",
+        createAccount: "Criar Conta",
+        formError: "Erro no formulário",
+        formErrorMessage: "Há um erro no formulário, corrija para poder criar sua conta :)",
+
+
 }
 
 export default pt;
