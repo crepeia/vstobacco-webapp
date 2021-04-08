@@ -17,6 +17,7 @@ import Constants from "expo-constants";
 import moment from "moment";
 
 import Colors from "../constants/Colors";
+import Traducao from '../components/Traducao/Traducao';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -45,7 +46,7 @@ const StartupLogin = (props) => {
 	const hora = diaPercent > 60 ? Math.floor(diaPercent / 60) : 0;
 	const horaPercent = hora >= 1 ? diaPercent % 60 : diaPercent; //minutos
 
-	const lifeTimeSavedText = `${mes === 1 ? `${mes} mês` : `${mes} meses`}, ${dia === 1 ? `${dia} dia` : `${dia} dias`}, ${hora === 1 ? `${hora} hora` : `${hora} horas`} e ${horaPercent === 1 ? `${horaPercent} minuto` : `${horaPercent} minutos`}`;
+	const lifeTimeSavedText = `${mes === 1 ? `${mes} ${Traducao.t('month')}` : `${mes} ${Traducao.t('months')}`}, ${dia === 1 ? `${dia} ${Traducao.t('day')}` : `${dia} ${Traducao.t('days')}`}, ${hora === 1 ? `${hora} ${Traducao.t('hour')}` : `${hora} ${Traducao.t('hours')}`} e ${horaPercent === 1 ? `${horaPercent} ${Traducao.t('minute')}` : `${horaPercent} ${Traducao.t('minutes')}`}`;
 	// fim calculo tempo vida
 
     const dispatch = useDispatch();
@@ -88,7 +89,7 @@ const StartupLogin = (props) => {
 				return;
 			}
 
-			Alert.alert('Sobre as notificações: ', 'Você pode alterar o horário de notificação em Opções no menu.', [
+			Alert.alert(Traducao.t('aboutNotifications'), Traducao.t('changeTime'), [
 				{ text: "Ok", style: "destructive" },
 			]);
 
@@ -101,8 +102,8 @@ const StartupLogin = (props) => {
 			if (options.allowCigarNotifications) {
 				let idCigarNotification = await Notifications.scheduleNotificationAsync({
 					content: {
-						title: "Lembrete",
-						body: "Informe a quantidade de cigarros fumados hoje!",
+						title: Traducao.t('reminder'),
+						body: Traducao.t('informQuantity'),
 						data: JSON.stringify({ screen: "Cigarros fumados" }),
 						sound: true
 					},
@@ -121,9 +122,9 @@ const StartupLogin = (props) => {
 			if (options.allowAchievementsNotifications) {
 				let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 					content: {
-						title: "Conquista =)",
-						body: isEven === 0 ? `Você deixou de fumar ${cigarsNotSmoken} cigarros e salvou ${lifeTimeSavedText} da sua vida!` 
-						: `Você deixou de fumar ${cigarsNotSmoken} cigarros e economizou R$${moneySaved.toFixed(2)}!`,
+						title: Traducao.t('conquest'),
+						body: isEven === 0 ? `${Traducao.t('conquestPhrasePart1')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart2')} ${lifeTimeSavedText} ${Traducao.t('conquestPhrasePart3')}` 
+						: `${Traducao.t('conquestPhrasePart4')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart5')}${moneySaved.toFixed(2)}!`,
 						data: JSON.stringify({ screen: " Conquistas" }),
 						sound: true
 					},
@@ -142,8 +143,8 @@ const StartupLogin = (props) => {
 			if (options.allowTipNotifications) {
 				let idTipNotification = await Notifications.scheduleNotificationAsync({
 					content: {
-						title: "Lembrete",
-						body: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+						title: Traducao.t('reminder'),
+						body: Traducao.t('reminderTip'),
 						data: JSON.stringify({ screen: "Dicas" }),
 						sound: true
 					},

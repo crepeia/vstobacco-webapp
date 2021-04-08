@@ -31,6 +31,10 @@ const pt = {
         conquestPhrasePart5: "cigarros e economizou R$",
         reminderTip: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
 
+        // Notifications:
+        aboutNotifications: "Sobre as notificações: ",
+        changeTime: "Você pode alterar o horário de notificação em Opções no menu.",
+
     // Screens:
 
         // AboutScreen
@@ -65,8 +69,6 @@ const pt = {
         noTips: "Você ainda não recebeu nenhuma dica!",
 
         // HomeScreen
-        aboutNotifications: "Sobre as notificações: ",
-        changeTime: "Você pode alterar o horário de notificação em Opções no menu.",
         smokedCigarettesInWeek: "Cigarros fumados na semana",
         weeksInYear: "Números acima correspondem às semanas e cada ano tem 52 semanas",
         numberADay: "Números acima correspondem aos dias de",
@@ -217,7 +219,56 @@ const pt = {
         formError: "Erro no formulário",
         formErrorMessage: "Há um erro no formulário, corrija para poder criar sua conta :)",
 
+        // TermoConsetimento:
+        consentForm: "Termo de Consentimento Livre e Esclarecido",
+        consentFormPart1: "O Sr. (a) está sendo convidado (a) como voluntário (a) a participar da pesquisa - Viva sem Tabaco - Avaliação de uma intervenção mediada por internet para tabagistas. O motivo que nos leva a estudar o tema é saber se informações sobre tabagismo na Internet ajudam fumantes a pararem de fumar.",
+        consentFormPart2: "Para esta pesquisa adotaremos os seguintes procedimentos: após seu consentimento, você usará um site e será convidado a responder algumas questões ao final.",
+        consentFormPart3: "Os riscos envolvidos na pesquisa consistem nos mesmos riscos ao usar um computador conectado à Internet.",
+        consentFormPart4: "A pesquisa contribuirá para futuras melhorias em sites com informações sobre tabagismo como também aumentará o conhecimento científico na área de tabagismo.",
+        consentFormPart5: "Para participar deste estudo ",
+        consentFormPart6: "o Sr(a) não terá nenhum custo",
+        consentFormPart7: ", nem receberá qualquer vantagem financeira. Apesar disso, caso sejam identificados e comprovados danos provenientes desta pesquisa, o Sr.(a) tem assegurado o direito à indenização. O Sr.(a) terá o esclarecimento sobre o estudo em qualquer aspecto que desejar e estará livre para participar ou recusar-se a participar. Poderá retirar seu consentimento ou interromper a participação a qualquer momento.",
+        consentFormPart8: "A sua participação é voluntária e a recusa em participar não acarretará qualquer penalidade ou modificação na forma em que o Sr.(a) é atendido pelo pesquisador, que tratará a sua identididade com padrões profissionais de sigilo. Os resultados da pesquisa estarão à sua disposição quando finalizada na sessão de pesquisa, dentro do site do estudo. Seu nome ou o material que indique sua participação não será liberado sem a sua permissão.",
+        consentFormPart9: "O (A) Sr(a) não será identificado(a) em nenhuma publicação que possa resultar.",
+        consentFormPart10: "Este termo de consentimento encontra-se disponível em duas vias eletrônicas. Uma enviada ao seu e-mail e a outra enviada para o e-mail do pesquisador responsável. Os dados e instrumentos utilizados na pesquisa ficarão arquivados com o pesquisador responsável por 5 (cinco) anos, e após este tempo serão destruídos. Os pesquisadores tratarão a sua identidade com padrões profissionais de sigilo, atendendo a legislação brasileira (Resolução N. 466/12 do Conselho Nacional de Saúde), utilizando as informações somente para os fins acadêmicos e científicos.",
+        consentFormPart11: "Eu fui informado(a) dos objetivos da pesquisa Viva sem Tabaco - Avaliação de uma intervenção mediada por internet para tabagistas, de maneira clara e detalhada e esclareci minhas dúvidas. Sei que a qualquer momento poderei solicitar novas informações e modificar minha decisão de participar se assim o desejar.",
+        consentFormPart12: "Declaro que concordo em participar. Recebi uma via original deste termo de consentimento livre e esclarecido e me foi dada à oportunidade de ler e esclarecer as minhas dúvidas.",
 
+        // TermosUso:
+        termsOfUse: "Termo de responsabilidade, política de privacidade e termos e condições de uso do Viva sem Tabaco.",
+        termsOfUsePart1: 'Bem vindo ao "Viva sem Tabaco". Para que o uso do Viva sem Tabaco seja satisfatório e não ofensivo para você, é importante ler, entender e concordar com os seguintes termos e condições.',
+        termsOfUsePart2: "O Viva sem Tabaco foi desenvolvido com intuito de ser um serviço público, ofertando informações e um programa de tratamento do tabagismo.",
+        termsOfUsePart3: "O programa é complementar ao tratamento tradicional de tabagismo e sua utilização do programa ",
+        termsOfUsePart4: "não",
+        termsOfUsePart5: " substitui a consulta com profissionais de saúde.",
+        termsOfUsePart6: " O programa é de caráter experimental e será testado quanto sua eficácia clínica.",
+        termsOfUsePart7: "Acesso ao Viva sem Tabaco",
+        termsOfUsePart8: "Algumas das páginas do Viva sem Tabaco são de livre acesso a todos os visitantes, no entanto, o acesso ao programa requer a realização de um cadastro gratuito. Caso exista interesse por parte do usuário, é necessário escolher um nome de usuário e uma senha. O nome de usuário e senha devem ser mantidos em sigilo e não devem ser compartilhados com qualquer outro usuário. Os visitantes são solicitados a não divulgarem o nome de usuário e senha para terceiros.",
+        termsOfUsePart9: "Proibições",
+        termsOfUsePart10: "- Usar outro nome de pessoa, nome de usuário ou senha quando acessar o Viva sem Tabaco, sem o prévio consentimento;",
+        termsOfUsePart11: "- Escrever ou transmitir qualquer material que pode, de alguma forma, difamar, ofender ou causar desconforto a qualquer pessoa; ser obsceno ou que de qualquer maneira, interfira na utilização de outros usuários do Viva sem Tabaco;",
+        termsOfUsePart12: "- Prover qualquer informação para o Viva sem Tabaco que seja confidencial ou propriedade de terceiros;",
+        termsOfUsePart13: "- Usar o Viva sem Tabaco de qualquer maneira que possa infringir leis, regras ou regulamentações ou direito de terceiros; ou",
+        termsOfUsePart14: "- Transmitir vírus ou qualquer conteúdo que interfira na funcionalidade do Viva sem Tabaco.",
+        termsOfUsePart15: "Garantias",
+        termsOfUsePart16: "Todos os esforços foram realizados para garantir que as informações e materiais contidos no Viva sem Tabaco sejam completamente verdadeiros e não danosos. Os materiais e informações disponibilizadas foram avaliados por especialistas na área de tratamento do tabagismo e por ex-fumantes.",
+        termsOfUsePart17: "O Viva sem Tabaco não garante que os serviços serão disponibilizados de forma ininterrupta ou constante",
+        termsOfUsePart18: "Embora os serviços propostos pelo Viva sem Tabaco tenham como objetivo prover ajuda a fumantes, os mesmos são livres e encorajados a consultar profissionais de saúde. Todos os usuários devem utilizar este assumindo seus próprios riscos.",
+        termsOfUsePart19: "Serviços e Materiais de Terceiros",
+        termsOfUsePart20: "As informações contidas no Viva sem Tabaco podem incluir serviços e informações de terceiros. O conteúdo e serviços de terceiros serão disponibilizados com aprovação prévia.",
+        termsOfUsePart21: "Links",
+        termsOfUsePart22: "O Viva sem Tabaco contém links para outros sites que não se encontram sob o controle ou é mantido por nós. Os links de terceiros são disponibilizados para conveniência e informação. Caso o usuário acesse estas informações, os riscos de utilização são de inteira responsabilidade do usuário. O fato de um site de terceiros estar ligado a este projeto, não implica necessariamente em relação de patrocínio ou que o site de terceiro seja afiliado deste.",
+        termsOfUsePart23: "Mudanças de Informações, Produtos e Serviços",
+        termsOfUsePart24: "Informações, produtos e serviços publicados no Viva sem Tabaco são sujeitos a alterações sem prévias notícias.",
+        termsOfUsePart25: "Informação disponibilizada pelo Viva sem Tabaco",
+        termsOfUsePart26: "Pessoas inscritas no programa Viva sem Tabaco disponibilizam informações relacionadas ao conteúdo dos mesmos de forma involuntária. Uma vez disponibilizada, a informação é de propriedade do usuário, podendo ser reproduzida, publicada, transmitida, disponibilizada, sujeita as obrigações da Política de Privacidade.",
+        termsOfUsePart27: "Licença",
+        termsOfUsePart28: "Todo conteúdo do Viva sem Tabaco, incluindo os programas, design, textos e gráficos são licenciados pela Licença Pública Geral - GNU, garantindo a liberdade de usar o conteúdo do programa para qualquer propósito, modificar o programa, de compartilhar com seus vizinhos e amigos e compartilhar as mudanças que você fizer.",
+        termsOfUsePart29: "Ver a licença GPL GNU completa.",
+        termsOfUsePart30: "Marcas Registradas",
+        termsOfUsePart31: "O Viva sem Tabaco contém marcas e logomarcas de terceiros registradas, protegidas por lei. Não é permitido o uso delas sem consentimento prévio.",
+        termsOfUsePart32: "Término",
+        termsOfUsePart33: "Caso o usuário desrespeite os termos e condições do Viva sem Tabaco, seu acesso pode ser limitado ou proibido.",
 }
 
 export default pt;

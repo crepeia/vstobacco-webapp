@@ -36,28 +36,28 @@ const tipsFrequencyData = [
 
 const validationSchema = yup.object({
     name: yup.string()
-        .required('Digite seu nome')
-        .min(8, 'Digite seu nome completo'),
+        .required(Traducao.t('typeName'))
+        .min(8, Traducao.t('minName')),
     gender: yup.string()
         .nullable()
-        .required('Escolha uma opção de sexo'),
+        .required(Traducao.t('requireGender')),
     pregnant: yup.mixed()
         .oneOf([null, true, false])
-        .notOneOf([undefined], 'Este campo é requerido'),
+        .notOneOf([undefined], Traducao.t('requirePregnant')),
     birthDate: yup.string()
-        .required('Insira sua data de nascimento'),
+        .required(Traducao.t('requireBirthDate')),
     email: yup.string()
-        .email('E-mail inválido')
-        .required('Digite o seu e-mail'),
+        .email(Traducao.t('validEmail'))
+        .required(Traducao.t('typeEmail')),
     password: yup.string()
-        .required('Digite uma senha')
-        .min(6, 'A senha deve conter no mínimo 6 caracteres'),
+        .required(Traducao.t('typePassword'))
+        .min(6, Traducao.t('minPassword')),
     termsUse: yup.boolean()
-        .oneOf([true], 'Você precisa aceitar os termos de uso para criar uma conta'),
+        .oneOf([true], Traducao.t('requireTermsUse')),
     tipsFrequency: yup.number()
-        .min(0, 'Escolha uma opção de frequência'),
+        .min(0, Traducao.t('frequency')),
     receiveEmails: yup.boolean()
-        .oneOf([true, false], 'Este campo é requerido'),
+        .oneOf([true, false], Traducao.t('receiveEmails')),
     
 });
 
@@ -119,10 +119,10 @@ const SignUpScreen = props => {
             await dispatch(userActions.signup(registerValues));
             setLoading(false);
             props.navigation.navigate('Login');
-            Alert.alert('Conta criada com sucesso');
+            Alert.alert(Traducao.t('accountCreated'));
         } catch (error) {
             setLoading(false);
-            Alert.alert('Não foi possível criar a conta.');
+            Alert.alert(Traducao.t('accountNotCreated'));
             console.log(error);
         }
     };
@@ -138,11 +138,11 @@ const SignUpScreen = props => {
                 >
                     {(formikProps) => (
                         <View style={styles.formContainer}>
-                            <LineSeparator title='Dados Pessoais' />
+                            <LineSeparator title={Traducao.t('personalData')} />
 
                             <FormTextInput 
-                                placeholder={'Digite seu nome'}
-                                title={'Nome completo'}
+                                placeholder={Traducao.t('typeName')}
+                                title={Traducao.t('completeName')}
                                 titleColor={'white'}
                                 onChangeText={formikProps.handleChange('name')}
                                 onBlur={formikProps.handleBlur('name')}
@@ -152,7 +152,7 @@ const SignUpScreen = props => {
                             />
 
                             <FormPicker
-                                title={'Gênero'}
+                                title={Traducao.t('gender')}
                                 value={formikProps.values.gender}
                                 onValueChange={itemValue => {
                                     if (itemValue === 'F') {
@@ -170,7 +170,7 @@ const SignUpScreen = props => {
 
                             {formikProps.values.gender === 'F' &&
                                 <FormCheck 
-                                    title={'Você se encontra grávida?'}
+                                    title={Traducao.t('isPregnant')}
                                     value={formikProps.values.pregnant}
                                     onChange={itemValue => {
                                         formikProps.setFieldValue('pregnant', itemValue)
@@ -181,7 +181,7 @@ const SignUpScreen = props => {
                             }
 
                             <FormData 
-                                title={'Data de nascimento'}
+                                title={Traducao.t('birthDate')}
                                 value={date}
                                 onValueChange={itemValue => {
                                     formikProps.setFieldValue('birthDate', itemValue)
@@ -194,8 +194,8 @@ const SignUpScreen = props => {
                             />
 
                             <FormTextInput
-                                placeholder={'Digite seu número'}
-                                title={'Telefone (opcional)'}
+                                placeholder={Traducao.t('typeNumber')}
+                                title={Traducao.t('phone')}
                                 titleColor={'white'}
                                 onChangeText={formikProps.handleChange('phone')}
                                 onBlur={formikProps.handleBlur('phone')}
@@ -203,7 +203,7 @@ const SignUpScreen = props => {
                                 onChange={() => {
                                     setErrorPhone(handlePhoneError(formikProps.values.phone));
                                 }}
-                                error={errorPhone ? 'Número de telefone inválido' : false}
+                                error={errorPhone ? Traducao.t('invalidPhone') : false}
                                 touched={formikProps.touched.phone}
                                 keyboardType='number-pad'
                             />
@@ -246,11 +246,11 @@ const SignUpScreen = props => {
                                 keyboardType='number-pad'
                             /> */}
 
-                            <LineSeparator title='Dados de Acesso' />
+                            <LineSeparator title={Traducao.t('acessData')} />
 
                             <FormTextInput
-                                placeholder={'Digite seu e-mail'}
-                                title={'E-mail'}
+                                placeholder={Traducao.t('typeEmail')}
+                                title={Traducao.t('email')}
                                 titleColor={'white'}
                                 onChangeText={formikProps.handleChange('email')}
                                 onBlur={formikProps.handleBlur('email')}
@@ -263,8 +263,8 @@ const SignUpScreen = props => {
                             />
 
                             <FormTextInput
-                                placeholder={'Digite uma senha'}
-                                title={'Senha'}
+                                placeholder={Traducao.t('typePassword')}
+                                title={Traducao.t('password')}
                                 titleColor={'white'}
                                 onChangeText={formikProps.handleChange('password')}
                                 onBlur={formikProps.handleBlur('password')}
@@ -276,10 +276,10 @@ const SignUpScreen = props => {
                                 secureTextEntry
                             />
 
-                            <LineSeparator title={'Finalizando'} />
+                            <LineSeparator title={Traducao.t('finishing')} />
 
                             <FormCheck 
-                                title={'Deseja receber nossas dicas por email?'}
+                                title={Traducao.t('receiveTips')}
                                 value={formikProps.values.receiveEmails}
                                 onChange={itemValue => {
                                     if (itemValue === true) {
@@ -296,7 +296,7 @@ const SignUpScreen = props => {
 
                             {formikProps.values.receiveEmails === true &&
                                 <FormTipFrequency 
-                                    title={'Frequência de recebimento das dicas para redução de consumo de tabaco'}
+                                    title={Traducao.t('frequencyTips')}
                                     tipsFrequencyData={tipsFrequencyData}
                                     value={formikProps.values.tipsFrequency}
                                     onValueChange={itemValue => {
@@ -308,7 +308,7 @@ const SignUpScreen = props => {
                             }
 
                             <FormTerms 
-                                title={'Ufa! Agora acabou :)'}
+                                title={Traducao.t('end')}
                                 value={formikProps.values.termsUse}
                                 valueC={formikProps.values.authorizeData}
                                 onChangeTerms={(itemValue) => {
@@ -324,10 +324,10 @@ const SignUpScreen = props => {
                             />
 
                             <FormButton 
-                                title={'Criar Conta'}
+                                title={Traducao.t('createAccount')}
                                 onPress={() => {
                                     if (errorPhone) {
-                                        Alert.alert('Erro no formulário', 'Há um erro no formulário, corrija para poder criar sua conta :)');
+                                        Alert.alert(Traducao.t('formError'), Traducao.t('formErrorMessage'));
                                         return;
                                     }
                                     formikProps.handleSubmit()
