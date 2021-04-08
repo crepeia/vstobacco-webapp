@@ -35,6 +35,63 @@ const en = {
         aboutNotifications: "About notifications: ",
         changeTime: "You can change the notification time in Options in the menu.",
 
+    // components:
+
+        // Form:
+            // FormCheck:
+            yes: "Yes",
+            no: "No",
+
+            // FormPicker:
+            male: "Male",
+            female: "Female",
+            dontReport: "Don't report",
+            chooseGender: "Choose your gender",
+            
+            // FormTerms:
+            readAgreeSingular: "I've read and agree to the ",
+            //titleTermoDeConsentimento
+            readAgreePlural: "I've read and agree to the ",
+            //titleTermosDeUso
+
+            // FormTipFrequency:
+            chooseAFrequency: "Choose a frequency",
+
+        // UI:
+            // ChallengeCard:
+            progress: "Progress in the last 7 days",
+            continueCompleting: "Keep completing to earn more points :)",
+            complete: "Complete",
+            incomplete: "Incomplete",
+
+            // TipCard:
+            readMore: "Read more",
+
+        // HelpButtonModal:
+        learnMore: "Learn More",
+
+        // OfflineWarning:
+        withoutConnection: "Connect to the internet to synchronize your data",
+    
+    // dummyData:
+
+        // availableChallenges:
+        readTips: "Read tips",
+        readTipsDescription: "Read a tip received.",
+        informCigarettes: "Report smoked cigarettes daily",
+        informCigarettesDescription: "Report daily the number of cigarettes smoked in the day.",
+        dontSmoke: "Don't smoke",
+        dontSmokeDescription: "Do not smoke during the day.",
+        register: "Cadastre",
+        registerDescription: "Finalize the registration on the website. You can find it in the About section.",
+        stopPlan: "Stop Plan",
+        stopPlanDescription: "Complete the stopping plan on the website. You can find it in the About section",
+
+    // Navigation:
+        titleRegister: "Cadastre",
+        titleTermosDeUso: "Terms of Use",
+        titleTermoDeConsentimento: "Consent Term",
+
     // Screens:
 
         // AboutScreen:
@@ -60,7 +117,7 @@ const en = {
         lastWeekPoints: "Points in the last week",
 
         // DicasDetalheScreen:
-        dicasDetalheScreenTip: "Tip",
+        dicasDetalheScreenTip: "Tips",
         dicasDetalheScreenDetails: "Details",
         likedTip: "Did you like this tip?",
 

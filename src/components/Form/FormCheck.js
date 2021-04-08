@@ -4,6 +4,7 @@ import Checkbox from '@react-native-community/checkbox'
 
 import DefaultText from '../DefaultText';
 import Colors from '../../constants/Colors';
+import Traducao from '../Traducao/Traducao';
 
 const FormCheck = props => {
 
@@ -31,7 +32,7 @@ const FormCheck = props => {
                             }
                         }}
                     />
-                    <DefaultText style={styles.text}>{'Sim'}</DefaultText>
+                    <DefaultText style={styles.text}>{Traducao.t('yes')}</DefaultText>
                 </View>
 
                 <View style={{...styles.checkBox, marginLeft: 20}}>
@@ -50,7 +51,7 @@ const FormCheck = props => {
                             }
                         }}
                     />
-                    <DefaultText style={styles.text}>{'Não'}</DefaultText>
+                    <DefaultText style={styles.text}>{Traducao.t('no')}</DefaultText>
                 </View>
 
             </View>

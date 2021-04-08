@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import DefaultText from './DefaultText';
+import Traducao from '../components/Traducao/Traducao';
 
 const OfflineWarning = props => {
-    return props.show ? <DefaultText style={styles.offline}>{'Conecte-se à internet para sincronizar seus dados'}</DefaultText> : <View></View>
+    return props.show ? <DefaultText style={styles.offline}>{Traducao.t('withoutConnection')}</DefaultText> : <View></View>
 }
 
 

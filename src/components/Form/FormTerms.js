@@ -4,6 +4,7 @@ import Checkbox from '@react-native-community/checkbox'
 
 import DefaultText from '../DefaultText';
 import Colors from '../../constants/Colors';
+import Traducao from '../Traducao/Traducao';
 
 const FormTerms = props => {
 
@@ -26,7 +27,7 @@ const FormTerms = props => {
                         }}
                     />
                     <TouchableOpacity style={{width: '100%'}} onPress={props.navTermoConsentimento}>
-                        <DefaultText style={styles.text}>{'Li e concordo com o '}<DefaultText style={styles.attentionText}>{'termo de consentimento'}</DefaultText></DefaultText>
+                        <DefaultText style={styles.text}>{Traducao.t('readAgreeSingular')}<DefaultText style={styles.attentionText}>{Traducao.t('titleTermoDeConsentimento')}</DefaultText></DefaultText>
                     </TouchableOpacity>
                 </View>
 
@@ -44,7 +45,7 @@ const FormTerms = props => {
                         }}
                     />
                     <TouchableOpacity style={{width: '100%'}} onPress={props.navTermosUso}>
-                        <DefaultText style={styles.text}>{'Li e concordo com os '}<DefaultText style={styles.attentionText}>{'termos de uso'}</DefaultText></DefaultText>
+                        <DefaultText style={styles.text}>{Traducao.t('readAgreePlural')}<DefaultText style={styles.attentionText}>{Traducao.t('titleTermosDeUso')}</DefaultText></DefaultText>
                     </TouchableOpacity>
                 </View>
 

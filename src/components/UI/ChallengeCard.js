@@ -7,6 +7,8 @@ import Moment from "moment";
 import { extendMoment } from 'moment-range';
 import { Ionicons } from '@expo/vector-icons';
 
+import Traducao from '../Traducao/Traducao';
+
 
 const ChallengeCard = props => {
     const moment = extendMoment(Moment);
@@ -76,7 +78,9 @@ const ChallengeCard = props => {
 
                 {props.type === 'DAILY' &&(
                     <View style={styles.daysContainer}>
-                        <DefaultText style={styles.daysTitle}>Progresso nos últimos 7 dias</DefaultText>
+                        <DefaultText style={styles.daysTitle}>
+                            {Traducao.t('progress')}
+                        </DefaultText>
                     
                         <View style={styles.days}>
                         {
@@ -84,7 +88,9 @@ const ChallengeCard = props => {
                         }
                         </View>
                         {isComplete &&
-                            <DefaultText style={styles.continueTitle}>Continue completando para ganhar mais pontos :)</DefaultText>
+                            <DefaultText style={styles.continueTitle}>
+                                {Traducao.t('continueCompleting')}
+                            </DefaultText>
                         }
                     </View>
                 )}
@@ -92,7 +98,7 @@ const ChallengeCard = props => {
                     <View style={styles.badgeContainer}>
                         <View style={isComplete? styles.badge: styles.badgeIncomplete}>
                             <DefaultText style={isComplete? styles.badgeText: styles.badgeTextIncomplete}>
-                                 {isComplete? "Completo!":"Incompleto"}
+                                 {isComplete? Traducao.t('complete') : Traducao.t('incomplete')}
                             </DefaultText>
                         </View>
                     </View>

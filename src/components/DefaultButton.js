@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
 import DefaultText from './DefaultText';
+
 const DefaultButton = props => {
     return (
         <TouchableOpacity disabled={props.disabled} style={ props.disabled ? styles.buttonDisabled : styles.button } onPress={props.onPress} activeOpacity={0.4} >
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		backgroundColor: Colors.primaryColor,
 		borderRadius: 7,
-        elevation: 2
+		elevation: 2
 	},
 	buttonDisabled: {
 		padding: 10,

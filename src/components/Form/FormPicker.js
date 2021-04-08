@@ -4,19 +4,20 @@ import { Ionicons } from '@expo/vector-icons';
 
 import DefaultText from '../DefaultText';
 import Colors from '../../constants/Colors';
+import Traducao from '../Traducao/Traducao';
 
 const gender = {
     masc: {
         value: 'M',
-        placeholder: 'Masculino',
+        placeholder: Traducao.t('male'),
     },
     fem: {
         value: 'F',
-        placeholder: 'Feminino'
+        placeholder: Traducao.t('female'),
     },
     none: {
         value: 'N',
-        placeholder: 'Não informar'
+        placeholder: Traducao.t('dontReport'),
     }
 } 
 
@@ -47,7 +48,7 @@ const FormPicker = props => {
                     activeOpacity={0.4}
                     onPress={() => setIsOpen(!isOpen)}
                 >
-                    <DefaultText>{props.value === null ? 'Escolha seu sexo' : `${chosenGender}`}</DefaultText>
+                    <DefaultText>{props.value === null ? Traducao.t('chooseGender') : `${chosenGender}`}</DefaultText>
                     <Ionicons 
                         name={isOpen ? 'md-arrow-dropup' : 'md-arrow-dropdown'}
                         size={24}

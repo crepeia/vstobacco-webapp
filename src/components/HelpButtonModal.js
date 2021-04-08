@@ -6,6 +6,7 @@ import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'; 
 import Colors from '../constants/Colors';
 import DefaultText from './DefaultText';
+import Traducao from '../components/Traducao/Traducao';
 
 const HelpButtonModal = props => {
     const [modalVisible, setModalVisible] = useState(false)
@@ -60,7 +61,7 @@ const HelpButtonModal = props => {
                     />
                     :
                     <DefaultText style={{color:Colors.primaryColor, textDecorationLine: 'underline'}}>
-                        Saiba mais
+                        {Traducao.t('learnMore')}
                     </DefaultText>
                 }
             </TouchableOpacity>

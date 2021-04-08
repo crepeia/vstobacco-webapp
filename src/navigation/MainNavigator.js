@@ -29,6 +29,7 @@ import TermoConsentimento from '../screens/TermoConsetimento';
 
 //constante
 import Colors from '../constants/Colors';
+import Traducao from '../components/Traducao/Traducao';
 
 const defaultNavOptionsStack = {
     headerStyle: {
@@ -59,19 +60,22 @@ export const LoginNavigator = () => {
             <LoginStackNavigator.Screen
                 name='Cadastro'
                 component={SignUpScreen}
+                options={{
+                    title: Traducao.t('titleRegister')
+                }}
             />
             <LoginStackNavigator.Screen
                 name='TermosUso'
                 component={TermosUso}
                 options={{
-                    title: 'Termos de Uso',
+                    title: Traducao.t('titleTermosDeUso')
                 }}
             />
             <LoginStackNavigator.Screen
                 name='TermoConsentimento'
                 component={TermoConsentimento}
                 options={{
-                    title: 'Termo de Consentimento',
+                    title: Traducao.t('titleTermoDeConsentimento')
                 }}
             />
             {/* <LoginStackNavigator.Screen
@@ -252,6 +256,7 @@ export const MenuNavigator = () => {
                 name='Cigarros fumados' 
                 component={AddCigarrosNavigator}
                 options={{
+                    title: Traducao.t('addCigarrosScreen'),
                     drawerIcon: props => (
                         <MaterialIcons 
                         name={'smoke-free'}
@@ -265,6 +270,7 @@ export const MenuNavigator = () => {
                 name='Desafios' 
                 component={DesafiosNavigator}
                 options={{
+                    title: Traducao.t('desafiosScreen'),
                     drawerIcon: props => (
                         <SimpleLineIcons 
                         name={'trophy'}
@@ -278,6 +284,7 @@ export const MenuNavigator = () => {
                 name='Dicas' 
                 component={DicasNavigator}
                 options={{
+                    title: Traducao.t('dicasDetalheScreenTip'),
                     drawerIcon: props => (
                         <MaterialCommunityIcons 
                         name={'lightbulb-on-outline'}
@@ -304,6 +311,7 @@ export const MenuNavigator = () => {
                 name=' Conquistas' 
                 component={LifeAndMoneyNavigator}
                 options={{
+                    title: Traducao.t('lifeAndMoneyScreen'),
                     drawerIcon: props => (
                         <Ionicons 
                         name={'md-heart-empty'}
@@ -317,6 +325,7 @@ export const MenuNavigator = () => {
                 name='Perfil' 
                 component={PerfilNavigator}
                 options={{
+                    title: Traducao.t('perfilScreen'),
                     drawerIcon: props => (
                         <MaterialIcons 
                         name={'person-outline'}
@@ -330,6 +339,7 @@ export const MenuNavigator = () => {
                 name=' Sobre' 
                 component={AboutNavigator}
                 options={{
+                    title: Traducao.t('aboutScreen'),
                     drawerIcon: props => (
                         <Ionicons 
                         name={'md-information-circle-outline'}
@@ -343,6 +353,7 @@ export const MenuNavigator = () => {
                 name='Opções' 
                 component={OptionsNavigator}
                 options={{
+                    title: Traducao.t('optionsScreen'),
                     drawerIcon: props => (
                         <Ionicons 
                         name={'md-options'}

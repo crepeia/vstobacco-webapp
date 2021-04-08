@@ -35,6 +35,63 @@ const pt = {
         aboutNotifications: "Sobre as notificações: ",
         changeTime: "Você pode alterar o horário de notificação em Opções no menu.",
 
+    // components:
+
+        // Form:
+            // FormCheck:
+            yes: "Sim",
+            no: "Não",
+
+            // FormPicker: 
+            male: "Masculino",
+            female: "Feminino",
+            dontReport: "Não informar",
+            chooseGender: "Escolha seu sexo",
+
+            // FormTerms:
+            readAgreeSingular: "Li e concordo com o ",
+            //titleTermoDeConsentimento
+            readAgreePlural: "Li e concordo com os ",
+            //titleTermosDeUso
+
+            // FormTipFrequency:
+            chooseAFrequency: "Escolha uma frequência",
+
+        // UI:
+            // ChallengeCard:
+            progress: "Progresso nos últimos 7 dias",
+            continueCompleting: "Continue completando para ganhar mais pontos :)",
+            complete: "Completo",
+            incomplete: "Incompleto",
+
+            // TipCard:
+            readMore: "Ler mais",
+
+        // HelpButtonModal:
+        learnMore: "Saiba mais",
+
+        // OfflineWarning:
+         withoutConnection: "Conecte-se à internet para sincronizar seus dados",
+
+    // dummyData:
+
+        //availableChallenges:
+        readTips: "Ler dicas",
+        readTipsDescription: "Ler uma dica recebida.",
+        informCigarettes: "Informar cigarros fumados diariamente",
+        informCigarettesDescription: "Informe diariamente o número de cigarros fumados no dia.",
+        dontSmoke: "Não fumar",
+        dontSmokeDescription: "Não fumar durante o dia.",
+        register: "Cadastro",
+        registerDescription: "Finalize o cadastro no site. Você o encontra na seção Sobre.",
+        stopPlan: "Plano de Parada",
+        stopPlanDescription: "Completar o plano de parada no site. Você o encontra na seção Sobre",
+
+    // Navigation:
+        titleRegister: "Cadastro",
+        titleTermosDeUso: "Termos de Uso",
+        titleTermoDeConsentimento: "Termo de Consentimento",
+
     // Screens:
 
         // AboutScreen

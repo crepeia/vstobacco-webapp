@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import DefaultText from '../DefaultText';
 import Colors from '../../constants/Colors';
+import Traducao from '../Traducao/Traducao';
 
 const TipButton = props => {
     
@@ -34,7 +35,7 @@ const FormTipFrequency = props => {
                     activeOpacity={0.4}
                     onPress={() => setIsOpen(!isOpen)}
                 >
-                    <DefaultText>{props.value === -1 ? 'Escolha uma frequência' : `${chosenData}`}</DefaultText>
+                    <DefaultText>{props.value === -1 ? Traducao.t('chooseAFrequency') : `${chosenData}`}</DefaultText>
                     <Ionicons 
                         name={isOpen ? 'md-arrow-dropup' : 'md-arrow-dropdown'}
                         size={24}

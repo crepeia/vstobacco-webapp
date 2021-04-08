@@ -6,15 +6,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DefaultTitle from '../DefaultTitle';
 import DefaultText from '../DefaultText';
 import Colors from '../../constants/Colors';
+import Traducao from '../Traducao/Traducao';
 
 const TipCard = props => {
-    return (
+    return ( 
         <View style ={props.isRead ? styles.readCard : styles.card}>
             <TouchableOpacity activeOpacity={0.9} onPress={props.onPressTip}>
                 <DefaultTitle style={props.isRead ? styles.readTitle : styles.title}>{props.title}</DefaultTitle>
                 <DefaultText numberOfLines={3} style={styles.description}>{props.description}</DefaultText>
                 <View style={styles.readMoreContainer}>
-                    <DefaultText style={styles.readMore}>Ler mais</DefaultText>
+                    <DefaultText style={styles.readMore}>{Traducao.t('readMore')}</DefaultText>
                     <MaterialCommunityIcons name="arrow-expand" size={24} color="#aaaaaa" />
                 </View>
             </TouchableOpacity>
