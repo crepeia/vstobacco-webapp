@@ -5,6 +5,7 @@ export const LOGOUT = 'LOGOUT';
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const SET_DID_TRY_LOGIN = 'SET_DID_TRY_LOGIN';
 export const TOGGLE_RANKING = 'TOGGLE_RANKING';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 import Localhost from '../../constants/Localhost';
 import moment from 'moment';
@@ -188,6 +189,33 @@ export const signup = (jsonForm) => {
 		console.log(usr);
 	};
 };
+
+export const resetPassword = (userEmail) => {
+	console.log(userEmail);
+	return async (dispatch) => {
+		const response = await fetch(
+			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/recover-password/`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+				body: JSON.stringify({
+					email: userEmail
+				})
+			}
+		);
+
+		console.log(response.status);
+		
+		if (!response.ok) {
+			throw new Error("Erro ao tentar resetar password.");
+		}
+
+		dispatch({ type: RESET_PASSWORD });
+	};
+}
 
 export const toggleRanking = (inRanking, nickname) => {
 	return async (dispatch, getState) => {

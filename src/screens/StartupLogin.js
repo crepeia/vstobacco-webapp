@@ -215,7 +215,7 @@ const StartupLogin = (props) => {
 			await dispatch(recordActions.fetchDailyLogs());
 			await dispatch(challengeActions.fetchChallenges());
 			await dispatch(challengeActions.fetchUserChallenges());
-			await dispatch(challengeActions.completeLoginChallenge());
+			// await dispatch(challengeActions.completeLoginChallenge());
 			await dispatch(achievementActions.fetchDailyAchievements());
 			await dispatch(tipActions.fetchTips());
 			await dispatch(tipActions.fetchUserTips());

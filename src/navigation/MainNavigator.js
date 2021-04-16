@@ -26,6 +26,7 @@ import SignUpScreen from '../screens/SignUpScreen';
 import StartupLogin from '../screens/StartupLogin'; 
 import TermosUso from '../screens/TermosUso';
 import TermoConsentimento from '../screens/TermoConsetimento';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 
 //constante
 import Colors from '../constants/Colors';
@@ -78,13 +79,13 @@ export const LoginNavigator = () => {
                     title: Traducao.t('titleTermoDeConsentimento')
                 }}
             />
-            {/* <LoginStackNavigator.Screen
-                name='StartupLogin'
-                component={StartupNavigator}
+            <LoginStackNavigator.Screen
+                name='ResetPassword'
+                component={ResetPasswordScreen}
                 options={{
-                    headerShown: false
+                    title: "Recuperar acesso"
                 }}
-            /> */}
+            /> 
         </LoginStackNavigator.Navigator>
     )
 }

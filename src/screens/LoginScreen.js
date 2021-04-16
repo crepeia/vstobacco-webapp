@@ -75,6 +75,12 @@ const LoginScreen = props => {
 		}
 	}, [dispatch, email, password]);
 
+    // esqueceu senha
+	const goToResetPassword = () => {
+		props.navigation.navigate('ResetPassword');
+	};
+	// esqueceu senha
+
 	useEffect(() => {
 		setFormValid(isEmailValid && isPasswordValid);
 	}, [email, password]);
@@ -151,6 +157,13 @@ const LoginScreen = props => {
                         </View>
                     )}
                 </KeyboardAvoidingView>
+
+                {/* esqueceu senha */}
+                <TouchableOpacity style={styles.buttonForgotPassword} onPress={goToResetPassword}>
+                    <DefaultText style={styles.forgotPassword}>Esqueceu sua senha?</DefaultText>
+                </TouchableOpacity>
+				{/* esqueceu senha */}
+
                 <TouchableOpacity 
                     style={styles.buttonSignIn}
                     onPress={signinHandler} 
@@ -194,11 +207,11 @@ const styles = StyleSheet.create({
     },
     logoContainer: {
         alignItems: 'center',
-        marginVertical: 15
+        marginVertical: 10
     },
     logoImg: {
-        width: Dimensions.get('window').width * 0.8,
-		height: Dimensions.get('window').width * 0.5,
+        width: Dimensions.get('window').width * 0.6,
+		height: Dimensions.get('window').width * 0.4,
 		resizeMode: 'contain'
     },
     title: {
@@ -235,10 +248,20 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primaryColor
     },
     buttonSignUp: {
-        marginVertical: 30,
+        marginVertical: 25,
         justifyContent: 'center',
         alignItems: 'center'
     },
+    buttonForgotPassword: {
+		marginBottom: 10,
+        marginTop: 5
+	},
+	forgotPassword: {
+		textAlign: 'center',
+		color: 'white',
+		// fontWeight: '700',
+        fontSize: 16
+	},
     labelAuth: {
         fontFamily: 'open-sans',
         fontSize: 16,

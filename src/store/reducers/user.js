@@ -1,4 +1,4 @@
-import { AUTHENTICATE, TOGGLE_RANKING, LOGOUT, SIGNIN, SET_DID_TRY_LOGIN } from '../actions/user';
+import { AUTHENTICATE, TOGGLE_RANKING, LOGOUT, SIGNIN, SET_DID_TRY_LOGIN, RESET_PASSWORD } from '../actions/user';
 
 import User from '../../models/User';
 
@@ -63,6 +63,8 @@ export default (state = initialState, action) => {
                 ...initialState,
                 didTryAutoLogin: true
             };
+		case RESET_PASSWORD:
+			return state;
 		default:
 			return state;
 	}
