@@ -160,7 +160,7 @@ const en = {
         placeHolderPassword: "Your password on Viva sem Tabaco",
         validPassword: "Please enter a valid password!",
         login: "Log in",
-        dontHaveAccount: "Don\'t have an account?",
+        dontHaveAccount: "Don't have an account?",
         forgotPassword: "Forgot your password?",
 
         // OptionsScreen:
@@ -238,6 +238,7 @@ const en = {
         forgotPasswordTitle: "Forgot your password?",
         instructionsText: "We will send instructions to your registration email.",
         send: "Send",
+        sentSuccessfully: "Password reset email sent successfully.",
 
         // SignUpScreen:
         never: "Never",

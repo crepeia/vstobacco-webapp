@@ -161,6 +161,7 @@ const pt = {
         validPassword: "Informe uma senha válida!",
         login: "Entrar",
         dontHaveAccount: "Não possui conta?",
+        forgotPassword: "Esqueceu sua senha?",
 
         // OptionsScreen
         optionsScreen: "Opções",
@@ -231,6 +232,13 @@ const pt = {
         //packPrice
         //quantityCigarette
         proceed: "PROSSEGUIR",
+
+        // ResetPasswordScreen:
+        resetPassword: "Recuperar acesso",
+        forgotPasswordTitle: "Esqueceu sua senha?",
+        instructionsText: "Nós vamos enviar instruções para seu e-mail de cadastro.",
+        send: "Enviar",
+        sentSuccessfully: "E-mail enviado com sucesso.",
 
         // SignUpScreen:
         never: "Nunca",
