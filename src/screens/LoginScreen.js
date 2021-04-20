@@ -160,7 +160,7 @@ const LoginScreen = props => {
 
                 {/* esqueceu senha */}
                 <TouchableOpacity style={styles.buttonForgotPassword} onPress={goToResetPassword}>
-                    <DefaultText style={styles.forgotPassword}>Esqueceu sua senha?</DefaultText>
+                    <DefaultText style={styles.forgotPassword}>{Traducao.t('forgotPassword')}</DefaultText>
                 </TouchableOpacity>
 				{/* esqueceu senha */}
 

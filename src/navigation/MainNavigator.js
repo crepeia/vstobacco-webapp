@@ -83,7 +83,7 @@ export const LoginNavigator = () => {
                 name='ResetPassword'
                 component={ResetPasswordScreen}
                 options={{
-                    title: "Recuperar acesso"
+                    title: Traducao.t('resetPassword')
                 }}
             /> 
         </LoginStackNavigator.Navigator>

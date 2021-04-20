@@ -51,8 +51,8 @@ const ResetPasswordScreen = (props) => {
 
     return (
         <View style={styles.container}>
-            <DefaultTitle style={styles.text}>Esqueceu sua senha?</DefaultTitle>
-            <DefaultText>Vamos enviar instruções para seu e-mail de cadastro.</DefaultText>
+            <DefaultTitle style={styles.text}>{Traducao.t('forgotPasswordTitle')}</DefaultTitle>
+            <DefaultText>{Traducao.t('instructionsText')}</DefaultText>
             <Formik
             initialValues={{ email: '' }}
             onSubmit={(values, actions) => {
@@ -84,7 +84,7 @@ const ResetPasswordScreen = (props) => {
 							</View>
 					)}
                     <TouchableOpacity onPress={handleSubmit} style={styles.buttonContainer} disabled={!isValid || isSubmitting}>
-						<DefaultText style={styles.buttonText}>Enviar</DefaultText>
+						<DefaultText style={styles.buttonText}>{Traducao.t('send')}</DefaultText>
 					</TouchableOpacity>
                     {/* <FormButton
                         title="Enviar"

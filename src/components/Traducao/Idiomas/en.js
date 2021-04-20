@@ -161,6 +161,7 @@ const en = {
         validPassword: "Please enter a valid password!",
         login: "Log in",
         dontHaveAccount: "Don\'t have an account?",
+        forgotPassword: "Forgot your password?",
 
         // OptionsScreen:
         optionsScreen: "Options",
@@ -186,7 +187,7 @@ const en = {
         anonymousRankingInfo: "Our ranking guarantees anonymity and allows you to validate your progress in relation to other users of the application.",
         participateRanking: "Participate in the ranking",
 
-        // ScreenScreen:
+        // PerfilScreen:
         perfilScreen: "Profile",
         withoutPlan: "You have not yet completed your plan to cut consumption!",
         createPlan: "Create plan",
@@ -231,6 +232,12 @@ const en = {
         // packPrice
         // quantityCigarette
         proceed: "PROCEED",
+
+        // ResetPasswordScreen:
+        resetPassword: "Reset password",
+        forgotPasswordTitle: "Forgot your password?",
+        instructionsText: "We will send instructions to your registration email.",
+        send: "Send",
 
         // SignUpScreen:
         never: "Never",
