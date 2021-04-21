@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Colors from '../constants/Colors';
 import DefaultText from '../components/DefaultText';
+import { Ionicons } from '@expo/vector-icons';
 import Traducao from '../components/Traducao/Traducao';
 
 import { useDispatch } from 'react-redux';
@@ -26,6 +27,7 @@ const LoginScreen = props => {
 
 	const [password, setPassword] = useState('');
 	const [isPasswordValid, setIsPasswordValid] = useState(false);
+    const [passwordView, setPasswordView] = useState(false);
 
 	const [formValid, setFormValid] = useState(false);
 
@@ -113,9 +115,9 @@ const LoginScreen = props => {
                 </View>
                 <KeyboardAvoidingView enabled behavior={'height'}>
                     <DefaultText style={styles.inputTitle}>{Traducao.t('email')}</DefaultText>
-                    <View style={styles.inputContainer}>
+                    <View style={styles.inputContainerEmail}>
                         <TextInput
-                        style={styles.input}
+                        style={styles.inputEmail}
                         placeholder={Traducao.t('placeHolderEmail')}
                         placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
                         onSubmitEditing={() => passwordInput.focus()}
@@ -136,21 +138,64 @@ const LoginScreen = props => {
                     )}
 
                     <DefaultText style={styles.inputTitle}>{Traducao.t('password')}</DefaultText>
-                    <View style={styles.inputContainer}>
-                        <TextInput
-                        style={styles.input}
-                        placeholder={Traducao.t('placeHolderPassword')}
-                        placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                        secureTextEntry
-                        autoCapitalize='none'
-                        returnKeyType='go'
-                        ref={(input) => (passwordInput = input)}
-                        value={password}
-                        onChangeText={onPasswordChange}
-                        selectionColor={Colors.primaryColor}
-                        onBlur={lostFocusPassword}
-                        />
-                    </View>
+                    {passwordView == false ?
+                        <View style={styles.inputContainerPassword}>
+                            <TextInput
+                            style={styles.inputPassword}
+                            placeholder={Traducao.t('placeHolderPassword')}
+                            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                            secureTextEntry
+                            autoCapitalize='none'
+                            returnKeyType='go'
+                            ref={(input) => (passwordInput = input)}
+                            value={password}
+                            onChangeText={onPasswordChange}
+                            selectionColor={Colors.primaryColor}
+                            onBlur={lostFocusPassword}
+                            />
+
+                            <TouchableOpacity 
+                                style={styles.buttonView}
+                                onPress={() => setPasswordView(true)} 
+                            >
+                                <Ionicons
+                                    name='md-eye'
+                                    size={25}
+                                    color={'#fff'}
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                    :
+
+                        <View style={styles.inputContainerPassword}>
+                            <TextInput
+                                style={styles.inputPassword}
+                                placeholder={Traducao.t('placeHolderPassword')}
+                                placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                                autoCapitalize='none'
+                                returnKeyType='go'
+                                ref={(input) => (passwordInput = input)}
+                                value={password}
+                                onChangeText={onPasswordChange}
+                                selectionColor={Colors.primaryColor}
+                                onBlur={lostFocusPassword}
+                            />
+
+                            <TouchableOpacity 
+                                style={styles.buttonView}
+                                onPress={() => setPasswordView(false)} 
+                            >
+                                <Ionicons
+                                    name='md-eye-off'
+                                    size={25}
+                                    color={'#fff'}
+                                />
+                            </TouchableOpacity>
+
+                        </View>
+                    }
+
                     {!isPasswordValid && touchedPassword && (
                         <View style={styles.errorContainer}>
                             <DefaultText style={styles.errorText}>{Traducao.t('validPassword')}</DefaultText>
@@ -225,7 +270,7 @@ const styles = StyleSheet.create({
         color: 'white',
         marginBottom: 2
     },
-    inputContainer: {
+    inputContainerEmail: {
         width: '100%',
         height: 40,
         backgroundColor: 'rgba(265, 265, 265, 0.5)',
@@ -234,9 +279,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10
     },
-    input: {
+    inputEmail: {
         marginLeft: 15,
         width: '100%'
+    },
+    inputContainerPassword: {
+        width: '100%',
+        height: 40,
+        backgroundColor: 'rgba(265, 265, 265, 0.5)',
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10
+    },
+    inputPassword: {
+        marginLeft: 15,
+        width: '85%'
+    },
+    buttonView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '15%',
     },
     buttonSignIn: {
         width: '100%',

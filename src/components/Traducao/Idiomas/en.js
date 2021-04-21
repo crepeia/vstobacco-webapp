@@ -157,7 +157,7 @@ const en = {
         placeHolderEmail: "email@domain.com",
         validEmail: "Please enter a valid email address!",
         password: "Password",
-        placeHolderPassword: "Your password on Viva sem Tabaco",
+        placeHolderPassword: "Your password",
         validPassword: "Please enter a valid password!",
         login: "Log in",
         dontHaveAccount: "Don't have an account?",

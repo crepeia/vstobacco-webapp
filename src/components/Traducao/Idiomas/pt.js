@@ -157,7 +157,7 @@ const pt = {
         placeHolderEmail: "email@dominio.com",
         validEmail: "Informe um e-mail válido!",
         password: "Senha",
-        placeHolderPassword: "Sua senha no Viva sem Tabaco",
+        placeHolderPassword: "Sua senha",
         validPassword: "Informe uma senha válida!",
         login: "Entrar",
         dontHaveAccount: "Não possui conta?",
