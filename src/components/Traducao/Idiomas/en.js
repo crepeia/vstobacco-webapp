@@ -23,7 +23,7 @@ const en = {
         // Reminders:
         reminder: "Reminder",
         informQuantity: "Enter the amount of cigarettes smoked today!",
-        conquest: "Conquest =)",
+        conquest: "Congrats =)",
         conquestPhrasePart1: "You stopped smoking",
         conquestPhrasePart2: "cigarettes and saved",
         conquestPhrasePart3: "of your life!",
@@ -45,13 +45,13 @@ const en = {
             // FormPicker:
             male: "Male",
             female: "Female",
-            dontReport: "Don't report",
-            chooseGender: "Choose your gender",
+            dontReport: "I'd rather not say",
+            chooseGender: "Gender",
             
             // FormTerms:
-            readAgreeSingular: "I've read and agree to the ",
+            readAgreeSingular: "I understand and agree with the ",
             //titleTermoDeConsentimento
-            readAgreePlural: "I've read and agree to the ",
+            readAgreePlural: "I understand and agree with the ",
             //titleTermosDeUso
 
             // FormTipFrequency:
@@ -60,7 +60,7 @@ const en = {
         // UI:
             // ChallengeCard:
             progress: "Progress in the last 7 days",
-            continueCompleting: "Keep completing to earn more points :)",
+            continueCompleting: "Earn more points by adding more information :)",
             complete: "Complete",
             incomplete: "Incomplete",
 
@@ -77,18 +77,18 @@ const en = {
 
         // availableChallenges:
         readTips: "Read tips",
-        readTipsDescription: "Read a tip received.",
+        readTipsDescription: "Read the new tip.",
         informCigarettes: "Report smoked cigarettes daily",
         informCigarettesDescription: "Report daily the number of cigarettes smoked in the day.",
         dontSmoke: "Don't smoke",
-        dontSmokeDescription: "Do not smoke during the day.",
+        dontSmokeDescription: "Do not smoke - even a puff, during one day.",
         register: "Cadastre",
-        registerDescription: "Finalize the registration on the website. You can find it in the About section.",
+        registerDescription: "Finish the registration on the website. You can find it in the About Section.",
         stopPlan: "Stop Plan",
-        stopPlanDescription: "Complete the stopping plan on the website. You can find it in the About section",
+        stopPlanDescription: "Complete the quit smoking plan on the website. You can find it in the About section",
 
     // Navigation:
-        titleRegister: "Cadastre",
+        titleRegister: "Sign in",
         titleTermosDeUso: "Terms of Use",
         titleTermoDeConsentimento: "Consent Term",
 
@@ -96,7 +96,7 @@ const en = {
 
         // AboutScreen:
         aboutScreen: "About",
-        about: "Free program made by experts in smoking, smokers and ex-smokers.",
+        about: "Free program made by experts in smoking, smokers and former smokers.",
         codeOfEthics: "Viva sem Tabaco complies with the Health on the Net Foundation Code of Ethics",
         visitWebsite: "Visit the website by clicking here",
         contentBasement: "All content was created from scientific research and protocols for the treatment of smoking by the Ministry of Health and the National Cancer Institute - INCA.",
@@ -105,7 +105,7 @@ const en = {
         addCigarrosScreen: "Smoked cigarettes",
         changeDate: "change data",
         smokedCigarettes: "Smoked cigarettes",
-        amountCigarettesSmoked: "Please enter the amount of cigarettes smoked above.",
+        amountCigarettesSmoked: "Please, enter the amount of cigarettes smoked above.",
 
         // DesafiosScreen:
         desafiosScreen: "Challenges",
@@ -127,12 +127,12 @@ const en = {
 
         // HomeScreen:
         smokedCigarettesInWeek: "Cigarettes smoked in the week",
-        weeksInYear: "Numbers above correspond to weeks and each year has 52 weeks",
+        weeksInYear: "Numbers above correspond to weeks; one year has 52 weeks",
         numberADay: "Numbers above correspond to the days of",
         and: "and",
         cigarettesAWeek: "Cigarettes in the week",
         cigarettes: "Cigarettes",
-        smokedCigarettesAWeek: "Cigarettes smoked over the course of a week",
+        smokedCigarettesAWeek: "Cigarettes smoked during the week",
         smokedCigarettesBefore: "Cigarettes smoked daily before intervention",
         average: "average",
         cigarettesADay: "cigarettes/day",
@@ -165,14 +165,14 @@ const en = {
 
         // OptionsScreen:
         optionsScreen: "Options",
-        notificationPermission: "Hello! Allow the app to send you notifications to receive reminders!",
-        nonTokenPermission: "The notification token could not be obtained!",
-        notificationsDevices: "Notifications only work on physical devices!",
+        notificationPermission: "Hi! Would you like to receive notifications and reminders?",
+        nonTokenPermission: "The notification token could not be retrieved!",
+        notificationsDevices: "Notifications only work on mobile devices!",
         options: "Options",
         savedChanges: "Changes saved successfully!",
         notifications: "Notifications",
         sendingNotifications: "These options control the sending of notifications to your device.",
-        registerCigarettes: "Cigarette registration reminder",
+        registerCigarettes: "Cigarette diary reminder",
         explanationRegisterCigarettes: ": notification to remember to inform the number of cigarettes smoked in the day.",
         registerReminderTips: "Tip reminder",
         explanationReminderTips: ": notification to read tips received automatically.",
@@ -189,15 +189,15 @@ const en = {
 
         // PerfilScreen:
         perfilScreen: "Profile",
-        withoutPlan: "You have not yet completed your plan to cut consumption!",
-        createPlan: "Create plan",
-        yourPlan: "Your stopping plan",
-        stopDate: "Stop date:",
-        fissureTechniques: "Techniques for cracking:",
+        withoutPlan: "You have not yet completed your plan to quit smoking!",
+        createPlan: "Create quit plan",
+        yourPlan: "Your quit plan",
+        stopDate: "Quit date:",
+        fissureTechniques: "Techniques for dealing with craving:",
         drinkWater: "- Drink a glass of water slowly.",
-        eatFruits: "- Eat low calorie foods like candied fruits, raisins, candies and diet gum.",
+        eatFruits: "- Eat low calories food like candied fruits, raisins, candies and diet gum.",
         readYourCard: "- Read a card with your reasons for quitting smoking.",
-        doExercises: "- Do an MP3 audio relaxation exercise (link available on the website)",
+        doExercises: "- Listen to an MP3 audio relaxation exercise (link available on the website)",
         withoutFissureTechniques: "There are no techniques selected in your plan.",
         preventRelapse: "Techniques to prevent relapse:",
         withoutTechniquesToRelapse: "You haven't written any techniques to prevent relapse.",
@@ -218,7 +218,7 @@ const en = {
         // RankingScreen:
         weekly: "Weekly",
         monthly: "Monthly",
-        yearly: "Annual",
+        yearly: "Annual", //Check this string out.
         withoutRanking: "You are no longer participating in the ranking.",
 
         // RecordScreen:

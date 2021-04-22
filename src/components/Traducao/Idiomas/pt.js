@@ -7,8 +7,8 @@ const pt = {
     return: "Voltar",
 
         // Errors:
-        error: "An error has occurred!",
-        tryAgain: "Try again.",
+        error: "Um erro aconteceu.",
+        tryAgain: "Tente novamente",
 
         // Time:
         month: "mês",
@@ -21,15 +21,15 @@ const pt = {
         minutes: "minutos",
 
         // Reminders:
-        reminder: "Lembrete",
-        informQuantity: "Informe a quantidade de cigarros fumados hoje!",
+        reminder: "Lembretes",
+        informQuantity: "Insira o número de cigarros que fumou hoje",
         conquest: "Conquista =)",
-        conquestPhrasePart1: "Você deixou de fumar",
+        conquestPhrasePart1: "Você parou de fumar",
         conquestPhrasePart2: "cigarros e salvou",
         conquestPhrasePart3: "da sua vida!",
         conquestPhrasePart4: "Você deixou de fumar",
-        conquestPhrasePart5: "cigarros e economizou R$",
-        reminderTip: "Passando para lembrá-lo de ler uma nova dica no Viva sem Tabaco!",
+        conquestPhrasePart5: "cigarros e economizou R$ ",
+        reminderTip: "Ei! Temos uma nova dica para você no Viva sem Tabaco!",
 
         // Notifications:
         aboutNotifications: "Sobre as notificações: ",
