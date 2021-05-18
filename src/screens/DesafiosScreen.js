@@ -24,6 +24,8 @@ import ChallengeCard from '../components/UI/ChallengeCard';
 import { LineChart } from 'react-native-chart-kit';
 import Traducao from '../components/Traducao/Traducao';
 
+import ChallengesEn from "../constants/ChallengesEn";
+
 // dados fictícios
 import { availableChallengesArray } from '../dummyData/availableChallenges';
 import { userChallengesArray } from '../dummyData/userChallenges';
@@ -31,66 +33,66 @@ import { userChallengesArray } from '../dummyData/userChallenges';
 const fillLabels = (numLabels, format) => {
     const today = moment();
     if (format === "week") {
-      let lab = [moment(today).format("dddd").substr(0, 3)];
-      for (let i = 1; i < numLabels; i++) {
-        lab.unshift(moment(today).subtract(i, "days").format("dddd").substr(0, 3));
-      }
-      return lab;
+        let lab = [moment(today).format("dddd").substr(0, 3)];
+        for (let i = 1; i < numLabels; i++) {
+            lab.unshift(moment(today).subtract(i, "days").format("dddd").substr(0, 3));
+        }
+        return lab;
     } else if (format === "month") {
-      let lab = [moment(today).format("MM-DD")];
-      for (let i = 1; i < numLabels; i++) {
-        lab.unshift(moment(today).subtract(i, "days").format("MM-DD"));
-      }
-      return lab;
+        let lab = [moment(today).format("MM-DD")];
+        for (let i = 1; i < numLabels; i++) {
+            lab.unshift(moment(today).subtract(i, "days").format("MM-DD"));
+        }
+        return lab;
     } else if (format === "year") {
-      let lab = [moment(today).format("MMM/YY")];
-      for (let i = 1; i < numLabels; i++) {
-        lab.unshift(moment(today).subtract(i, "month").format("MMM/YY"));
-      }
-      return lab;
+        let lab = [moment(today).format("MMM/YY")];
+        for (let i = 1; i < numLabels; i++) {
+            lab.unshift(moment(today).subtract(i, "month").format("MMM/YY"));
+        }
+        return lab;
     }
 };
 
 const fillData = (arr, days, format) => {
-  const today = moment();
-	let data = [];
-	if (format === "week" || format === "month" ) {
+    const today = moment();
+    let data = [];
+    if (format === "week" || format === "month") {
         let reducedLog = arr.reduce((acc, curr) => {
-            let id = moment(curr.dateCompleted).format("YYYY-MM-DD");     
+            let id = moment(curr.dateCompleted).format("YYYY-MM-DD");
             if (!acc[id]) {
-              acc[id] = { id: id, dateScore: 0 };
+                acc[id] = { id: id, dateScore: 0 };
             }
             acc[id].dateScore += curr.score;
             return acc;
         }, {});
         //console.log(reducedLog)
         for (let i = 0; i < days; i++) {
-                let index = moment(today).subtract(i, "days").format("YYYY-MM-DD");
-                if(reducedLog[index]){
-                  data.unshift(reducedLog[index].dateScore);
-                } else {
-                  data.unshift(0);
-                } 
-		    }
-  } else if (format === "year") { 
-		  let reducedLog = arr.reduce((acc, curr) => {
-        let id = moment(curr.dateCompleted).format("MMM/YY");
-        if (!acc[id]) {
-          acc[id] = { id: id, dateScore: 0 };
+            let index = moment(today).subtract(i, "days").format("YYYY-MM-DD");
+            if (reducedLog[index]) {
+                data.unshift(reducedLog[index].dateScore);
+            } else {
+                data.unshift(0);
+            }
         }
-        acc[id].dateScore += curr.score;
-        return acc;
-		  }, {});
-		  for (let i = 0; i < 12; i++) {
-        let index = moment(today).subtract(i, "month").format("MMM/YY");
-        if(reducedLog[index]){
-				  data.unshift(reducedLog[index].dateScore);
-			  } else {
-				  data.unshift(0);
-			  }
-		  }   
-  }
-	return data;
+    } else if (format === "year") {
+        let reducedLog = arr.reduce((acc, curr) => {
+            let id = moment(curr.dateCompleted).format("MMM/YY");
+            if (!acc[id]) {
+                acc[id] = { id: id, dateScore: 0 };
+            }
+            acc[id].dateScore += curr.score;
+            return acc;
+        }, {});
+        for (let i = 0; i < 12; i++) {
+            let index = moment(today).subtract(i, "month").format("MMM/YY");
+            if (reducedLog[index]) {
+                data.unshift(reducedLog[index].dateScore);
+            } else {
+                data.unshift(0);
+            }
+        }
+    }
+    return data;
 };
 
 
@@ -113,9 +115,9 @@ const DesafiosScreen = props => {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState();
 
-	const [labels, setLabels] = useState([]);
-	const [data, setData] = useState([]);
-    
+    const [labels, setLabels] = useState([]);
+    const [data, setData] = useState([]);
+
     useEffect(() => {
         setData(fillData(userChallenges, 7, "week"));
         setLabels(fillLabels(7, "week"));
@@ -126,7 +128,7 @@ const DesafiosScreen = props => {
         setIsRefreshing(true);
         try {
             await dispatch(challengeActions.fetchUserChallenges());
-            if(evaluation){
+            if (evaluation) {
                 await dispatch(challengeActions.completePlanChallenge());
             }
         } catch (err) {
@@ -154,7 +156,7 @@ const DesafiosScreen = props => {
         return (
             <View style={styles.loading}>
                 <DefaultText>{Traducao.t('error')}</DefaultText>
-                <DefaultText style={{textAlign: 'center', marginVertical: 5}}>{error}</DefaultText>
+                <DefaultText style={{ textAlign: 'center', marginVertical: 5 }}>{error}</DefaultText>
 
                 <Button title={Traducao.t('tryAgain')} onPress={loadChallenges} color={Colors.primaryColor} />
             </View>
@@ -172,19 +174,19 @@ const DesafiosScreen = props => {
     if (!isLoading && availableChallenges.length === 0) {
         return (
             <View style={styles.loading}>
-                <DefaultText style={{paddingHorizontal: 5}}>{Traducao.t('noChallenge')}</DefaultText>
+                <DefaultText style={{ paddingHorizontal: 5 }}>{Traducao.t('noChallenge')}</DefaultText>
             </View>
         );
     }
-    
+
 
     if (showGraphic) {
         return (
             <View style={styles.challengesContainer}>
                 <View style={styles.filterContainer}>
-                    <TouchableOpacity 
-                        style={styles.filterBox} 
-                        activeOpacity={0.6} 
+                    <TouchableOpacity
+                        style={styles.filterBox}
+                        activeOpacity={0.6}
                         onPress={() => {
                             setIsDaily(true);
                             setIsOnce(false);
@@ -193,9 +195,9 @@ const DesafiosScreen = props => {
                     >
                         <DefaultTitle style={isDaily ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('daily')}</DefaultTitle>
                     </TouchableOpacity>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={styles.filterBox}
-                        activeOpacity={0.6} 
+                        activeOpacity={0.6}
                         onPress={() => {
                             setIsDaily(false);
                             setIsOnce(true);
@@ -204,14 +206,14 @@ const DesafiosScreen = props => {
                     >
                         <DefaultTitle style={isOnce ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('unique')}</DefaultTitle>
                     </TouchableOpacity>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={styles.filterBox}
-                        activeOpacity={0.6} 
+                        activeOpacity={0.6}
                         onPress={() => {
                             setIsDaily(false);
                             setIsOnce(false);
                             setShowGraphic(true);
-                            
+
                         }}
                     >
                         <DefaultTitle style={showGraphic ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('graphics')}</DefaultTitle>
@@ -223,122 +225,123 @@ const DesafiosScreen = props => {
                 </View>
                 {
                     <LineChart
-							data={{
-								labels: labels,
-								datasets: [
-									{
-										data: data,
-									},
-								],
-							}}
-							width={Dimensions.get("window").width * 0.9} // from react-native
-							height={270}
-							verticalLabelRotation={-90}
-							xLabelsOffset={20}
-							//segments={data.reduce((a, b) => Math.max(a, b)) - data.reduce((a, b) => Math.min(a, b)) + 1}
-							chartConfig={{
-								backgroundColor: "#0052cc",
-								backgroundGradientFrom: "white",
-                                backgroundGradientTo: "white",
-                                strokeWidth: 2,
-								decimalPlaces: 1, // optional, defaults to 2dp
-								color: (opacity = 1) => `rgba(50, 50, 50, ${opacity})`,
-							}}
-                            fromZero={true}
-                            style={{borderWidth: 1, borderColor: '#ccc', borderRadius: 10, padding: 5, marginVertical: 5}}
-						/>
-                        }
+                        data={{
+                            labels: labels,
+                            datasets: [
+                                {
+                                    data: data,
+                                },
+                            ],
+                        }}
+                        width={Dimensions.get("window").width * 0.9} // from react-native
+                        height={270}
+                        verticalLabelRotation={-90}
+                        xLabelsOffset={20}
+                        //segments={data.reduce((a, b) => Math.max(a, b)) - data.reduce((a, b) => Math.min(a, b)) + 1}
+                        chartConfig={{
+                            backgroundColor: "#0052cc",
+                            backgroundGradientFrom: "white",
+                            backgroundGradientTo: "white",
+                            strokeWidth: 2,
+                            decimalPlaces: 1, // optional, defaults to 2dp
+                            color: (opacity = 1) => `rgba(50, 50, 50, ${opacity})`,
+                        }}
+                        fromZero={true}
+                        style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 10, padding: 5, marginVertical: 5 }}
+                    />
+                }
             </View>
         );
     }
 
     return (
-            <FlatList
-                ListHeaderComponent={
-                    <View style={styles.challengesContainer}>
-                        <View style={styles.filterContainer}>
-                            <TouchableOpacity 
-                                style={styles.filterBox} 
-                                activeOpacity={0.6} 
-                                onPress={() => {
-                                    setIsDaily(true);
-                                    setIsOnce(false);
-                                    setShowGraphic(false);
-                                }}
-                            >
-                                <DefaultTitle style={isDaily ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('daily')}</DefaultTitle>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                                style={styles.filterBox}
-                                activeOpacity={0.6} 
-                                onPress={() => {
-                                    setIsDaily(false);
-                                    setIsOnce(true);
-                                    setShowGraphic(false);
-                                }}
-                            >
-                                <DefaultTitle style={isOnce ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('unique')}</DefaultTitle>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                                style={styles.filterBox}
-                                activeOpacity={0.6} 
-                                onPress={() => {
-                                    setIsDaily(false);
-                                    setIsOnce(false);
-                                    setShowGraphic(true);
-                                    setData(fillData(userChallenges, 7, "week"));
-                                    setLabels(fillLabels(7, "week"));
-                                }}
-                            >
-                                <DefaultTitle style={showGraphic ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('graphics')}</DefaultTitle>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.titleContainer}>
-                            <DefaultTitle style={styles.scoreText}>{Traducao.t('points')} {points}</DefaultTitle>
-                        </View>
+        <FlatList
+            ListHeaderComponent={
+                <View style={styles.challengesContainer}>
+                    <View style={styles.filterContainer}>
+                        <TouchableOpacity
+                            style={styles.filterBox}
+                            activeOpacity={0.6}
+                            onPress={() => {
+                                setIsDaily(true);
+                                setIsOnce(false);
+                                setShowGraphic(false);
+                            }}
+                        >
+                            <DefaultTitle style={isDaily ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('daily')}</DefaultTitle>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.filterBox}
+                            activeOpacity={0.6}
+                            onPress={() => {
+                                setIsDaily(false);
+                                setIsOnce(true);
+                                setShowGraphic(false);
+                            }}
+                        >
+                            <DefaultTitle style={isOnce ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('unique')}</DefaultTitle>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.filterBox}
+                            activeOpacity={0.6}
+                            onPress={() => {
+                                setIsDaily(false);
+                                setIsOnce(false);
+                                setShowGraphic(true);
+                                setData(fillData(userChallenges, 7, "week"));
+                                setLabels(fillLabels(7, "week"));
+                            }}
+                        >
+                            <DefaultTitle style={showGraphic ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('graphics')}</DefaultTitle>
+                        </TouchableOpacity>
                     </View>
-                }
-                onRefresh={loadChallenges}
-                refreshing={isRefreshing}
-                style={styles.listStyle}
-                data={isDaily ? dailyChallenges : onceChallenges}
-                keyExtractor={item => item.id.toString()}
-                renderItem={itemData => {
-                    const usrCh = userChallenges.filter(c => c.challengeId === itemData.item.id);
-                    const datesCompleted = usrCh.map(c => c.dateCompleted)
-                    return (
-                        <View style={styles.listContainer}>
-                            <ChallengeCard
-                                title={itemData.item.title}
-                                text={itemData.item.description}
-                                score={itemData.item.baseValue}
-                                modifier={itemData.item.modifier}
-                                type={itemData.item.type}
-                                userChallenges={usrCh}
-                                datesCompleted={datesCompleted}
-                            />
-                        </View>
-                    )
-                }}
-            />
+                    <View style={styles.titleContainer}>
+                        <DefaultTitle style={styles.scoreText}>{Traducao.t('points')} {points}</DefaultTitle>
+                    </View>
+                </View>
+            }
+            onRefresh={loadChallenges}
+            refreshing={isRefreshing}
+            style={styles.listStyle}
+            data={isDaily ? dailyChallenges : onceChallenges}
+            keyExtractor={item => item.id.toString()}
+            renderItem={itemData => {
+                const usrCh = userChallenges.filter(c => c.challengeId === itemData.item.id);
+                const datesCompleted = usrCh.map(c => c.dateCompleted);
+                const ch = ChallengesEn.find(tc => tc.id === itemData.item.id);
+                return (
+                    <View style={styles.listContainer}>
+                        <ChallengeCard
+                            title={ch.title}
+                            text={ch.description}
+                            score={ch.baseValue}
+                            modifier={ch.modifier}
+                            type={ch.type}
+                            userChallenges={usrCh}
+                            datesCompleted={datesCompleted}
+                        />
+                    </View>
+                )
+            }}
+        />
     );
 }
 
 export const screenOptions = navData => {
-  return {
-    headerTitle: Traducao.t('desafiosScreen'),
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item 
-          title='Menu'
-          iconName={'md-menu'}
-          onPress={() => {
-            navData.navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    )
-  }
+    return {
+        headerTitle: Traducao.t('desafiosScreen'),
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title='Menu'
+                    iconName={'md-menu'}
+                    onPress={() => {
+                        navData.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        )
+    }
 };
 
 
@@ -362,7 +365,7 @@ const styles = StyleSheet.create({
     filterTitle: {
         color: 'white',
         fontSize: 18,
-        textDecorationLine:"underline"
+        textDecorationLine: "underline"
     },
     filterTitleInactive: {
         color: '#ccc',
