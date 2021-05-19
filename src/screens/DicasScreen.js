@@ -14,6 +14,8 @@ import DefaultText from '../components/DefaultText';
 import OfflineWarning from '../components/OfflineWarning';
 import Traducao from '../components/Traducao/Traducao';
 
+import Tips from "../constants/Tips";
+
 // const dicas = [
 // 	{
 // 		id: 1,
@@ -28,7 +30,7 @@ import Traducao from '../components/Traducao/Traducao';
 // ]
 
 const DicasScreen = props => {
-	const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState();
     const [isOnline, setIsOnline] = useState(true);
@@ -95,65 +97,68 @@ const DicasScreen = props => {
     if (!isLoading && tips && tips.length === 0) {
         return (
             <View style={styles.loading}>
-                <DefaultText style={{paddingHorizontal: 5}}>{Traducao.t('noTips')}</DefaultText>
+                <DefaultText style={{ paddingHorizontal: 5 }}>{Traducao.t('noTips')}</DefaultText>
             </View>
         );
-	}
-	
+    }
+
     return (
-		<View style={styles.background}>
-			<OfflineWarning show={!isOnline}/>
-			<FlatList 
-				onRefresh={loadTips}
-				refreshing={isRefreshing}
-				data={tips}
-				keyExtractor={item => item.id.toString()}
-				contentContainerStyle={{ flexGrow: 1, width: Dimensions.get('window').width }}
-				extraData={tips}
-				renderItem={itemData => (
-					<TipCard 
-						title={itemData.item.title}
-						description={itemData.item.description}
-						isRead={itemData.item.read}
-						onPressTip={() => {
-							dispatch(challengeActions.completeTipChallenge());
-                           	props.navigation.navigate('DicasDetalhe', {
-								tipId: itemData.item.id,
-								tipTitle: itemData.item.title,
-								isLiked: itemData.item.liked
-							})
-						}}
-					/>
-				)}
-			/>
-		</View>
+        <View style={styles.background}>
+            <OfflineWarning show={!isOnline} />
+            <FlatList
+                onRefresh={loadTips}
+                refreshing={isRefreshing}
+                data={tips}
+                keyExtractor={item => item.id.toString()}
+                contentContainerStyle={{ flexGrow: 1, width: Dimensions.get('window').width }}
+                extraData={tips}
+                renderItem={itemData => {
+                    const tip = Tips.find(t => t.id === itemData.item.id);
+                    return (
+                        <TipCard
+                            title={tip.title}
+                            description={tip.description}
+                            isRead={itemData.item.read}
+                            onPressTip={() => {
+                                dispatch(challengeActions.completeTipChallenge());
+                                props.navigation.navigate('DicasDetalhe', {
+                                    tipId: itemData.item.id,
+                                    tipTitle: itemData.item.title,
+                                    isLiked: itemData.item.liked
+                                })
+                            }}
+                        />
+                    )
+                }}
+            />
+        </View>
     );
 };
 
 export const screenOptions = navData => {
     return {
-		headerTitle: Traducao.t('dicasScreen'),
-		headerLeft: () => (
-			<HeaderButtons HeaderButtonComponent={HeaderButton}>
-				<Item 
-					title='Menu'
-					iconName={'md-menu'}
-					onPress={() => {
-					navData.navigation.toggleDrawer();
-					}}
-				/>
-			</HeaderButtons>
-		)
+        headerTitle: Traducao.t('dicasScreen'),
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title='Menu'
+                    iconName={'md-menu'}
+                    onPress={() => {
+                        navData.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        )
     }
 };
 
 const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		backgroundColor: 'white',
-		paddingTop: 5
-	},
-	loading: {
+    background: {
+        flex: 1,
+        backgroundColor: 'white',
+        paddingTop: 5
+    },
+    loading: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'

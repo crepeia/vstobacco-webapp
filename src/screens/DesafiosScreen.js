@@ -24,7 +24,7 @@ import ChallengeCard from '../components/UI/ChallengeCard';
 import { LineChart } from 'react-native-chart-kit';
 import Traducao from '../components/Traducao/Traducao';
 
-import ChallengesEn from "../constants/ChallengesEn";
+import Challenges from "../constants/Challenges";
 
 // dados fictícios
 import { availableChallengesArray } from '../dummyData/availableChallenges';
@@ -308,7 +308,7 @@ const DesafiosScreen = props => {
             renderItem={itemData => {
                 const usrCh = userChallenges.filter(c => c.challengeId === itemData.item.id);
                 const datesCompleted = usrCh.map(c => c.dateCompleted);
-                const ch = ChallengesEn.find(tc => tc.id === itemData.item.id);
+                const ch = Challenges.find(tc => tc.id === itemData.item.id);
                 return (
                     <View style={styles.listContainer}>
                         <ChallengeCard
