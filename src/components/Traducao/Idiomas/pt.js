@@ -105,7 +105,7 @@ const pt = {
     title14: "Dica 14",
     description14: "Participar de grupos de apoio para fumantes/ex-fumantes podem aumentar suas chances de parar de fumar.",
     title15: "Dica 15",
-    description15: "Em 15 anos após parar,  os riscos de sofrer de doenças cardiacas são iguais a de uma pessoa que nunca fumou.",
+    description15: "Em 15 anos após parar, os riscos de sofrer de doenças cardiacas são iguais a de uma pessoa que nunca fumou.",
     title16: "Dica 16",
     description16: "Não desista diante das recaídas. A maioria das pessoas que conseguem deixar de fumar não conseguem da primeira vez.",
     title17: "Dica 17",
@@ -121,7 +121,7 @@ const pt = {
     title22: "Dica 22",
     description22: "A prática de exercícios físicos pode ajudar a diminuir a ansiedade e evitar o ganho de peso.",
     title23: "Dica 23",
-    description23: "Procure evita situações estressantes durante o processo de parar de fumar.",
+    description23: "Procure evitar situações estressantes durante o processo de parar de fumar.",
     title24: "Dica 24",
     description24: "Beba bastante água durante o dia para ajudar na desintoxicação da nicotina.",
     title25: "Dica 25",
@@ -133,20 +133,17 @@ const pt = {
     title28: "Dica 28",
     description28: "Evite comportamentos ou situações que reforcem o desejo de acender um cigarro.",
 
-
-    // dummyData:
-
-    //availableChallenges:
-    readTips: "Ler dicas",
-    readTipsDescription: "Ler uma dica recebida.",
-    informCigarettes: "Informar cigarros fumados diariamente",
-    informCigarettesDescription: "Informe diariamente o número de cigarros fumados no dia.",
-    dontSmoke: "Não fumar",
-    dontSmokeDescription: "Não fumar durante o dia.",
-    register: "Cadastro",
-    registerDescription: "Finalize o cadastro no site. Você o encontra na seção Sobre.",
-    stopPlan: "Plano de Parada",
-    stopPlanDescription: "Completar o plano de parada no site. Você o encontra na seção Sobre",
+    //Challenges
+    challenge1: "Cadastro",
+    descriptionChallenge1: "Finalize o Cadastro no Site",
+    challenge2: "Plano de Mudança",
+    descriptionChallenge2: "Completar o plano de mudança",
+    challenge3: "Ler Dicas",
+    descriptionChallenge3: "Ler uma dica recebida",
+    challenge4: "Informar Cigarros Diariamente",
+    descriptionChallenge4: "Informe o número de cigarros fumados diariamente",
+    challenge5: "Não fumar",
+    descriptionChallenge5: "Não fumar cigarros durante o dia",
 
     // Navigation:
     titleRegister: "Cadastro",

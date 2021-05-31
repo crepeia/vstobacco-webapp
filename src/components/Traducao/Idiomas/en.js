@@ -85,7 +85,7 @@ const en = {
     title4: "Tip 4",
     description4: "During the cessation process it is common for episodes of relapse to occur, but do not be discouraged, remain firm in your purpose to quit smoking.",
     title5: "Tip 5",
-    description5: "Eating fruits or low-calorie foods helps in times of craving and does not gain weight.",
+    description5: "Eating fruits or low-calorie foods helps in times of fissure and does not gain weight.",
     title6: "Tip 6",
     description6: "Quitting smoking increases life expectancy and quality of life.",
     title7: "Tip 7",
@@ -103,7 +103,7 @@ const en = {
     title13: "Tip 13",
     description13: "Think about your daily activities and when you feel like smoking and try to change that behavior.",
     title14: "Tip 14",
-    description14: "Participating in support groups for smokers / ex-smokers can increase your chances of quitting.",
+    description14: "Participating in support groups for smokers/ex-smokers can increase your chances of quitting.",
     title15: "Tip 15",
     description15: "In 15 years after quitting, the risks of suffering from heart disease are the same as those of a person who has never smoked.",
     title16: "Tip 16",
@@ -121,7 +121,7 @@ const en = {
     title22: "Tip 22",
     description22: "Physical exercise can help reduce anxiety and prevent weight gain.",
     title23: "Tip 23",
-    description23: "Seek to avoid stressful situations during the process of quitting smoking.",
+    description23: "Try to avoid stressful situations during the process of quitting.",
     title24: "Tip 24",
     description24: "Drink plenty of water during the day to help nicotine detox.",
     title25: "Tip 25",
@@ -133,20 +133,17 @@ const en = {
     title28: "Tip 28",
     description28: "Avoid behaviors or situations that reinforce the desire to light a cigarette.",
 
-
-    // dummyData:
-
-    // availableChallenges:
-    readTips: "Read tips",
-    readTipsDescription: "Read the new tip.",
-    informCigarettes: "Report smoked cigarettes daily",
-    informCigarettesDescription: "Report daily the number of cigarettes smoked in the day.",
-    dontSmoke: "Don't smoke",
-    dontSmokeDescription: "Do not smoke - even a puff, during one day.",
-    register: "Cadastre",
-    registerDescription: "Finish the registration on the website. You can find it in the About Section.",
-    stopPlan: "Stop Plan",
-    stopPlanDescription: "Complete the quit smoking plan on the website. You can find it in the About section",
+    // Challenges
+    challenge1: "Register",
+    descriptionChallenge1: "Finalize the Registration on the Site",
+    challenge2: "Change Plan",
+    descriptionChallenge2: "Complete the change plan",
+    challenge3: "Read Tips",
+    descriptionChallenge3: "Read a tip received",
+    challenge4: "Inform Cigarettes Daily",
+    descriptionChallenge4: "Enter the number of cigarettes smoked daily",
+    challenge5: "No smoking",
+    descriptionChallenge5: "No smoking cigarettes during the day",
 
     // Navigation:
     titleRegister: "Sign in",
