@@ -2,7 +2,7 @@
   "expo": {
     "name": "Viva sem Tabaco",
     "slug": "viva-sem-tabaco",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -21,7 +21,7 @@
     ],
     "ios": {
       "bundleIdentifier": "dcc.ufjf.livewithouttobacco",
-      "buildNumber": "3.0.0",
+      "buildNumber": "3.0.1",
       "supportsTablet": true
     },
     "web": {
@@ -33,7 +33,7 @@
       "permissions": [
         "USE_FINGERPRINT"
       ],
-      "versionCode": 3,
+      "versionCode": 4,
       "useNextNotificationsApi": true
     }
   }
