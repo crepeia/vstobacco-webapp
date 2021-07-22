@@ -315,6 +315,7 @@ const pt = {
     typeEmail: "Digite o seu e-mail",
     typePassword: "Digite uma senha",
     minPassword: "A senha deve conter no mínimo 6 caracteres",
+    passwordMatch: "As senhas devem ser iguais",
     requireTermsUse: "Você precisa aceitar os termos de uso para criar uma conta",
     frequency: "Escolha uma opção de frequência",
     receiveEmails: "Este campo é requerido",
@@ -334,6 +335,8 @@ const pt = {
     //email
     //typePassword
     //password
+    typePasswordConfirmation: "Digite novamente sua senha",
+    passwordConfirmation: "Confirmação de Senha",
     finishing: "Finalizado",
     receiveTips: "Deseja receber nossas dicas por email?",
     frequencyTips: "Frequência de recebimento das dicas para redução de consumo de tabaco",
