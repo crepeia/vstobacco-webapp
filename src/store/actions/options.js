@@ -19,7 +19,7 @@ export const fetchOptions = () => {
         const userId = getState().user.currentUser.id;
 
 
-        const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions/find/${userId}`, {
+        const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/mobileoptions/find/${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,8 +36,8 @@ export const fetchOptions = () => {
 
 
         const userOp = new Options(resData.id, resData.user.id, resData.allowCigarNotifications, resData.allowTipNotifications, resData.allowAchievmentNotifications,
-        moment(resData.cigarNotificationTime, "HH:mmZZ").format("HH:mm"), moment(resData.tipNotificationTime, "HH:mmZZ").format("HH:mm"), 
-        moment(resData.achievmentNotificationTime, "HH:mmZZ").format("HH:mm"), resData.notificationToken);
+            moment(resData.cigarNotificationTime, "HH:mmZZ").format("HH:mm"), moment(resData.tipNotificationTime, "HH:mmZZ").format("HH:mm"),
+            moment(resData.achievmentNotificationTime, "HH:mmZZ").format("HH:mm"), resData.notificationToken);
 
         // const userOp = new Options (6, 22795, true, true, true, moment('20:00', "HH:mmZZ").format("HH:mm"), moment('20:00', "HH:mmZZ").format("HH:mm"), 
         // moment('20:00', "HH:mmZZ").format("HH:mm"), 'VLz1pJD0g-IacYh3geV8Z2');
@@ -65,9 +65,9 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
 
 
         const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
-			{
-				method: 'PUT',
+            `http://${Localhost.address}${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
+            {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -84,11 +84,11 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
                     notificationToken: notificationToken,
                     user: { id: userId }
                 })
-			}
+            }
         );
-        
 
-		if (!response.ok) {
+
+        if (!response.ok) {
             console.log(response.status);
 
             throw new Error('Não foi possível editar as configurações.');
@@ -96,11 +96,11 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
 
         dispatch({
             type: UPDATE_OPTIONS,
-            options: { optionsId, userId, allowCigarNotifications, allowTipNotifications, allowAchievementsNotifications, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, notificationToken},
+            options: { optionsId, userId, allowCigarNotifications, allowTipNotifications, allowAchievementsNotifications, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, notificationToken },
             // meta: {
             //     offline: {
             //         effect: {
-            //             url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
+            //             url: `http://${Localhost.address}${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
             //             method: 'PUT',
             //             headers: {
             //                 'Content-Type': 'application/json',

@@ -66,12 +66,12 @@ export const authenticate = (token, userId, userName, userEmail, birthDate, gend
 
 export const signin = (email, password) => {
 	console.log(email);
-	
+
 	return async (dispatch) => {
-        const encryptedPass = encryptPassword(password);
-        
+		const encryptedPass = encryptPassword(password);
+
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/authenticationtoken/${email}/${encryptedPass}`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/authenticationtoken/${email}/${encryptedPass}`,
 			{
 				method: 'GET',
 				headers: {
@@ -80,7 +80,7 @@ export const signin = (email, password) => {
 				},
 			}
 		);
-        
+
 		if (!response.ok) {
 			throw new Error('Email ou senha incorretos!');
 		}
@@ -88,9 +88,9 @@ export const signin = (email, password) => {
 		const token = await response.text();
 
 		console.log(token);
-		
+
 		const responseUser = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/login/${token}`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/user/login/${token}`,
 			{
 				method: 'GET',
 				headers: {
@@ -111,13 +111,13 @@ export const signin = (email, password) => {
 		 * General checks to simplify future service calls
 		 * Check is user already have chat, record and options tables and create them.
 		 */
-		
+
 
 		if (usr.record == null) {
 			//CREATE RECORD
 			console.log('CREATE RECORD');
 			const recordResponse = await fetch(
-				`http://${Localhost.address}:${Localhost.port}/wati/webresources/record/`,
+				`http://${Localhost.address}${Localhost.port}/wati/webresources/record/`,
 				{
 					method: 'POST',
 					headers: {
@@ -129,8 +129,8 @@ export const signin = (email, password) => {
 						user: { id: usr.id },
 						cigarsDaily: 0,
 						packPrice: 0.0,
-                        packAmount: 0,
-                        filled: false
+						packAmount: 0,
+						filled: false
 					}),
 				}
 			);
@@ -141,7 +141,7 @@ export const signin = (email, password) => {
 
 			console.log("registro criado");
 		}
-	
+
 		dispatch({
 			type: SIGNIN,
 			userId: usr.id,
@@ -169,7 +169,7 @@ export const signup = (jsonForm) => {
 		console.log(jsonForm);
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/${encryptedPass}/`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/user/${encryptedPass}/`,
 			{
 				method: 'POST',
 				headers: {
@@ -177,7 +177,7 @@ export const signup = (jsonForm) => {
 					Accept: 'application/json',
 				},
 				body: JSON.stringify(jsonForm),
-				
+
 			}
 		);
 
@@ -194,7 +194,7 @@ export const resetPassword = (userEmail) => {
 	console.log(userEmail);
 	return async (dispatch) => {
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/recover-password/`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/user/recover-password/`,
 			{
 				method: 'PUT',
 				headers: {
@@ -208,7 +208,7 @@ export const resetPassword = (userEmail) => {
 		);
 
 		console.log(response.status);
-		
+
 		if (!response.ok) {
 			throw new Error("Erro ao tentar resetar password.");
 		}
@@ -224,7 +224,7 @@ export const toggleRanking = (inRanking, nickname) => {
 		//console.log(inRanking)
 		//console.log(nickname)
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/user/setInRanking`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/user/setInRanking`,
 			{
 				method: 'PUT',
 				headers: {
@@ -240,12 +240,12 @@ export const toggleRanking = (inRanking, nickname) => {
 			}
 		);
 
-		
+
 
 		if (!response.ok) {
 			throw new Error("Erro ao participar do ranking.");
-        }
-        
+		}
+
 		AsyncStorage.mergeItem(
 			'userData',
 			JSON.stringify({
@@ -265,7 +265,7 @@ export const logout = () => {
 		const token = getState().user.token;
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/authenticationtoken/secured/logout/${token}`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/authenticationtoken/secured/logout/${token}`,
 			{
 				method: 'DELETE',
 				headers: {

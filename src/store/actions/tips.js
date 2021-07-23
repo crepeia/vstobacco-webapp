@@ -26,7 +26,7 @@ export const readTip = (tipId) => {
 		const token = getState().user.token;
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/read`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/tipuser/read`,
 			{
 				method: 'PUT',
 				headers: {
@@ -52,7 +52,7 @@ export const readTip = (tipId) => {
 			// 	offline: {
 			// 		// the network action to execute:
 			// 		effect: {
-			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/read`,
+			// 			url: `http://${Localhost.address}${Localhost.port}/wati/webresources/tipuser/read`,
 			// 			method: 'PUT',
 			// 			headers: {
 			// 				'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export const sendTip = (tip) => {
 		const newTip = new TipUser(id, userId, title, description, false, null, date);
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/createTip`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/tipuser/createTip`,
 			{
 				method: 'POST',
 				headers: {
@@ -112,7 +112,7 @@ export const toggleLikeTip = (tipId, oldLiked) => {
 		const newLiked = oldLiked !== null && oldLiked ? null : true;
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/like`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/tipuser/like`,
 			{
 				method: 'PUT',
 				headers: {
@@ -140,7 +140,7 @@ export const toggleLikeTip = (tipId, oldLiked) => {
 			// 	offline: {
 			// 		// the network action to execute:
 			// 		effect: {
-			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/like`,
+			// 			url: `http://${Localhost.address}${Localhost.port}/wati/webresources/tipuser/like`,
 			// 			method: 'PUT',
 			// 			headers: {
 			// 				'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ export const toggleDislikeTip = (tipId, oldLiked) => {
 		const newLiked = oldLiked !== null && !oldLiked ? null : false;
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/dislike`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/tipuser/dislike`,
 			{
 				method: 'PUT',
 				headers: {
@@ -200,7 +200,7 @@ export const toggleDislikeTip = (tipId, oldLiked) => {
 			// 	offline: {
 			// 		// the network action to execute:
 			// 		effect: {
-			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/dislike`,
+			// 			url: `http://${Localhost.address}${Localhost.port}/wati/webresources/tipuser/dislike`,
 			// 			method: 'PUT',
 			// 			headers: {
 			// 				'Content-Type': 'application/json',
@@ -232,7 +232,7 @@ export const fetchUserTips = () => {
 			const token = getState().user.token;
 
 			const response = await fetch(
-				`http://${Localhost.address}:${Localhost.port}/wati/webresources/tipuser/find/${userId}`,
+				`http://${Localhost.address}${Localhost.port}/wati/webresources/tipuser/find/${userId}`,
 				{
 					method: 'GET',
 					headers: {
@@ -276,7 +276,7 @@ export const fetchTips = () => {
 	try {
 		return async (dispatch, getState) => {
 			const token = getState().user.token;
-			const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/tip/all`, {
+			const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/tip/all`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

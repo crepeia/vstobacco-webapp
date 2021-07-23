@@ -22,7 +22,7 @@ export const fetchChallenges = () => {
     try {
         return async (dispatch, getState) => {
             const token = getState().user.token;
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challenge`, {
+            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challenge`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const fetchUserChallenges = () => {
         return async (dispatch, getState) => {
             const userId = getState().user.currentUser.id;
             const token = getState().user.token;
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/find/${userId}`, {
+            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/find/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export const fetchUserChallenges = () => {
                     resData[key].score, resData[key].dateCreated, resData[key].dateCompleted));
             }
 
-            const responseScore = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/points`, {
+            const responseScore = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/points`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -95,8 +95,8 @@ export const fetchUserChallenges = () => {
             }
 
             const resDataScore = await responseScore.json();
-            const sortedChallenges = loadedChallenges.sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
-                                        -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted))? 0 : 1);
+            const sortedChallenges = loadedChallenges.sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted)) ?
+                -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted)) ? 0 : 1);
 
             dispatch({ type: FETCH_USER_CHALLENGES, challenges: sortedChallenges, points: resDataScore });
         }
@@ -112,12 +112,12 @@ export const completeLoginChallenge = () => {
         return async (dispatch, getState) => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
-            const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 1);
+            const challenge = (getState().challenges.availableChallenges).
+                find(c => c.id === 1);
             //console.log(challenge)
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -125,8 +125,8 @@ export const completeLoginChallenge = () => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    user: {id: userId},
-                    challenge: {id: challenge.id},
+                    user: { id: userId },
+                    challenge: { id: challenge.id },
                     dateCreated: currentDate,
                     dateCompleted: currentDate,
                     score: challenge.baseValue,
@@ -134,7 +134,7 @@ export const completeLoginChallenge = () => {
             });
 
             if (!response.ok) {
-                if(response.status !== 304) {
+                if (response.status !== 304) {
                     throw new Error('Algo deu errado ao completar o desafio.');
                 }
             } else {
@@ -145,7 +145,7 @@ export const completeLoginChallenge = () => {
                     resData.score, resData.dateCreated, resData.dateCompleted)
                 dispatch({ type: COMPLETE_CHALLENGE, challenge: newChUser, challengeUserId: resData.id, score: challenge.baseValue, dateCompleted: resData.dateCompleted });
             }
-            
+
         }
 
     } catch (err) {
@@ -158,12 +158,12 @@ export const completePlanChallenge = () => {
         return async (dispatch, getState) => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
-            const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 2);
+            const challenge = (getState().challenges.availableChallenges).
+                find(c => c.id === 2);
             //console.log(challenge)
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -171,8 +171,8 @@ export const completePlanChallenge = () => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    user: {id: userId},
-                    challenge: {id: challenge.id},
+                    user: { id: userId },
+                    challenge: { id: challenge.id },
                     dateCreated: currentDate,
                     dateCompleted: currentDate,
                     score: challenge.baseValue,
@@ -180,7 +180,7 @@ export const completePlanChallenge = () => {
             });
 
             if (!response.ok) {
-                if(response.status !== 304) {
+                if (response.status !== 304) {
                     throw new Error('Algo deu errado ao completar o desafio do plano.');
                 }
             } else {
@@ -191,7 +191,7 @@ export const completePlanChallenge = () => {
                     resData.score, resData.dateCreated, resData.dateCompleted)
                 dispatch({ type: COMPLETE_CHALLENGE, challenge: newChUser, challengeUserId: resData.id, score: challenge.baseValue, dateCompleted: resData.dateCompleted });
             }
-            
+
         }
 
     } catch (err) {
@@ -205,11 +205,11 @@ export const completeTipChallenge = () => {
         return async (dispatch, getState) => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
-            const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 3);
-            const userChallenges =  (getState().challenges.userChallenges).
-                                    filter(c => c.challengeId === 3).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
-                                                                                -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted))? 0 : 1);
+            const challenge = (getState().challenges.availableChallenges).
+                find(c => c.id === 3);
+            const userChallenges = (getState().challenges.userChallenges).
+                filter(c => c.challengeId === 3).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted)) ?
+                    -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted)) ? 0 : 1);
             // console.log(userChallenges)
             const yesterday = moment().add(-1, 'days').format("YYYY-MM-DD");
 
@@ -218,7 +218,7 @@ export const completeTipChallenge = () => {
                 //console.log(id)
                 //console.log(acc)
 
-                if (id === acc){
+                if (id === acc) {
                     return moment(acc).add(-1, 'days').format("YYYY-MM-DD");
                 } else {
                     return acc;
@@ -230,10 +230,10 @@ export const completeTipChallenge = () => {
             //console.log(lastDay);
             //console.log(yesterday);
 
-            
+
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -241,8 +241,8 @@ export const completeTipChallenge = () => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    user: {id: userId},
-                    challenge: {id: challenge.id},
+                    user: { id: userId },
+                    challenge: { id: challenge.id },
                     dateCreated: currentDate,
                     dateCompleted: currentDate,
                     score: challenge.baseValue + (streak * challenge.modifier),
@@ -250,7 +250,7 @@ export const completeTipChallenge = () => {
             });
 
             if (!response.ok) {
-                if(response.status !== 304) {
+                if (response.status !== 304) {
                     throw new Error('Algo deu errado ao completar o desafio de dicas.');
                 }
             } else {
@@ -261,7 +261,7 @@ export const completeTipChallenge = () => {
                     resData.score, resData.dateCreated, resData.dateCompleted)
                 dispatch({ type: COMPLETE_CHALLENGE, challenge: newChUser, challengeUserId: resData.id, score: challenge.baseValue, dateCompleted: resData.dateCompleted });
             }
-            
+
         }
 
     } catch (err) {
@@ -275,11 +275,11 @@ export const completeDailyLogChallenge = () => {
         return async (dispatch, getState) => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
-            const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 4);
-            const userChallenges =  (getState().challenges.userChallenges).
-                                    filter(c => c.challengeId === 4).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
-                                    -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted))? 0 : 1);
+            const challenge = (getState().challenges.availableChallenges).
+                find(c => c.id === 4);
+            const userChallenges = (getState().challenges.userChallenges).
+                filter(c => c.challengeId === 4).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted)) ?
+                    -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted)) ? 0 : 1);
             // console.log(userChallenges)
             const yesterday = moment().add(-1, 'days').format("YYYY-MM-DD");
 
@@ -288,7 +288,7 @@ export const completeDailyLogChallenge = () => {
                 //console.log(id)
                 //console.log(acc)
 
-                if (id === acc){
+                if (id === acc) {
                     return moment(acc).add(-1, 'days').format("YYYY-MM-DD");
                 } else {
                     return acc;
@@ -300,10 +300,10 @@ export const completeDailyLogChallenge = () => {
             //console.log(lastDay);
             //console.log(yesterday);
 
-            
+
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -311,8 +311,8 @@ export const completeDailyLogChallenge = () => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    user: {id: userId},
-                    challenge: {id: challenge.id},
+                    user: { id: userId },
+                    challenge: { id: challenge.id },
                     dateCreated: currentDate,
                     dateCompleted: currentDate,
                     score: challenge.baseValue + (streak * challenge.modifier),
@@ -320,7 +320,7 @@ export const completeDailyLogChallenge = () => {
             });
 
             if (!response.ok) {
-                if(response.status !== 304) {
+                if (response.status !== 304) {
                     throw new Error('Algo deu errado ao completar o desafio de informar cigarros.');
                 }
             } else {
@@ -331,7 +331,7 @@ export const completeDailyLogChallenge = () => {
                     resData.score, resData.dateCreated, resData.dateCompleted)
                 dispatch({ type: COMPLETE_CHALLENGE, challenge: newChUser, challengeUserId: resData.id, score: challenge.baseValue, dateCompleted: resData.dateCompleted });
             }
-            
+
         }
 
     } catch (err) {
@@ -345,11 +345,11 @@ export const completeDontSmokeChallenge = (date) => {
         return async (dispatch, getState) => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
-            const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 5);
-            const userChallenges =  (getState().challenges.userChallenges).
-                                    filter(c => c.challengeId === 5).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted))?
-                                    -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted))? 0 : 1);
+            const challenge = (getState().challenges.availableChallenges).
+                find(c => c.id === 5);
+            const userChallenges = (getState().challenges.userChallenges).
+                filter(c => c.challengeId === 5).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted)) ?
+                    -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted)) ? 0 : 1);
             // console.log(userChallenges)
             const yesterday = moment(date).add(-1, 'days').format("YYYY-MM-DD");
 
@@ -358,7 +358,7 @@ export const completeDontSmokeChallenge = (date) => {
                 //console.log(id)
                 //console.log(acc)
 
-                if (id === acc){
+                if (id === acc) {
                     return moment(acc).add(-1, 'days').format("YYYY-MM-DD");
                 } else {
                     return acc;
@@ -370,10 +370,10 @@ export const completeDontSmokeChallenge = (date) => {
             //console.log(lastDay);
             //console.log(yesterday);
 
-            
+
             const currentDate = moment(date).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -381,8 +381,8 @@ export const completeDontSmokeChallenge = (date) => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    user: {id: userId},
-                    challenge: {id: challenge.id},
+                    user: { id: userId },
+                    challenge: { id: challenge.id },
                     dateCreated: currentDate,
                     dateCompleted: currentDate,
                     score: challenge.baseValue + (streak * challenge.modifier),
@@ -390,7 +390,7 @@ export const completeDontSmokeChallenge = (date) => {
             });
 
             if (!response.ok) {
-                if(response.status !== 304) {
+                if (response.status !== 304) {
                     throw new Error('Algo deu errado ao completar o desafio de não fumar.');
                 }
             } else {
@@ -401,7 +401,7 @@ export const completeDontSmokeChallenge = (date) => {
                     resData.score, resData.dateCreated, resData.dateCompleted)
                 dispatch({ type: COMPLETE_CHALLENGE, challenge: newChUser, challengeUserId: resData.id, score: challenge.baseValue, dateCompleted: resData.dateCompleted });
             }
-            
+
         }
 
     } catch (err) {
@@ -415,19 +415,19 @@ export const checkDontSmokeChallenge = (date) => {
         return async (dispatch, getState) => {
             const token = getState().user.token;
             const userId = getState().user.currentUser.id;
-            const challenge =  (getState().challenges.availableChallenges).
-                                    find(c => c.id === 5);
-            const userChallenges =  (getState().challenges.userChallenges).
-                                    filter(c => c.challengeId === 5).reverse();
+            const challenge = (getState().challenges.availableChallenges).
+                find(c => c.id === 5);
+            const userChallenges = (getState().challenges.userChallenges).
+                filter(c => c.challengeId === 5).reverse();
             // console.log(userChallenges)
 
             const challengeValue = userChallenges.find(c => c.dateCompleted === date)
             // console.log(challengeValue)
-            if(challengeValue){
+            if (challengeValue) {
                 // console.log("aqui2?")
                 const currentDate = moment(date).format("YYYY-MM-DD");
 
-                const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/deleteChallenge/${challengeValue.id}`, {
+                const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/deleteChallenge/${challengeValue.id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -438,12 +438,12 @@ export const checkDontSmokeChallenge = (date) => {
                 console.log(response.body)
                 if (!response.ok) {
                     throw new Error('Algo deu errado ao conferir desafio de não fumar.');
-                } 
-                
+                }
 
-                dispatch({ type: DELETE_CHALLENGE, challengeId: challengeValue.id});
-            
-                
+
+                dispatch({ type: DELETE_CHALLENGE, challengeId: challengeValue.id });
+
+
             }
         }
 
@@ -460,7 +460,7 @@ export const computePoints = () => {
             const userId = getState().user.currentUser.id;
             const token = getState().user.token;
 
-            const responseScore = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/points`, {
+            const responseScore = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/points`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -492,7 +492,7 @@ export const fetchRanking = () => {
             const token = getState().user.token;
             const today = moment().format("YYYY-MM-DD").toString();
 
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/challengeuser/rank/${today}`, {
+            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/rank/${today}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -507,15 +507,15 @@ export const fetchRanking = () => {
             }
 
             const resData = await response.json();
-            
+
             console.log(resData)
-            const {weeklyResult, monthlyResult, yearlyResult} = resData
+            const { weeklyResult, monthlyResult, yearlyResult } = resData
 
             weeklyResult.sort((a, b) => b.score - a.score)
             let position = 1
             let lastScore = weeklyResult[0].score;
             weeklyResult.forEach(wr => {
-                if(wr.score != lastScore){
+                if (wr.score != lastScore) {
                     position += 1;
                     lastScore = wr.score;
                 }
@@ -526,7 +526,7 @@ export const fetchRanking = () => {
             position = 1
             lastScore = monthlyResult[0].score;
             monthlyResult.forEach(wr => {
-                if(wr.score != lastScore){
+                if (wr.score != lastScore) {
                     position += 1;
                     lastScore = wr.score;
                 }
@@ -537,7 +537,7 @@ export const fetchRanking = () => {
             position = 1
             lastScore = yearlyResult[0].score;
             yearlyResult.forEach(wr => {
-                if(wr.score != lastScore){
+                if (wr.score != lastScore) {
                     position += 1;
                     lastScore = wr.score;
                 }

@@ -6,12 +6,12 @@ import Localhost from "../../constants/Localhost";
 import moment from 'moment';
 
 export const fetchDailyAchievements = () => {
-    return async (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		const userId = getState().user.currentUser.id;
 		const token = getState().user.token;
 
 		const responseDailyAchievements = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/achievement/find/${userId}`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/achievement/find/${userId}`,
 			{
 				method: "GET",
 				headers: {
@@ -41,45 +41,45 @@ export const fetchDailyAchievements = () => {
 				);
 			}
 		}
-        
+
 		dispatch({
 			type: FETCH_DAILY_ACHIEVEMENTS,
-            loadedAchievements: loadedAchievements
+			loadedAchievements: loadedAchievements
 		});
 	};
 };
 
 export const saveAchievement = (cigars, date) => {
 	return async (dispatch, getState) => {
-		
+
 		const userId = getState().user.currentUser.id;
 
-        const token = getState().user.token;
-        const cigarsDaily = getState().record.record.cigarsDaily;
-        const packPrice = getState().record.record.packPrice;
-        const packAmount = getState().record.record.packAmount;
+		const token = getState().user.token;
+		const cigarsDaily = getState().record.record.cigarsDaily;
+		const packPrice = getState().record.record.packPrice;
+		const packAmount = getState().record.record.packAmount;
 
-        const thereIsAchievement = cigarsDaily - cigars;
+		const thereIsAchievement = cigarsDaily - cigars;
 
-        let currentCigarsNotSmoken = 0;
-        let currentLifeTimeSaved = 0;
-        let currentMoneySaved = 0;
+		let currentCigarsNotSmoken = 0;
+		let currentLifeTimeSaved = 0;
+		let currentMoneySaved = 0;
 
-        if (thereIsAchievement > 0) {
-            currentCigarsNotSmoken = thereIsAchievement;
-            currentLifeTimeSaved = currentCigarsNotSmoken * 11;
-            currentMoneySaved = currentCigarsNotSmoken * (packPrice / packAmount);
-        }
-        
+		if (thereIsAchievement > 0) {
+			currentCigarsNotSmoken = thereIsAchievement;
+			currentLifeTimeSaved = currentCigarsNotSmoken * 11;
+			currentMoneySaved = currentCigarsNotSmoken * (packPrice / packAmount);
+		}
+
 		let achievement = getState().achievement.dailyAchievements.find((dl) => dl.logDate === date);
 		let oldAchievement = null;
-        let action = "";
-        
+		let action = "";
+
 		if (achievement) {
 			oldAchievement = new Achievement(achievement.cigarsNotSmoken, achievement.lifeTimeSaved, achievement.moneySaved, achievement.logDate);
-            achievement.cigarsNotSmoken = currentCigarsNotSmoken;
-            achievement.lifeTimeSaved = currentLifeTimeSaved;
-            achievement.moneySaved = currentMoneySaved;
+			achievement.cigarsNotSmoken = currentCigarsNotSmoken;
+			achievement.lifeTimeSaved = currentLifeTimeSaved;
+			achievement.moneySaved = currentMoneySaved;
 			achievement.logDate = date;
 			action = "edit";
 		} else {
@@ -87,11 +87,11 @@ export const saveAchievement = (cigars, date) => {
 			oldAchievement = achievement;
 			action = "create";
 		}
-		
+
 		let newDate = moment.utc(date).format();
 
 		const saveAchievementResponse = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/achievement/editOrCreate`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/achievement/editOrCreate`,
 			{
 				method: "POST",
 				headers: {

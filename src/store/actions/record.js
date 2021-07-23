@@ -38,7 +38,7 @@ export const fetchRecord = () => {
 		const userId = getState().user.currentUser.id;
 
 		const responseRecord = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/record/find/${userId}`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/record/find/${userId}`,
 			{
 				method: "GET",
 				headers: {
@@ -51,17 +51,17 @@ export const fetchRecord = () => {
 
 		if (!responseRecord.ok) {
 			throw new Error('Erro ao carregar registro');
-        }
-        
-        let record = await responseRecord.json();
+		}
+
+		let record = await responseRecord.json();
 		console.log(record);
 
 		dispatch({
 			type: FETCH_RECORD,
 			recordId: record.id,
 			cigarsDaily: record.cigarsDaily,
-            packPrice: record.packPrice,
-            packAmount: record.packAmount,
+			packPrice: record.packPrice,
+			packAmount: record.packAmount,
 			userId: userId,
 			filled: record.filled,
 		});
@@ -86,7 +86,7 @@ export const updateRecord = (cigarsDaily, packPrice, packAmount) => {
 		console.log("------------------------------");
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/record/edit/`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/record/edit/`,
 			{
 				method: 'PUT',
 				headers: {
@@ -107,21 +107,21 @@ export const updateRecord = (cigarsDaily, packPrice, packAmount) => {
 
 		if (!response.ok) {
 			throw new Error("Erro ao registrar record.");
-        }
+		}
 
 		dispatch({
-            type: UPDATE_RECORD,
-            id: recordId,
+			type: UPDATE_RECORD,
+			id: recordId,
 			cigarsDaily: cigarsDaily,
-            packPrice: packPrice,
-            packAmount: packAmount,
+			packPrice: packPrice,
+			packAmount: packAmount,
 			userId: userId,
 			filled: true,
 			// meta: {
 			// 	offline: {
 			// 		// the network action to execute:
 			// 		effect: {
-			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/record/edit/`,
+			// 			url: `http://${Localhost.address}${Localhost.port}/wati/webresources/record/edit/`,
 			// 			method: "PUT",
 			// 			headers: {
 			// 				"Content-Type": "application/json",
@@ -153,7 +153,7 @@ export const fetchDailyLogs = () => {
 		const token = getState().user.token;
 
 		const responseDailyLogs = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/dailylog/find/${recordId}`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/dailylog/find/${recordId}`,
 			{
 				method: "GET",
 				headers: {
@@ -215,12 +215,12 @@ export const saveLog = (cigars, date) => {
 
 		console.log("log atualizado");
 		console.log(log);
-		
+
 		let newDate = moment.utc(date).format();
 		console.log(newDate);
 
 		const response = await fetch(
-			`http://${Localhost.address}:${Localhost.port}/wati/webresources/dailylog/editOrCreate`,
+			`http://${Localhost.address}${Localhost.port}/wati/webresources/dailylog/editOrCreate`,
 			{
 				method: 'POST',
 				headers: {
@@ -247,7 +247,7 @@ export const saveLog = (cigars, date) => {
 			// 	offline: {
 			// 		// the network action to execute:
 			// 		effect: {
-			// 			url: `http://${Localhost.address}:${Localhost.port}/wati/webresources/dailylog/editOrCreate`,
+			// 			url: `http://${Localhost.address}${Localhost.port}/wati/webresources/dailylog/editOrCreate`,
 			// 			method: "POST",
 			// 			headers: {
 			// 				"Content-Type": "application/json",
