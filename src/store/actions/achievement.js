@@ -11,7 +11,7 @@ export const fetchDailyAchievements = () => {
 		const token = getState().user.token;
 
 		const responseDailyAchievements = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/achievement/find/${userId}`,
+			`http://${Localhost.localhost}/wati/webresources/achievement/find/${userId}`,
 			{
 				method: "GET",
 				headers: {
@@ -91,7 +91,7 @@ export const saveAchievement = (cigars, date) => {
 		let newDate = moment.utc(date).format();
 
 		const saveAchievementResponse = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/achievement/editOrCreate`,
+			`http://${Localhost.localhost}/wati/webresources/achievement/editOrCreate`,
 			{
 				method: "POST",
 				headers: {

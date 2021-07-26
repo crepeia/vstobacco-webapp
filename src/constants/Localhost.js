@@ -1,7 +1,12 @@
 
 export default {
-	address: 'alcoolesaude.com.br',
-	port: '',
-	//address: '192.168.0.2',
-	//port: '',
+	/* 
+	  example ---> localhost:"address:port" <--- example
+	*/
+
+	//server remoto (não usamos porta no remoto)
+	localhost: 'vivasemtabaco.com.br',
+
+	//server local
+	//localhost: '192.168.0.2:8080',
 };

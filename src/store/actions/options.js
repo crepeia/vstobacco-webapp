@@ -19,7 +19,7 @@ export const fetchOptions = () => {
         const userId = getState().user.currentUser.id;
 
 
-        const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/mobileoptions/find/${userId}`, {
+        const response = await fetch(`http://${Localhost.localhost}/wati/webresources/mobileoptions/find/${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
 
 
         const response = await fetch(
-            `http://${Localhost.address}${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
+            `http://${Localhost.localhost}/wati/webresources/mobileoptions/edit/${userId}`,
             {
                 method: 'PUT',
                 headers: {
@@ -100,7 +100,7 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
             // meta: {
             //     offline: {
             //         effect: {
-            //             url: `http://${Localhost.address}${Localhost.port}/wati/webresources/mobileoptions/edit/${userId}`,
+            //             url: `http://${Localhost.localhost}/wati/webresources/mobileoptions/edit/${userId}`,
             //             method: 'PUT',
             //             headers: {
             //                 'Content-Type': 'application/json',

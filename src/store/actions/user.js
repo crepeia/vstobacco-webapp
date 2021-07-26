@@ -71,7 +71,7 @@ export const signin = (email, password) => {
 		const encryptedPass = encryptPassword(password);
 
 		const response = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/authenticationtoken/${email}/${encryptedPass}`,
+			`http://${Localhost.localhost}/wati/webresources/authenticationtoken/${email}/${encryptedPass}`,
 			{
 				method: 'GET',
 				headers: {
@@ -90,7 +90,7 @@ export const signin = (email, password) => {
 		console.log(token);
 
 		const responseUser = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/user/login/${token}`,
+			`http://${Localhost.localhost}/wati/webresources/user/login/${token}`,
 			{
 				method: 'GET',
 				headers: {
@@ -117,7 +117,7 @@ export const signin = (email, password) => {
 			//CREATE RECORD
 			console.log('CREATE RECORD');
 			const recordResponse = await fetch(
-				`http://${Localhost.address}${Localhost.port}/wati/webresources/record/`,
+				`http://${Localhost.localhost}/wati/webresources/record/`,
 				{
 					method: 'POST',
 					headers: {
@@ -169,7 +169,7 @@ export const signup = (jsonForm) => {
 		console.log(jsonForm);
 
 		const response = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/user/${encryptedPass}/`,
+			`http://${Localhost.localhost}/wati/webresources/user/${encryptedPass}/`,
 			{
 				method: 'POST',
 				headers: {
@@ -194,7 +194,7 @@ export const resetPassword = (userEmail) => {
 	console.log(userEmail);
 	return async (dispatch) => {
 		const response = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/user/recover-password/`,
+			`http://${Localhost.localhost}/wati/webresources/user/recover-password/`,
 			{
 				method: 'PUT',
 				headers: {
@@ -224,7 +224,7 @@ export const toggleRanking = (inRanking, nickname) => {
 		//console.log(inRanking)
 		//console.log(nickname)
 		const response = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/user/setInRanking`,
+			`http://${Localhost.localhost}/wati/webresources/user/setInRanking`,
 			{
 				method: 'PUT',
 				headers: {
@@ -265,7 +265,7 @@ export const logout = () => {
 		const token = getState().user.token;
 
 		const response = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/authenticationtoken/secured/logout/${token}`,
+			`http://${Localhost.localhost}/wati/webresources/authenticationtoken/secured/logout/${token}`,
 			{
 				method: 'DELETE',
 				headers: {

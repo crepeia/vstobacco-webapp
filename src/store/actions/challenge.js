@@ -22,7 +22,7 @@ export const fetchChallenges = () => {
     try {
         return async (dispatch, getState) => {
             const token = getState().user.token;
-            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challenge`, {
+            const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challenge`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const fetchUserChallenges = () => {
         return async (dispatch, getState) => {
             const userId = getState().user.currentUser.id;
             const token = getState().user.token;
-            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/find/${userId}`, {
+            const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/find/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export const fetchUserChallenges = () => {
                     resData[key].score, resData[key].dateCreated, resData[key].dateCompleted));
             }
 
-            const responseScore = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/points`, {
+            const responseScore = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/points`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ export const completeLoginChallenge = () => {
             //console.log(challenge)
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ export const completePlanChallenge = () => {
             //console.log(challenge)
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -233,7 +233,7 @@ export const completeTipChallenge = () => {
 
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -303,7 +303,7 @@ export const completeDailyLogChallenge = () => {
 
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -373,7 +373,7 @@ export const completeDontSmokeChallenge = (date) => {
 
             const currentDate = moment(date).format("YYYY-MM-DD");
 
-            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/completeCreateChallenge`, {
+            const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/completeCreateChallenge`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -427,7 +427,7 @@ export const checkDontSmokeChallenge = (date) => {
                 // console.log("aqui2?")
                 const currentDate = moment(date).format("YYYY-MM-DD");
 
-                const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/deleteChallenge/${challengeValue.id}`, {
+                const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/deleteChallenge/${challengeValue.id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -460,7 +460,7 @@ export const computePoints = () => {
             const userId = getState().user.currentUser.id;
             const token = getState().user.token;
 
-            const responseScore = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/points`, {
+            const responseScore = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/points`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -492,7 +492,7 @@ export const fetchRanking = () => {
             const token = getState().user.token;
             const today = moment().format("YYYY-MM-DD").toString();
 
-            const response = await fetch(`http://${Localhost.address}${Localhost.port}/wati/webresources/challengeuser/rank/${today}`, {
+            const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/rank/${today}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

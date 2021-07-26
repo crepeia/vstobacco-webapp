@@ -38,7 +38,7 @@ export const fetchRecord = () => {
 		const userId = getState().user.currentUser.id;
 
 		const responseRecord = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/record/find/${userId}`,
+			`http://${Localhost.localhost}/wati/webresources/record/find/${userId}`,
 			{
 				method: "GET",
 				headers: {
@@ -86,7 +86,7 @@ export const updateRecord = (cigarsDaily, packPrice, packAmount) => {
 		console.log("------------------------------");
 
 		const response = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/record/edit/`,
+			`http://${Localhost.localhost}/wati/webresources/record/edit/`,
 			{
 				method: 'PUT',
 				headers: {
@@ -121,7 +121,7 @@ export const updateRecord = (cigarsDaily, packPrice, packAmount) => {
 			// 	offline: {
 			// 		// the network action to execute:
 			// 		effect: {
-			// 			url: `http://${Localhost.address}${Localhost.port}/wati/webresources/record/edit/`,
+			// 			url: `http://${Localhost.localhost}/wati/webresources/record/edit/`,
 			// 			method: "PUT",
 			// 			headers: {
 			// 				"Content-Type": "application/json",
@@ -153,7 +153,7 @@ export const fetchDailyLogs = () => {
 		const token = getState().user.token;
 
 		const responseDailyLogs = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/dailylog/find/${recordId}`,
+			`http://${Localhost.localhost}/wati/webresources/dailylog/find/${recordId}`,
 			{
 				method: "GET",
 				headers: {
@@ -220,7 +220,7 @@ export const saveLog = (cigars, date) => {
 		console.log(newDate);
 
 		const response = await fetch(
-			`http://${Localhost.address}${Localhost.port}/wati/webresources/dailylog/editOrCreate`,
+			`http://${Localhost.localhost}/wati/webresources/dailylog/editOrCreate`,
 			{
 				method: 'POST',
 				headers: {
@@ -247,7 +247,7 @@ export const saveLog = (cigars, date) => {
 			// 	offline: {
 			// 		// the network action to execute:
 			// 		effect: {
-			// 			url: `http://${Localhost.address}${Localhost.port}/wati/webresources/dailylog/editOrCreate`,
+			// 			url: `http://${Localhost.localhost}/wati/webresources/dailylog/editOrCreate`,
 			// 			method: "POST",
 			// 			headers: {
 			// 				"Content-Type": "application/json",
