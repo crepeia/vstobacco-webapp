@@ -1,7 +1,12 @@
 
 export default {
-	address: '200.131.219.93',
-	port: '9080',
-	// address: '192.168.2.107',
-	// port: '8080',
+	/* 
+	  example ---> localhost:"address:port" <--- example
+	*/
+
+	//server remoto (não usamos porta no remoto)
+	localhost: 'vivasemtabaco.com.br',
+
+	//server local
+	//localhost: '192.168.0.2:8080',
 };

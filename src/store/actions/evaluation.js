@@ -15,7 +15,7 @@ export const fetchEvaluation = () => {
             console.log(token);
             const userId = getState().user.currentUser.id;
             console.log(userId);
-            const response = await fetch(`http://${Localhost.address}:${Localhost.port}/wati/webresources/prontoparaparar/find/${userId}`, {
+            const response = await fetch(`http://${Localhost.localhost}/wati/webresources/prontoparaparar/find/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

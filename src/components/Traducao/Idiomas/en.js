@@ -315,6 +315,7 @@ const en = {
     typeEmail: "Enter your email",
     typePassword: "Enter a password",
     minPassword: "The password must contain at least 6 characters",
+    passwordMatch: "Passwords must match",
     requireTermsUse: "You need to accept the terms of use to create an account",
     frequency: "Choose a frequency option",
     receiveEmails: "This field is required",
@@ -334,6 +335,8 @@ const en = {
     //email
     // typePassword
     // password
+    typePasswordConfirmation: "Retype your password",
+    passwordConfirmation: "Password Confirmation",
     finishing: "Finished",
     receiveTips: "Do you want to receive our tips by email?",
     frequencyTips: "Frequency of receiving tips for reducing tobacco consumption",
