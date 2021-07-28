@@ -8,7 +8,9 @@ import {
     TouchableOpacity,
     Alert,
     ActivityIndicator,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Animated,
+    Keyboard
 } from 'react-native';
 import Colors from '../constants/Colors';
 import DefaultText from '../components/DefaultText';
@@ -36,6 +38,55 @@ const LoginScreen = props => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
+
+    //Animações ao abrir teclado:
+    const [Size] = useState(new Animated.Value(32));
+    const [logo] = useState(new Animated.ValueXY({ x: 180, y: 160 }));
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
+    }, []);
+
+    function keyboardDidShow() {
+        Animated.parallel([
+            Animated.timing(logo.x, {
+                toValue: 70,
+                duration: 300,
+                useNativeDriver: false,
+            }),
+            Animated.timing(logo.y, {
+                toValue: 50,
+                duration: 300,
+                useNativeDriver: false,
+            }),
+            Animated.timing(Size, {
+                toValue: 16,
+                duration: 300,
+                useNativeDriver: false,
+            }),
+        ]).start();
+    }
+
+    function keyboardDidHide() {
+        Animated.parallel([
+            Animated.timing(logo.x, {
+                toValue: 180,
+                duration: 400,
+                useNativeDriver: false,
+            }),
+            Animated.timing(logo.y, {
+                toValue: 160,
+                duration: 400,
+                useNativeDriver: false,
+            }),
+            Animated.timing(Size, {
+                toValue: 32,
+                duration: 400,
+                useNativeDriver: false,
+            }),
+        ]).start();
+    }
 
     const onEmailChange = (emailInput) => {
         const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -105,9 +156,24 @@ const LoginScreen = props => {
 
     return (
         <View style={styles.background}>
-            <DefaultText style={styles.title}>VIVA SEM TABACO</DefaultText>
+            <Animated.Text style={{
+                fontFamily: 'open-sans',
+                textAlign: 'justify',
+                color: 'white',
+                fontSize: Size
+            }}>
+                VIVA SEM TABACO
+            </Animated.Text>
+
             <View style={styles.logoContainer}>
-                <Image style={styles.logoImg} source={require('../../assets/images/logo-vst-1.png')} />
+                <Animated.Image
+                    style={{
+                        width: logo.x,
+                        height: logo.y,
+                        resizeMode: 'contain'
+                    }}
+                    source={require('../../assets/images/logo-vst-1.png')}
+                />
             </View>
             <View style={styles.formContainer}>
                 <View style={{ marginTop: 20, marginBottom: 10 }}>
@@ -237,16 +303,6 @@ const styles = StyleSheet.create({
     logoContainer: {
         alignItems: 'center',
         marginVertical: 10
-    },
-    logoImg: {
-        width: Dimensions.get('window').width * 0.6,
-        height: Dimensions.get('window').width * 0.4,
-        resizeMode: 'contain'
-    },
-    title: {
-        fontFamily: 'open-sans',
-        color: 'white',
-        fontSize: 35
     },
     inputTitle: {
         alignSelf: 'flex-start',
