@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { Linking } from 'expo'
+import { StyleSheet, View, TouchableOpacity, ScrollView, Alert, Linking } from 'react-native';
 
 import DefaultText from '../components/DefaultText';
 import DefaultTitle from '../components/DefaultTitle';
@@ -13,82 +12,82 @@ const TermosUso = props => {
 
         <ScrollView>
             <View style={styles.container}>
-                <DefaultTitle style={{...styles.title, fontSize: 24}}>
+                <DefaultTitle style={{ ...styles.title, fontSize: 24 }}>
                     {Traducao.t('termsOfUse')}
                 </DefaultTitle>
-                
+
                 <View style={styles.textContainer}>
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart1')}
                     </DefaultText>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart2')}
                     </DefaultText>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart3')}
-                    <DefaultText style={styles.textBold}>
-                        {Traducao.t('termsOfUsePart4')}
-                    </DefaultText>
+                        <DefaultText style={styles.textBold}>
+                            {Traducao.t('termsOfUsePart4')}
+                        </DefaultText>
                         {Traducao.t('termsOfUsePart5')}
-                     </DefaultText>
+                    </DefaultText>
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart6')}
-                    </DefaultText> 
-                
+                    </DefaultText>
+
                     <DefaultTitle style={styles.title}>
                         {Traducao.t('termsOfUsePart7')}
                     </DefaultTitle>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart8')}
                     </DefaultText>
-                
+
                     <DefaultTitle style={styles.title}>
                         {Traducao.t('termsOfUsePart9')}
                     </DefaultTitle>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart10')}
                     </DefaultText>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart11')}
                     </DefaultText>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart12')}
                     </DefaultText>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart13')}
                     </DefaultText>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart14')}
                     </DefaultText>
-                
+
                     <DefaultTitle style={styles.title}>
                         {Traducao.t('termsOfUsePart15')}
                     </DefaultTitle>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart16')}
                     </DefaultText>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart17')}
                     </DefaultText>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart18')}
                     </DefaultText>
-                
+
                     <DefaultTitle style={styles.title}>
                         {Traducao.t('termsOfUsePart19')}
                     </DefaultTitle>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart20')}
                     </DefaultText>
@@ -96,7 +95,7 @@ const TermosUso = props => {
                     <DefaultTitle style={styles.title}>
                         {Traducao.t('termsOfUsePart21')}
                     </DefaultTitle>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart22')} deste.
                     </DefaultText>
@@ -104,7 +103,7 @@ const TermosUso = props => {
                     <DefaultTitle style={styles.title}>
                         {Traducao.t('termsOfUsePart23')}
                     </DefaultTitle>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart24')}
                     </DefaultText>
@@ -119,13 +118,13 @@ const TermosUso = props => {
                     <DefaultTitle style={styles.title}>
                         {Traducao.t('termsOfUsePart27')}
                     </DefaultTitle>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart28')}
                     </DefaultText>
 
                     <TouchableOpacity activeOpacity={0.4} onPress={() => Linking.openURL('http://www.gnu.org/licenses/gpl-3.0.html')}>
-                        <DefaultTitle style={{...styles.title, fontSize: 16}}>
+                        <DefaultTitle style={{ ...styles.title, fontSize: 16 }}>
                             {Traducao.t('termsOfUsePart29')}
                         </DefaultTitle>
                     </TouchableOpacity>
@@ -133,7 +132,7 @@ const TermosUso = props => {
                     <DefaultTitle style={styles.title}>
                         {Traducao.t('termsOfUsePart30')}
                     </DefaultTitle>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart31')}
                     </DefaultText>
@@ -141,7 +140,7 @@ const TermosUso = props => {
                     <DefaultTitle style={styles.title}>
                         {Traducao.t('termsOfUsePart32')}
                     </DefaultTitle>
-                    
+
                     <DefaultText style={styles.spacement}>
                         {Traducao.t('termsOfUsePart33')}
                     </DefaultText>
