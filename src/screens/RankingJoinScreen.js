@@ -35,9 +35,7 @@ const RankingJoin = props => {
 
 
     useEffect(() => {
-        console.log("Aq lu");
-        console.log(inRanking);
-        if(inRanking){
+        if (inRanking) {
             props.navigation.navigate('Ranking');
         }
     }, [])
@@ -48,8 +46,8 @@ const RankingJoin = props => {
             await dispatch(userActions.toggleRanking(true, values.nickname));
             setIsLoading(false);
             props.navigation.navigate('Ranking');
-        } catch(e) {
-            console.log(e.message)
+        } catch (e) {
+            //console.log(e.message)
         }
         setIsLoading(false);
     };
@@ -63,7 +61,7 @@ const RankingJoin = props => {
     };
 
     return (
-        <ScrollView style={{backgroundColor: 'white'}}>
+        <ScrollView style={{ backgroundColor: 'white' }}>
             <View style={styles.containerTitle}>
                 <DefaultText style={styles.title}>{Traducao.t('rankingInvitation')}</DefaultText>
             </View>
@@ -92,9 +90,9 @@ const RankingJoin = props => {
                     onSubmit={onSubmit}
                 >
                     {(formikProps) => (
-                        
+
                         <View style={styles.inputContainer}>
-                            
+
                             <FormTextInput
                                 placeholder={Traducao.t('registerNickname')}
                                 title={Traducao.t('nickname')}
@@ -105,9 +103,9 @@ const RankingJoin = props => {
                                 error={formikProps.errors.nickname}
                                 touched={formikProps.touched.nickname}
                             />
-                                
+
                             <TouchableOpacity
-                                style={styles.button} 
+                                style={styles.button}
                                 onPress={() => {
                                     formikProps.handleSubmit()
                                 }}
@@ -127,18 +125,18 @@ const RankingJoin = props => {
 
 export const screenOptions = navData => {
     return {
-      headerTitle: 'Ranking',
-      headerLeft: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item 
-            title='Menu'
-            iconName={'md-menu'}
-            onPress={() => {
-              navData.navigation.toggleDrawer();
-            }}
-          />
-        </HeaderButtons>
-      )
+        headerTitle: 'Ranking',
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title='Menu'
+                    iconName={'md-menu'}
+                    onPress={() => {
+                        navData.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        )
     }
 };
 
@@ -171,7 +169,7 @@ const styles = StyleSheet.create({
     },
     bellowText: {
         fontSize: 18,
-        color: Colors.primaryColor, 
+        color: Colors.primaryColor,
         fontWeight: 'bold',
         marginRight: 10,
     },
@@ -223,7 +221,7 @@ const styles = StyleSheet.create({
     helpText: {
         fontSize: 15,
         marginBottom: 15,
-        textAlign:'center'
+        textAlign: 'center'
     }
 });
 

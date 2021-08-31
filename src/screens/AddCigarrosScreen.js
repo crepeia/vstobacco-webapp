@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useNetInfo } from '@react-native-community/netinfo';
+import NetInfo/* , { useNetInfo } */ from '@react-native-community/netinfo';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
@@ -25,15 +25,16 @@ import Traducao from '../components/Traducao/Traducao';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => {
-      return {
-        shouldShowAlert: true
-      };
+        return {
+            shouldShowAlert: true
+        };
     }
-  });
+});
 
 const AddCigarrosScreen = props => {
 
-    const NetInfo = useNetInfo();
+    //const netInfo = useNetInfo();
+
     const dispatch = useDispatch();
     const dailyLogs = useSelector(state => state.record.dailyLogs);
 
@@ -43,7 +44,7 @@ const AddCigarrosScreen = props => {
 
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [valueDate, setValueDate] = useState(new Date());
-    
+
     const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
     const [markedDate, setMarkedDate] = useState(moment().format("dddd"));
     const [isOnline, setIsOnline] = useState(true);
@@ -78,7 +79,7 @@ const AddCigarrosScreen = props => {
     }, [dispatch, loadRecord, date]);
 
     useEffect(() => {
-        setIsOnline(NetInfo.isConnected.valueOf());
+        setIsOnline(NetInfo.fetch()._W.isConnected);
     });
 
     const saveLogHandler = useCallback(async () => {
@@ -89,18 +90,14 @@ const AddCigarrosScreen = props => {
             // await dispatch(recordActions.saveLog(cigarros, date, '', ''));
             await dispatch(recordActions.saveLog(cigarros, date));
             await dispatch(achievementActions.saveAchievement(cigarros, date));
-            console.log(dailyLogs);
             await dispatch(challengeActions.completeDailyLogChallenge());
-            if(cigarros === 0){
+            if (cigarros === 0) {
                 await dispatch(challengeActions.completeDontSmokeChallenge(date));
             } else {
                 await dispatch(challengeActions.checkDontSmokeChallenge(date));
             }
-            console.log('correu bem lu');
         } catch (err) {
             setError(err.message);
-            console.log('erro');
-            console.log(err.message);
         }
         setIsLoading(false);
         props.navigation.navigate("Home");
@@ -119,79 +116,78 @@ const AddCigarrosScreen = props => {
     }
 
     return (
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <View style={styles.background}>
-            <OfflineWarning show={!isOnline}/>
-            <View style={styles.numeroCigarrosContainer}>
-                <View style={styles.titleContainer}>
-                    <TouchableOpacity activeOpacity={0.4} style={styles.calendarButtonContainer} onPress={() => setShowDatePicker(true)}>
-                        <View style={styles.calendarDataContainer}>
-                            <Ionicons name='md-calendar' style={styles.calendarIcon}/>
-                            <Text style={styles.calendarData}>{date}</Text>
-                        </View>
-                        <Text style={styles.calendarChangeText}>{Traducao.t('changeDate')}</Text>
-                    </TouchableOpacity>
-                    {showDatePicker &&
-                    <DateTimePicker
-                        value={valueDate}
-                        mode='date'
-                        minimumDate={new Date().setDate(new Date().getDate() - 1)}
-                        maximumDate={new Date()}
-                        onChange={(event, dt) => {
-                            setShowDatePicker(false)
-                            if(event.type === 'set')
-                            {
-                                setValueDate(dt)
-                                setDate(moment(dt).format("YYYY-MM-DD"));
-                                setMarkedDate(moment(dt, 'YYYY-MM-DD').format("dddd"))
-                            }
-                        }}
-                    />
-                    }
-                    <Text style={styles.title}>{markedDate}</Text>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <View style={styles.background}>
+                <OfflineWarning show={!isOnline} />
+                <View style={styles.numeroCigarrosContainer}>
+                    <View style={styles.titleContainer}>
+                        <TouchableOpacity activeOpacity={0.4} style={styles.calendarButtonContainer} onPress={() => setShowDatePicker(true)}>
+                            <View style={styles.calendarDataContainer}>
+                                <Ionicons name='md-calendar' style={styles.calendarIcon} />
+                                <Text style={styles.calendarData}>{date}</Text>
+                            </View>
+                            <Text style={styles.calendarChangeText}>{Traducao.t('changeDate')}</Text>
+                        </TouchableOpacity>
+                        {showDatePicker &&
+                            <DateTimePicker
+                                value={valueDate}
+                                mode='date'
+                                minimumDate={new Date().setDate(new Date().getDate() - 1)}
+                                maximumDate={new Date()}
+                                onChange={(event, dt) => {
+                                    setShowDatePicker(false)
+                                    if (event.type === 'set') {
+                                        setValueDate(dt)
+                                        setDate(moment(dt).format("YYYY-MM-DD"));
+                                        setMarkedDate(moment(dt, 'YYYY-MM-DD').format("dddd"))
+                                    }
+                                }}
+                            />
+                        }
+                        <Text style={styles.title}>{markedDate}</Text>
 
-                </View>
-
-                <View style={styles.dataContainer}>
-                    {/**BOTÃO - */}
-                    <TouchableOpacity activeOpacity={0.4} style={styles.botaoCigarro} onPress={removerCigarro}>
-                        <Ionicons name='md-remove' style={{fontSize: 27, color: 'white'}}/>
-                    </TouchableOpacity>
-
-                    {/**NÚMERO*/}
-                    <View>
-                        <View style={{ borderBottomColor: '#ccc', borderBottomWidth: 2, paddingBottom: 10 }}>
-                            <Text style={styles.numeroCigarros}>{cigarros}</Text>
-                        </View>
-
-                        <Text style={{ fontSize: 15, color: '#ccc', alignSelf: 'center', marginTop: 5 }}>
-                            {Traducao.t('smokedCigarettes')}
-                        </Text>
                     </View>
 
-                    {/**BOTÃO + */}
-                    <TouchableOpacity activeOpacity={0.4} style={styles.botaoCigarro} onPress={addCigarro}>
-                        <Ionicons name='md-add' style={{fontSize: 27, color: 'white'}} />
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.dataContainer}>
+                        {/**BOTÃO - */}
+                        <TouchableOpacity activeOpacity={0.4} style={styles.botaoCigarro} onPress={removerCigarro}>
+                            <Ionicons name='md-remove' style={{ fontSize: 27, color: 'white' }} />
+                        </TouchableOpacity>
 
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity activeOpacity={0.4} onPress={saveLogHandler} style={styles.button}>
-                        <Text style={styles.buttonText}>{Traducao.t('save')}</Text>
-                    </TouchableOpacity>
+                        {/**NÚMERO*/}
+                        <View>
+                            <View style={{ borderBottomColor: '#ccc', borderBottomWidth: 2, paddingBottom: 10 }}>
+                                <Text style={styles.numeroCigarros}>{cigarros}</Text>
+                            </View>
+
+                            <Text style={{ fontSize: 15, color: '#ccc', alignSelf: 'center', marginTop: 5 }}>
+                                {Traducao.t('smokedCigarettes')}
+                            </Text>
+                        </View>
+
+                        {/**BOTÃO + */}
+                        <TouchableOpacity activeOpacity={0.4} style={styles.botaoCigarro} onPress={addCigarro}>
+                            <Ionicons name='md-add' style={{ fontSize: 27, color: 'white' }} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity activeOpacity={0.4} onPress={saveLogHandler} style={styles.button}>
+                            <Text style={styles.buttonText}>{Traducao.t('save')}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.informeCigarrosContainer}>
+                        <Text style={styles.informeCigarrosTxt}>
+                            {Traducao.t('amountCigarettesSmoked')}
+                        </Text>
+                    </View>
                 </View>
-                <View style={styles.informeCigarrosContainer}>
-                    <Text style={styles.informeCigarrosTxt}>
-                        {Traducao.t('amountCigarettesSmoked')}
-                    </Text>
-                </View>
+                {isLoading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' color={Colors.primaryColor} />
+                    </View>
+                }
             </View>
-            {isLoading &&
-                <View style={styles.loading}>
-                    <ActivityIndicator size='large' color={Colors.primaryColor} />
-                </View>
-            }
-        </View>
         </ScrollView>
     );
 };
@@ -280,8 +276,8 @@ const styles = StyleSheet.create({
         color: Colors.primaryColor
     },
     calendarChangeText: {
-        fontSize: 10, 
-        alignSelf: 'center', 
+        fontSize: 10,
+        alignSelf: 'center',
         color: Colors.primaryColor,
         textDecorationLine: 'underline'
     },
@@ -310,18 +306,18 @@ const styles = StyleSheet.create({
 
 export const screenOptions = navData => {
     return {
-      headerTitle: Traducao.t('addCigarrosScreen'),
-      headerLeft: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item 
-            title='Menu'
-            iconName={'md-menu'}
-            onPress={() => {
-              navData.navigation.toggleDrawer();
-            }}
-          />
-        </HeaderButtons>
-      )
+        headerTitle: Traducao.t('addCigarrosScreen'),
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title='Menu'
+                    iconName={'md-menu'}
+                    onPress={() => {
+                        navData.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        )
     }
 };
 

@@ -27,11 +27,11 @@ import Traducao from '../components/Traducao/Traducao';
 
 // o que ele faz quando chega notificacao com o app aberto
 Notifications.setNotificationHandler({
-  handleNotification: async () => {
-    return {
-      shouldShowAlert: true
-    };
-  }
+	handleNotification: async () => {
+		return {
+			shouldShowAlert: true
+		};
+	}
 });
 
 const OptionsScreen = props => {
@@ -47,7 +47,7 @@ const OptionsScreen = props => {
 	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
 	const moneySaved = useSelector(state => state.achievement.moneySaved);
 	const lifeTimeSaved = useSelector(state => state.achievement.lifeTimeSaved);
-	
+
 	// calculo tempo vida	
 	const mes = lifeTimeSaved > 43800 ? Math.floor(lifeTimeSaved / 43800) : 0;
 	const mesPercent = mes >= 1 ? lifeTimeSaved % 43800 : lifeTimeSaved;
@@ -61,8 +61,8 @@ const OptionsScreen = props => {
 	const lifeTimeSavedText = `${mes === 1 ? `${mes} ${Traducao.t('month')}` : `${mes} ${Traducao.t('months')}`}, ${dia === 1 ? `${dia} ${Traducao.t('day')}` : `${dia} ${Traducao.t('days')}`}, ${hora === 1 ? `${hora} ${Traducao.t('hour')}` : `${hora} ${Traducao.t('hours')}`} e ${horaPercent === 1 ? `${horaPercent} ${Traducao.t('minute')}` : `${horaPercent} ${Traducao.t('minutes')}`}`;
 	// fim calculo tempo vida
 
-    const inRanking = useSelector((state) => state.user.currentUser.inRanking);
-    const userNickname = useSelector((state) => state.user.currentUser.nickname);
+	const inRanking = useSelector((state) => state.user.currentUser.inRanking);
+	const userNickname = useSelector((state) => state.user.currentUser.nickname);
 
 	// Variáveis para o Modal
 	const hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
@@ -70,67 +70,66 @@ const OptionsScreen = props => {
 	const [modalTipVisible, setModalTipVisible] = useState(false);
 	const [modalAchievementsVisible, setModalAchievementsVisible] = useState(false);
 	const deviceWidth = Dimensions.get('window').width;
-    const deviceHeight = Dimensions.get('window').height;
+	const deviceHeight = Dimensions.get('window').height;
 
 	const [cigarNotification, setCigarNotification] = useState(options.allowCigarNotifications);
 	const [cigarNotificationTime, setCigarNotificationTime] = useState(moment(options.cigarNotificationTime, "HH:mm").format("HH:mm"));
-    const [cigarNotificationTimeString, setCigarNotificationTimeString] = useState();
+	const [cigarNotificationTimeString, setCigarNotificationTimeString] = useState();
 
 	const [tipNotification, setTipNotification] = useState(options.allowTipNotifications);
 	const [tipNotificationTime, setTipNotificationTime] = useState(moment(options.tipNotificationTime, "HH:mm").format("HH:mm"));
 	const [tipNotificationTimeString, setTipNotificationTimeString] = useState();
-	
+
 	const [achievementsNotification, setAchievementsNotification] = useState(options.allowAchievementsNotifications);
 	const [achievementsNotificationTime, setAchievementsNotificationTime] = useState(moment(options.achievementsNotificationTime, "HH:mm").format("HH:mm"));
-    const [achievementsNotificationTimeString, setAchievementsNotificationTimeString] = useState();
+	const [achievementsNotificationTimeString, setAchievementsNotificationTimeString] = useState();
 
 	const [isInRanking, setIsInRanking] = useState(true);
 
 	useEffect(() => {
 		setIsInRanking(inRanking);
-		console.log(options);
 	}, [inRanking])
-	
-	const saveOptions = useCallback(async () => {
-        let finalStatus = '';
-        let token = '';
-		setIsLoading(true);
-        if (cigarNotification || tipNotification || achievementsNotification) {
-            if (Constants.isDevice) {
-                const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-                finalStatus = existingStatus;
 
-                if (existingStatus !== 'granted') {
-                    alert(Traducao.t('notificationPermission'));
-                    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-                    finalStatus = status;
-                }
-                if (finalStatus !== 'granted') {
-                    alert(Traducao.t('nonTokenPermission'));
-                    setIsLoading(false);
-                    return;
-                }
-                token = (await Notifications.getExpoPushTokenAsync()).data;
-            } else {
-                alert(Traducao.t('notificationsDevices'));
+	const saveOptions = useCallback(async () => {
+		let finalStatus = '';
+		let token = '';
+		setIsLoading(true);
+		if (cigarNotification || tipNotification || achievementsNotification) {
+			if (Constants.isDevice) {
+				const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+				finalStatus = existingStatus;
+
+				if (existingStatus !== 'granted') {
+					alert(Traducao.t('notificationPermission'));
+					const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+					finalStatus = status;
+				}
+				if (finalStatus !== 'granted') {
+					alert(Traducao.t('nonTokenPermission'));
+					setIsLoading(false);
+					return;
+				}
+				token = (await Notifications.getExpoPushTokenAsync()).data;
+			} else {
+				alert(Traducao.t('notificationsDevices'));
 			}
-			
-            if (Platform.OS === 'android') {
+
+			if (Platform.OS === 'android') {
 				Notifications.setNotificationChannelAsync('default', {
-				  name: 'default',
-				  importance: Notifications.AndroidImportance.MAX,
-				  vibrationPattern: [0, 250, 250, 250],
-				  lightColor: '#FF231F7C',
+					name: 'default',
+					importance: Notifications.AndroidImportance.MAX,
+					vibrationPattern: [0, 250, 250, 250],
+					lightColor: '#FF231F7C',
 				});
 			}
 		}
 
 		Notifications.cancelAllScheduledNotificationsAsync();
-		
+
 		// notificacao cigarros 
 
-        if (cigarNotification) {
-            let idCigarNotification = await Notifications.scheduleNotificationAsync({
+		if (cigarNotification) {
+			let idCigarNotification = await Notifications.scheduleNotificationAsync({
 				content: {
 					title: Traducao.t('reminder'),
 					body: Traducao.t('informQuantity'),
@@ -143,16 +142,16 @@ const OptionsScreen = props => {
 					repeats: true
 				}
 			});
-        } 
+		}
 
 		// notificacao conquistas
-		
-        if (achievementsNotification) {
-            let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
+
+		if (achievementsNotification) {
+			let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 				content: {
 					title: Traducao.t('conquest'),
-					body: isEven === 0 ? `${Traducao.t('conquestPhrasePart1')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart2')} ${lifeTimeSavedText} ${Traducao.t('conquestPhrasePart3')}` 
-					: `${Traducao.t('conquestPhrasePart4')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart5')}${moneySaved.toFixed(2)}!`,
+					body: isEven === 0 ? `${Traducao.t('conquestPhrasePart1')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart2')} ${lifeTimeSavedText} ${Traducao.t('conquestPhrasePart3')}`
+						: `${Traducao.t('conquestPhrasePart4')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart5')}${moneySaved.toFixed(2)}!`,
 					data: JSON.stringify({ screen: " Conquistas" }),
 					sound: true
 				},
@@ -162,12 +161,12 @@ const OptionsScreen = props => {
 					repeats: true
 				}
 			});
-        }
+		}
 
 		// notificacao dicas
 
-        if (tipNotification) {
-            let idTipNotification = await Notifications.scheduleNotificationAsync({
+		if (tipNotification) {
+			let idTipNotification = await Notifications.scheduleNotificationAsync({
 				content: {
 					title: Traducao.t('reminder'),
 					body: Traducao.t('reminderTip'),
@@ -180,18 +179,18 @@ const OptionsScreen = props => {
 					repeats: true
 				}
 			});
-        } 
+		}
 
 		await dispatch(optionsActions.updateOptions(cigarNotification, tipNotification, achievementsNotification, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, token));
-        await dispatch(userActions.toggleRanking(isInRanking, userNickname));
+		await dispatch(userActions.toggleRanking(isInRanking, userNickname));
 
-        setIsLoading(false);
-        Alert.alert(Traducao.t('options'), Traducao.t('savedChanges'), [{ text: 'Ok', style: 'destructive' }])
-    }, [dispatch, isInRanking, cigarNotification, cigarNotificationTime, tipNotification, tipNotificationTime, achievementsNotification, achievementsNotificationTime]);
-    
+		setIsLoading(false);
+		Alert.alert(Traducao.t('options'), Traducao.t('savedChanges'), [{ text: 'Ok', style: 'destructive' }])
+	}, [dispatch, isInRanking, cigarNotification, cigarNotificationTime, tipNotification, tipNotificationTime, achievementsNotification, achievementsNotificationTime]);
 
-    return (
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+
+	return (
+		<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 			<View style={styles.background}>
 
 				{/* HEADER DAS NOTIFICAÇÕES */}
@@ -200,20 +199,20 @@ const OptionsScreen = props => {
 				>
 					<HelpButtonModal title={Traducao.t('notifications')}>
 						<DefaultText style={styles.helpText}>{Traducao.t('sendingNotifications')}</DefaultText>
-						
+
 						<DefaultText style={styles.helpText}>
-							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{Traducao.t('registerCigarettes')}</DefaultText>
+							<DefaultText style={{ fontFamily: 'open-sans-bold' }}>{Traducao.t('registerCigarettes')}</DefaultText>
 							{Traducao.t('explanationRegisterCigarettes')}
 						</DefaultText>
 						<DefaultText style={styles.helpText}>
-							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{Traducao.t('registerReminderTips')}</DefaultText>
+							<DefaultText style={{ fontFamily: 'open-sans-bold' }}>{Traducao.t('registerReminderTips')}</DefaultText>
 							{Traducao.t('explanationReminderTips')}
 						</DefaultText>
 						<DefaultText style={styles.helpText}>
-							<DefaultText style={{fontFamily: 'open-sans-bold' }}>{Traducao.t('registerReminderConquests')}</DefaultText>
+							<DefaultText style={{ fontFamily: 'open-sans-bold' }}>{Traducao.t('registerReminderConquests')}</DefaultText>
 							{Traducao.t('explanationReminderConquests')}
 						</DefaultText>
-                	</HelpButtonModal>
+					</HelpButtonModal>
 				</OptionsHeader>
 
 				{/* SWITCH -> REGISTRO CIGARROS */}
@@ -221,7 +220,7 @@ const OptionsScreen = props => {
 					<View style={styles.textContainer}>
 						<DefaultText style={styles.optionText}>{Traducao.t('registerCigarettes')}</DefaultText>
 					</View>
-				
+
 					<View style={styles.toggleContainer}>
 						<Switch
 							trackColor={{ false: "#767577", true: Colors.primaryColor }}
@@ -304,7 +303,7 @@ const OptionsScreen = props => {
 							ios_backgroundColor="#3e3e3e"
 							onValueChange={() => {
 								setTipNotification(prevState => !prevState)
-								}
+							}
 							}
 							value={tipNotification}
 						/>
@@ -372,7 +371,7 @@ const OptionsScreen = props => {
 					<View style={styles.textContainer}>
 						<DefaultText style={styles.optionText}>{Traducao.t('conquestsInfo')}</DefaultText>
 					</View>
-				
+
 					<View style={styles.toggleContainer}>
 						<Switch
 							trackColor={{ false: "#767577", true: Colors.primaryColor }}
@@ -380,8 +379,8 @@ const OptionsScreen = props => {
 							ios_backgroundColor="#3e3e3e"
 							onValueChange={() => {
 								setAchievementsNotification(prevState => !prevState)
-								}
-								
+							}
+
 							}
 							value={achievementsNotification}
 						/>
@@ -458,7 +457,7 @@ const OptionsScreen = props => {
 						<DefaultText style={styles.helpText}>
 							{Traducao.t('anonymousRankingInfo')}
 						</DefaultText>
-                	</HelpButtonModal>
+					</HelpButtonModal>
 				</OptionsHeader>
 
 				{/* SWITCH -> RANKING */}
@@ -474,7 +473,7 @@ const OptionsScreen = props => {
 							ios_backgroundColor="#3e3e3e"
 							onValueChange={() => {
 								setIsInRanking(prevState => !prevState)
-								}
+							}
 							}
 							value={isInRanking}
 						/>
@@ -482,13 +481,13 @@ const OptionsScreen = props => {
 				</View>
 
 				{/* BOTÃO SALVAR */}
-				<TouchableOpacity 
+				<TouchableOpacity
 					onPress={() => {
 						saveOptions();
 					}}
 					style={styles.button}
 				>
-					{isLoading ? 
+					{isLoading ?
 						<ActivityIndicator size={27} color='white' />
 						:
 						<DefaultText style={styles.buttonText}>{Traducao.t('save')}</DefaultText>
@@ -497,92 +496,92 @@ const OptionsScreen = props => {
 
 			</View>
 		</ScrollView>
-    );
+	);
 };
 
 const styles = StyleSheet.create({
-    background: {
+	background: {
 		flex: 1,
 		alignItems: 'center',
 		backgroundColor: 'white',
 		paddingTop: 6
 	},
 	helpText: {
-        fontSize: 16,
-        marginBottom: 15,
-        textAlign:'center'
+		fontSize: 16,
+		marginBottom: 15,
+		textAlign: 'center'
 	},
 	line: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: Dimensions.get('window').width * 0.9,
-        marginBottom: 12,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		width: Dimensions.get('window').width * 0.9,
+		marginBottom: 12,
 		paddingVertical: 1,
-    },
-    textContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        maxWidth: '80%',
-    },
-    toggleContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '20%',
+	},
+	textContainer: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		maxWidth: '80%',
+	},
+	toggleContainer: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: '20%',
 	},
 	optionText: {
-        fontSize: 15,
-        fontFamily: 'open-sans',
+		fontSize: 15,
+		fontFamily: 'open-sans',
 	},
 	modalContainer: {
-        borderRadius: 15,
-        backgroundColor: 'white',
-        width: Dimensions.get('window').width * 0.6,
-        height: Dimensions.get('window').height * 0.5,
-        paddingBottom: 20
-    },
-    modaltoggleContainer: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        paddingRight: 20,
-        paddingVertical: 5
-    },
-    hourText: {
-        color: Colors.primaryColor,
-        fontFamily: 'open-sans-bold',
-        fontSize: 16,
+		borderRadius: 15,
+		backgroundColor: 'white',
+		width: Dimensions.get('window').width * 0.6,
+		height: Dimensions.get('window').height * 0.5,
+		paddingBottom: 20
+	},
+	modaltoggleContainer: {
+		width: '100%',
+		justifyContent: 'center',
+		alignItems: 'flex-end',
+		paddingRight: 20,
+		paddingVertical: 5
+	},
+	hourText: {
+		color: Colors.primaryColor,
+		fontFamily: 'open-sans-bold',
+		fontSize: 16,
 	},
 	button: {
-        width: Dimensions.get('window').width * 0.9,
-        marginVertical: 20,
-        padding: 10,
-        backgroundColor: Colors.primaryColor,
-        borderRadius: 7,
+		width: Dimensions.get('window').width * 0.9,
+		marginVertical: 20,
+		padding: 10,
+		backgroundColor: Colors.primaryColor,
+		borderRadius: 7,
 		elevation: 3,
-    },
-    buttonText: {
-        fontSize: 20,
-        color: 'white',
-        textAlign: 'center'
-    },
+	},
+	buttonText: {
+		fontSize: 20,
+		color: 'white',
+		textAlign: 'center'
+	},
 });
 
 export const screenOptions = navData => {
-    return {
+	return {
 		headerTitle: Traducao.t('optionsScreen'),
 		headerLeft: () => (
 			<HeaderButtons HeaderButtonComponent={HeaderButton}>
-				<Item 
+				<Item
 					title='Menu'
 					iconName={'md-menu'}
 					onPress={() => {
-					navData.navigation.toggleDrawer();
+						navData.navigation.toggleDrawer();
 					}}
 				/>
 			</HeaderButtons>
 		)
-    }
+	}
 };
 
 export default OptionsScreen;

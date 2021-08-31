@@ -65,7 +65,6 @@ export const authenticate = (token, userId, userName, userEmail, birthDate, gend
 };
 
 export const signin = (email, password) => {
-	console.log(email);
 
 	return async (dispatch) => {
 		const encryptedPass = encryptPassword(password);
@@ -86,8 +85,6 @@ export const signin = (email, password) => {
 		}
 
 		const token = await response.text();
-
-		console.log(token);
 
 		const responseUser = await fetch(
 			`http://${Localhost.localhost}/wati/webresources/user/login/${token}`,
@@ -115,7 +112,6 @@ export const signin = (email, password) => {
 
 		if (usr.record == null) {
 			//CREATE RECORD
-			console.log('CREATE RECORD');
 			const recordResponse = await fetch(
 				`http://${Localhost.localhost}/wati/webresources/record/`,
 				{
@@ -138,8 +134,6 @@ export const signin = (email, password) => {
 			if (!recordResponse.ok) {
 				throw new Error('Não foi possível criar o registro!');
 			}
-
-			console.log("registro criado");
 		}
 
 		dispatch({
@@ -165,8 +159,6 @@ export const signup = (jsonForm) => {
 
 		encryptedPass = encryptPassword(jsonForm.password);
 		jsonForm.password = encryptedPass;
-		console.log("O que vai para a requisição: ");
-		console.log(jsonForm);
 
 		const response = await fetch(
 			`http://${Localhost.localhost}/wati/webresources/user/${encryptedPass}/`,
@@ -186,12 +178,10 @@ export const signup = (jsonForm) => {
 		}
 
 		const usr = await response.json();
-		console.log(usr);
 	};
 };
 
 export const resetPassword = (userEmail) => {
-	console.log(userEmail);
 	return async (dispatch) => {
 		const response = await fetch(
 			`http://${Localhost.localhost}/wati/webresources/user/recover-password/`,
@@ -207,8 +197,6 @@ export const resetPassword = (userEmail) => {
 			}
 		);
 
-		console.log(response.status);
-
 		if (!response.ok) {
 			throw new Error("Erro ao tentar resetar password.");
 		}
@@ -221,8 +209,6 @@ export const toggleRanking = (inRanking, nickname) => {
 	return async (dispatch, getState) => {
 		const token = getState().user.token;
 		const userId = getState().user.id;
-		//console.log(inRanking)
-		//console.log(nickname)
 		const response = await fetch(
 			`http://${Localhost.localhost}/wati/webresources/user/setInRanking`,
 			{

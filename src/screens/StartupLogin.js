@@ -20,11 +20,11 @@ import Colors from "../constants/Colors";
 import Traducao from '../components/Traducao/Traducao';
 
 Notifications.setNotificationHandler({
-  handleNotification: async () => {
-    return {
-      shouldShowAlert: true
-    };
-  }
+	handleNotification: async () => {
+		return {
+			shouldShowAlert: true
+		};
+	}
 });
 
 const StartupLogin = (props) => {
@@ -35,7 +35,7 @@ const StartupLogin = (props) => {
 	const cigarsNotSmoken = useSelector(state => state.achievement.cigarsNotSmoken);
 	const moneySaved = useSelector(state => state.achievement.moneySaved);
 	const lifeTimeSaved = useSelector(state => state.achievement.lifeTimeSaved);
-	
+
 	// calculo tempo vida	
 	const mes = lifeTimeSaved > 43800 ? Math.floor(lifeTimeSaved / 43800) : 0;
 	const mesPercent = mes >= 1 ? lifeTimeSaved % 43800 : lifeTimeSaved;
@@ -49,13 +49,13 @@ const StartupLogin = (props) => {
 	const lifeTimeSavedText = `${mes === 1 ? `${mes} ${Traducao.t('month')}` : `${mes} ${Traducao.t('months')}`}, ${dia === 1 ? `${dia} ${Traducao.t('day')}` : `${dia} ${Traducao.t('days')}`}, ${hora === 1 ? `${hora} ${Traducao.t('hour')}` : `${hora} ${Traducao.t('hours')}`} e ${horaPercent === 1 ? `${horaPercent} ${Traducao.t('minute')}` : `${horaPercent} ${Traducao.t('minutes')}`}`;
 	// fim calculo tempo vida
 
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-    const [isLogging, setIsLogging] = useState(false);
+	const [isLogging, setIsLogging] = useState(false);
 
 	const options = useSelector((state) => state.options.options);
 
-    const registerForPushNotificationsAsync = async () => {
+	const registerForPushNotificationsAsync = async () => {
 		if (Constants.isDevice) {
 			const { status: existingStatus } = await Permissions.getAsync(
 				Permissions.NOTIFICATIONS
@@ -115,7 +115,7 @@ const StartupLogin = (props) => {
 				});
 
 				//await dispatch(optionsActions.storeIdCigarNotification(idCigarNotification));
-        	}
+			}
 
 			// configuracao notificacao conquista
 
@@ -123,8 +123,8 @@ const StartupLogin = (props) => {
 				let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 					content: {
 						title: Traducao.t('conquest'),
-						body: isEven === 0 ? `${Traducao.t('conquestPhrasePart1')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart2')} ${lifeTimeSavedText} ${Traducao.t('conquestPhrasePart3')}` 
-						: `${Traducao.t('conquestPhrasePart4')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart5')}${moneySaved.toFixed(2)}!`,
+						body: isEven === 0 ? `${Traducao.t('conquestPhrasePart1')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart2')} ${lifeTimeSavedText} ${Traducao.t('conquestPhrasePart3')}`
+							: `${Traducao.t('conquestPhrasePart4')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart5')}${moneySaved.toFixed(2)}!`,
 						data: JSON.stringify({ screen: " Conquistas" }),
 						sound: true
 					},
@@ -177,7 +177,6 @@ const StartupLogin = (props) => {
 			);
 
 		} else {
-			console.log("Se estou no emulador cai aqui");
 			await dispatch(
 				optionsActions.updateOptions(
 					false,
@@ -200,17 +199,17 @@ const StartupLogin = (props) => {
 
 		if (Platform.OS === 'android') {
 			Notifications.setNotificationChannelAsync('default', {
-			  name: 'default',
-			  importance: Notifications.AndroidImportance.MAX,
-			  vibrationPattern: [0, 250, 250, 250],
-			  lightColor: '#FF231F7C',
+				name: 'default',
+				importance: Notifications.AndroidImportance.MAX,
+				vibrationPattern: [0, 250, 250, 250],
+				lightColor: '#FF231F7C',
 			});
-		}	
-		
-    };
+		}
+
+	};
 
 	useEffect(() => {
-        const tryLogin = async () => {
+		const tryLogin = async () => {
 			await dispatch(recordActions.fetchRecord());
 			await dispatch(recordActions.fetchDailyLogs());
 			await dispatch(challengeActions.fetchChallenges());
@@ -225,11 +224,11 @@ const StartupLogin = (props) => {
 		tryLogin();
 
 	}, [dispatch]);
-	
+
 	const record = useSelector((state) => state.record.record);
-    
-    useEffect(() => {
-        if(isLogging){
+
+	useEffect(() => {
+		if (isLogging) {
 			// registerForPushNotificationsAsync();
 			if (record.filled === false) {
 				props.navigation.navigate("Record");
@@ -237,7 +236,7 @@ const StartupLogin = (props) => {
 				props.navigation.navigate("Menu");
 			}
 		}
-    }, [dispatch, isLogging]);
+	}, [dispatch, isLogging]);
 
 	return (
 		<View style={styles.loading}>

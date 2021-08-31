@@ -14,7 +14,6 @@ import moment from 'moment';
 
 export const fetchOptions = () => {
     return async (dispatch, getState) => {
-        console.log("Fetch options");
         const userToken = getState().user.token;
         const userId = getState().user.currentUser.id;
 
@@ -27,7 +26,6 @@ export const fetchOptions = () => {
                 'Authorization': `Bearer ${userToken}`
             }
         });
-        //console.log(response)
         if (!response.ok) {
             throw new Error('Não foi possível obter as suas configurações.');
         }
@@ -44,7 +42,6 @@ export const fetchOptions = () => {
 
         // const userOp = getState().options.options;
 
-        console.log(userOp);
         dispatch({ type: FETCH_OPTIONS, options: userOp });
     }
 
@@ -53,15 +50,9 @@ export const fetchOptions = () => {
 
 export const updateOptions = (allowCigarNotifications, allowTipNotifications, allowAchievementsNotifications, cigarNotificationTime, tipNotificationTime, achievementsNotificationTime, notificationToken) => {
     return async (dispatch, getState) => {
-        console.log("Update options")
         const token = getState().user.token;
         const optionsId = getState().options.options.id;
         const userId = getState().user.currentUser.id;
-        console.log(userId)
-        console.log(optionsId)
-        console.log(cigarNotificationTime);
-        console.log(tipNotificationTime);
-        console.log(achievementsNotificationTime);
 
 
         const response = await fetch(
@@ -89,8 +80,6 @@ export const updateOptions = (allowCigarNotifications, allowTipNotifications, al
 
 
         if (!response.ok) {
-            console.log(response.status);
-
             throw new Error('Não foi possível editar as configurações.');
         }
 

@@ -1,11 +1,12 @@
-import { 
-    FETCH_USER_CHALLENGES, 
-    COMPLETE_CHALLENGE, 
-    FETCH_CHALLENGES, 
-    LOAD_CHALLENGES, 
-    DELETE_CHALLENGE, 
-    FETCH_RANKING } 
-from "../actions/challenge";
+import {
+    FETCH_USER_CHALLENGES,
+    COMPLETE_CHALLENGE,
+    FETCH_CHALLENGES,
+    LOAD_CHALLENGES,
+    DELETE_CHALLENGE,
+    FETCH_RANKING
+}
+    from "../actions/challenge";
 
 const initialState = {
     availableChallenges: [],
@@ -48,31 +49,29 @@ export default (state = initialState, action) => {
                 points = points - updatedCh[cIndex].score + action.score;
                 updatedCh[cIndex].score = action.score;
 
-                console.log("aqui1")
                 return { ...state, userChallenges: updatedCh, points: points }
             } else {
-                console.log(action.challenge)
                 const updatedCh = [...state.userChallenges];
                 points += action.challenge.score;
-                return { ...state, userChallenges: [...state.userChallenges, action.challenge], points: points}
+                return { ...state, userChallenges: [...state.userChallenges, action.challenge], points: points }
             }
         case DELETE_CHALLENGE:
             const index = state.userChallenges.findIndex(ch => ch.id === action.challengeId);
             let numPoints = state.points;
             if (index >= 0) {
                 const updatedCh = [...state.userChallenges];
-                
+
                 numPoints = numPoints - updatedCh[index].score;
                 updatedCh.splice(index, 0)
-                console.log("aqui1")
                 return { ...state, userChallenges: updatedCh, points: numPoints }
             }
         case FETCH_RANKING:
-            return {...state, 
-                    weeklyRank: action.weeklyResult,
-                    monthlyRank: action.monthlyResult,
-                    yearlyRank: action.yearlyResult
-                }
+            return {
+                ...state,
+                weeklyRank: action.weeklyResult,
+                monthlyRank: action.monthlyResult,
+                yearlyRank: action.yearlyResult
+            }
         default:
             return state;
     }

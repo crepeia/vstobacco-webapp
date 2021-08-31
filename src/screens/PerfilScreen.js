@@ -47,7 +47,6 @@ const PerfilScreen = (props) => {
 			setLoading(true);
 			await dispatch(evaluationActions.fetchEvaluation());
 		} catch (err) {
-			console.log("Veio parar aqui" + err);
 			setError(err.message);
 		}
 		setLoading(false);

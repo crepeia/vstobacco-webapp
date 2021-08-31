@@ -12,8 +12,8 @@ import Traducao from '../Traducao/Traducao';
 
 const ChallengeCard = props => {
     const moment = extendMoment(Moment);
-    const range = moment.range(moment().subtract(6,"day"), moment());
-    
+    const range = moment.range(moment().subtract(6, "day"), moment());
+
 
     const wasCompletedToday = (challenges) => {
         const today = moment().format("YYYY-MM-DD")
@@ -22,26 +22,25 @@ const ChallengeCard = props => {
     }
 
     const wasCompletedInDay = (day) => {
-        //console.log(day)
         const index = props.datesCompleted.indexOf(day)
         return (index > -1);
     }
 
     const days = Array.from(range.by('days')).map(d => {
-        return {day: d.format("DD"), complete: wasCompletedInDay(d.format("YYYY-MM-DD"))}
+        return { day: d.format("DD"), complete: wasCompletedInDay(d.format("YYYY-MM-DD")) }
     })
 
 
     const isComplete = (props.type === 'ONCE' && props.datesCompleted.length > 0) ||
-                        (props.type === 'DAILY' && wasCompletedToday(props.datesCompleted))
-    
-    
+        (props.type === 'DAILY' && wasCompletedToday(props.datesCompleted))
+
+
     const yesterday = moment().add(-1, 'days').format("YYYY-MM-DD");
 
     const lastDay = props.userChallenges.reduce((acc, curr) => {
         let id = moment(curr.dateCompleted).format("YYYY-MM-DD");
 
-        if (id === acc){
+        if (id === acc) {
             return moment(acc).add(-1, 'days').format("YYYY-MM-DD");
         } else {
             return acc;
@@ -50,7 +49,6 @@ const ChallengeCard = props => {
 
     const streak = moment().diff(lastDay, 'days');
 
-    //console.log((streak * props.modifier) + props.score)
     return (
         <View style={isComplete ? styles.readContainer : styles.container}>
             <View>
@@ -60,32 +58,32 @@ const ChallengeCard = props => {
                     </View>
                     <View style={styles.scoreContainer}>
                         {isComplete &&
-                            <Ionicons 
-                            name="md-checkmark-circle-outline" 
-                            size={30}
-                            color={Colors.primaryColor}
-                            style={{marginRight: 12}}
+                            <Ionicons
+                                name="md-checkmark-circle-outline"
+                                size={30}
+                                color={Colors.primaryColor}
+                                style={{ marginRight: 12 }}
                             />
                         }
-                        <DefaultTitle numberOfLines={1} style={{...styles.score, fontSize: 20}}>{(streak * props.modifier) + props.score}</DefaultTitle>
+                        <DefaultTitle numberOfLines={1} style={{ ...styles.score, fontSize: 20 }}>{(streak * props.modifier) + props.score}</DefaultTitle>
                     </View>
                 </View>
-                
+
 
                 <View style={styles.containerDescription}>
                     <DefaultText style={styles.description}>{props.text}</DefaultText>
                 </View>
 
-                {props.type === 'DAILY' &&(
+                {props.type === 'DAILY' && (
                     <View style={styles.daysContainer}>
                         <DefaultText style={styles.daysTitle}>
                             {Traducao.t('progress')}
                         </DefaultText>
-                    
+
                         <View style={styles.days}>
-                        {
-                            days.map(d => <DefaultText key={d.day} style={d.complete ? styles.day : styles.dayIncomplete}>{d.day}</DefaultText>)
-                        }
+                            {
+                                days.map(d => <DefaultText key={d.day} style={d.complete ? styles.day : styles.dayIncomplete}>{d.day}</DefaultText>)
+                            }
                         </View>
                         {isComplete &&
                             <DefaultText style={styles.continueTitle}>
@@ -94,11 +92,11 @@ const ChallengeCard = props => {
                         }
                     </View>
                 )}
-                {props.type === 'ONCE' &&(
+                {props.type === 'ONCE' && (
                     <View style={styles.badgeContainer}>
-                        <View style={isComplete? styles.badge: styles.badgeIncomplete}>
-                            <DefaultText style={isComplete? styles.badgeText: styles.badgeTextIncomplete}>
-                                 {isComplete? Traducao.t('complete') : Traducao.t('incomplete')}
+                        <View style={isComplete ? styles.badge : styles.badgeIncomplete}>
+                            <DefaultText style={isComplete ? styles.badgeText : styles.badgeTextIncomplete}>
+                                {isComplete ? Traducao.t('complete') : Traducao.t('incomplete')}
                             </DefaultText>
                         </View>
                     </View>
@@ -147,11 +145,11 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingBottom: 10
     },
-    daysContainer:{
+    daysContainer: {
         paddingHorizontal: 10,
         paddingBottom: 15
     },
-    daysTitle:{
+    daysTitle: {
         color: Colors.primaryColor,
         paddingBottom: 10,
         fontFamily: 'open-sans-bold'
@@ -164,23 +162,23 @@ const styles = StyleSheet.create({
     },
     days: {
         flexDirection: 'row',
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
     },
     dayIncomplete: {
         borderWidth: 1,
         borderColor: Colors.primaryColor,
         padding: 5,
         borderRadius: 5,
-        textAlign:'center'
+        textAlign: 'center'
     },
     day: {
-        backgroundColor:  Colors.primaryColor,
+        backgroundColor: Colors.primaryColor,
         padding: 5,
         borderRadius: 5,
-        textAlign:'center',
+        textAlign: 'center',
         color: 'white'
     },
-    badgeContainer:{
+    badgeContainer: {
         paddingHorizontal: 10,
         paddingBottom: 15,
     },
@@ -195,25 +193,25 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 5,
     },
-    badgeText:{
-        textAlign:'center',
+    badgeText: {
+        textAlign: 'center',
         fontFamily: 'open-sans-bold',
         color: 'white'
     },
     badgeTextIncomplete: {
-        textAlign:'center',
+        textAlign: 'center',
         color: Colors.primaryColor
     },
-    topContainer:{
+    topContainer: {
         margin: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
     },
-    scoreContainer:{
+    scoreContainer: {
         flexDirection: 'row',
     },
-    score:{
+    score: {
         justifyContent: 'center',
         alignItems: 'center',
         color: Colors.primaryColor,

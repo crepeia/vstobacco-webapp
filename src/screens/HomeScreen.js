@@ -59,12 +59,12 @@ const fillData = (logs, days, format, dailyCigars) => {
 			}
 			dailyCigarsArray.unshift(Number(dailyCigars));
 		}
-		
+
 		return [
-			{data: data},
+			{ data: data },
 			{
 				data: dailyCigarsArray,
-				svg:{
+				svg: {
 					stroke: 'transparent'
 				}
 			}];
@@ -92,13 +92,13 @@ const fillData = (logs, days, format, dailyCigars) => {
 			}
 			dailyCigarsArray.unshift(Number(dailyCigars));
 		}
-		
+
 	}
 	return [
-		{data:data},
+		{ data: data },
 		{
-			data:dailyCigarsArray,
-			svg:{
+			data: dailyCigarsArray,
+			svg: {
 				stroke: 'transparent'
 			}
 		}];
@@ -199,8 +199,8 @@ const HomeScreen = props => {
 				let idAchievementsNotification = await Notifications.scheduleNotificationAsync({
 					content: {
 						title: Traducao.t('conquest'),
-						body: isEven === 0 ? `${Traducao.t('conquestPhrasePart1')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart2')} ${lifeTimeSavedText} ${Traducao.t('conquestPhrasePart3')}` 
-						: `${Traducao.t('conquestPhrasePart4')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart5')}${moneySaved.toFixed(2)}!`,
+						body: isEven === 0 ? `${Traducao.t('conquestPhrasePart1')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart2')} ${lifeTimeSavedText} ${Traducao.t('conquestPhrasePart3')}`
+							: `${Traducao.t('conquestPhrasePart4')} ${cigarsNotSmoken} ${Traducao.t('conquestPhrasePart5')}${moneySaved.toFixed(2)}!`,
 						data: JSON.stringify({ screen: " Conquistas" }),
 						sound: true
 					},
@@ -249,7 +249,6 @@ const HomeScreen = props => {
 			);
 
 		} else {
-			console.log("Se estou no emulador cai aqui");
 			await dispatch(
 				optionsActions.updateOptions(
 					false,
@@ -277,14 +276,13 @@ const HomeScreen = props => {
 				vibrationPattern: [0, 250, 250, 250],
 				lightColor: '#FF231F7C',
 			});
-		}	
-		
+		}
+
 	}, [cigarsNotSmoken, lifeTimeSaved, moneySaved]);
 
 	// Para atualização das notificações de conquistas
 
 	// const handleNotification = (notification) => {
-	// 	//console.log(notification);
 	// 	if (notification.origin === "selected") {
 	// 		props.navigation.navigate({
 	// 			routeName: notification.data.screen,
@@ -348,7 +346,7 @@ const HomeScreen = props => {
 
 	useEffect(() => {
 		const unsubscribe = props.navigation.addListener('focus', resetState);
-	  
+
 		return unsubscribe;
 	}, [resetState]);
 
@@ -359,7 +357,7 @@ const HomeScreen = props => {
 			</View>
 		);
 	}
-	
+
 	// Variáveis de consumo
 	const dailyCigars = record.cigarsDaily.toString();
 	const packPrice = record.packPrice.toString();
@@ -369,86 +367,86 @@ const HomeScreen = props => {
 	const verticalContentInset = { top: 20, bottom: 20 };
 	const HorizontalLine = (({ y }) => (
 		<Line
-			key={ 'zero-axis' }
-			x1={ '0%' }
-			x2={ '100%' }
-			y1={ y(dailyCigars) }
-			y2={ y(dailyCigars) } //cigarros fumados no dia antes
-			stroke={ Colors.red }
-			strokeDasharray={ [ 4, 12 ] }
-			strokeWidth={ 2 }
+			key={'zero-axis'}
+			x1={'0%'}
+			x2={'100%'}
+			y1={y(dailyCigars)}
+			y2={y(dailyCigars)} //cigarros fumados no dia antes
+			stroke={Colors.red}
+			strokeDasharray={[4, 12]}
+			strokeWidth={2}
 		/>
 	));
 
-    return (
-		<ScrollView 
-			refreshControl={<RefreshControl 
-			refreshing={isRefreshing} 
-			onRefresh={() =>  {
-				resetState();
-			}}/>} 
-			contentContainerStyle={{flexGrow: 1}}>
+	return (
+		<ScrollView
+			refreshControl={<RefreshControl
+				refreshing={isRefreshing}
+				onRefresh={() => {
+					resetState();
+				}} />}
+			contentContainerStyle={{ flexGrow: 1 }}>
 			<View style={styles.background}>
-				<View style={{marginVertical: 20}}>
+				<View style={{ marginVertical: 20 }}>
 					<DefaultTitle style={styles.title}>{Traducao.t('smokedCigarettesInWeek')}</DefaultTitle>
 				</View>
 				{/* GRÁFICO */}
 				{!isRefreshing && (
-				<View style={styles.chartContainer}>
-					<YAxis 
-						data={data[0].data.concat(data[1].data)}
-						style={{ marginBottom: 14 }}
-						contentInset={verticalContentInset}
-						svg={{
-							fontSize: 10, 
-							fill: 'grey'
-						}}
-						numberOfTicks={5}
-					/>
-					<View style={{flex: 1, marginLeft: 10 }}>
-						<LineChart
-							style={{ flex: 1 }}
-							data={data}
+					<View style={styles.chartContainer}>
+						<YAxis
+							data={data[0].data.concat(data[1].data)}
+							style={{ marginBottom: 14 }}
 							contentInset={verticalContentInset}
-							svg={{ stroke: Colors.primaryColor }}								
-						>
-							<Grid />
-							<HorizontalLine />
-						</LineChart>
-						<XAxis 
-							style={{ marginHorizontal: -10,  }}
-							data={data[0].data}
-							formatLabel={definitiveSelectedPlot === 'week' ? (_, index) => labels[index] : definitiveSelectedPlot === 'month' ? (_, index) => (index+1)%2 === 0 ? labels[index] : '' : (_, index) => (index+1)%3 === 0 ? labels[index] : '' }
-							contentInset={{ left: 14, right: 14 }}
 							svg={{
-								fontSize: 10, 
-								fill: 'grey',
+								fontSize: 10,
+								fill: 'grey'
 							}}
+							numberOfTicks={5}
 						/>
+						<View style={{ flex: 1, marginLeft: 10 }}>
+							<LineChart
+								style={{ flex: 1 }}
+								data={data}
+								contentInset={verticalContentInset}
+								svg={{ stroke: Colors.primaryColor }}
+							>
+								<Grid />
+								<HorizontalLine />
+							</LineChart>
+							<XAxis
+								style={{ marginHorizontal: -10, }}
+								data={data[0].data}
+								formatLabel={definitiveSelectedPlot === 'week' ? (_, index) => labels[index] : definitiveSelectedPlot === 'month' ? (_, index) => (index + 1) % 2 === 0 ? labels[index] : '' : (_, index) => (index + 1) % 3 === 0 ? labels[index] : ''}
+								contentInset={{ left: 14, right: 14 }}
+								svg={{
+									fontSize: 10,
+									fill: 'grey',
+								}}
+							/>
+						</View>
 					</View>
-				</View>
 				)}
 				{/* GRÁFICO LEGENDA */}
-				<View style={{width: '100%', alignItems: 'center', paddingHorizontal: 10}}>
+				<View style={{ width: '100%', alignItems: 'center', paddingHorizontal: 10 }}>
 					{definitiveSelectedPlot === 'year' ?
-						<View style={{marginBottom: 2}}>
-							<DefaultText style={{fontSize: 11}}>{Traducao.t('weeksInYear')}</DefaultText>
+						<View style={{ marginBottom: 2 }}>
+							<DefaultText style={{ fontSize: 11 }}>{Traducao.t('weeksInYear')}</DefaultText>
 						</View>
 						:
 						definitiveSelectedPlot === 'month' ?
-						<View style={{marginBottom: 2}}>
-							<DefaultText style={{fontSize: 11}}>{Traducao.t('numberADay') + mesAtual + Traducao.t('and') + mesPassado}</DefaultText>
-						</View>
-						:
-						null
+							<View style={{ marginBottom: 2 }}>
+								<DefaultText style={{ fontSize: 11 }}>{Traducao.t('numberADay') + mesAtual + Traducao.t('and') + mesPassado}</DefaultText>
+							</View>
+							:
+							null
 					}
 					<View style={styles.chartSubtitle}>
 						<View style={styles.subtitleContainer}>
-							<View style={{...styles.circleSubtitle, backgroundColor: Colors.primaryColor}} />
+							<View style={{ ...styles.circleSubtitle, backgroundColor: Colors.primaryColor }} />
 							<DefaultText>{definitiveSelectedPlot === 'year' ? Traducao.t('cigarettesAWeek') : Traducao.t('cigarettes')}</DefaultText>
 						</View>
 						<View style={styles.subtitleContainer}>
-							<View style={{...styles.circleSubtitle, backgroundColor: Colors.red}} />
+							<View style={{ ...styles.circleSubtitle, backgroundColor: Colors.red }} />
 							<DefaultText>{definitiveSelectedPlot === 'year' ? Traducao.t('smokedCigarettesAWeek') : Traducao.t('smokedCigarettesBefore')}</DefaultText>
 						</View>
 					</View>
@@ -476,15 +474,15 @@ const HomeScreen = props => {
 
 				{/* DADOS DE CONSUMO */}
 				<View style={styles.colunaConsumo}>
-					<View style={{...styles.consumoContainer, marginBottom: 10}}>
+					<View style={{ ...styles.consumoContainer, marginBottom: 10 }}>
 						<DefaultText style={styles.consumoText}>{Traducao.t('smokedCigarettesADay')}</DefaultText>
 						<DefaultTitle style={styles.numberHighlight}>{dailyCigars}</DefaultTitle>
 					</View>
-					<View style={{...styles.consumoContainer, borderTopWidth: 0.8, borderBottomWidth: 0.8, borderColor: Colors.primaryColor, paddingVertical: 10}}>
+					<View style={{ ...styles.consumoContainer, borderTopWidth: 0.8, borderBottomWidth: 0.8, borderColor: Colors.primaryColor, paddingVertical: 10 }}>
 						<DefaultText style={styles.consumoText}>{Traducao.t('packPrice')}</DefaultText>
 						<DefaultTitle style={styles.numberHighlight}>R$ {packPrice}</DefaultTitle>
 					</View>
-					<View style={{...styles.consumoContainer, marginTop: 10}}>
+					<View style={{ ...styles.consumoContainer, marginTop: 10 }}>
 						<DefaultText style={styles.consumoText}>{Traducao.t('quantityCigarette')}</DefaultText>
 						<DefaultTitle style={styles.numberHighlight}>{packAmount}</DefaultTitle>
 					</View>
@@ -492,19 +490,19 @@ const HomeScreen = props => {
 
 			</View>
 		</ScrollView>
-    );
+	);
 };
 
 const styles = StyleSheet.create({
-    background: {
+	background: {
 		flex: 1,
 		alignItems: 'center',
 		backgroundColor: 'white'
-    },
-    containerTitle: {
-      	marginVertical: 20
-    },
-    title: {
+	},
+	containerTitle: {
+		marginVertical: 20
+	},
+	title: {
 		color: Colors.primaryColor,
 		fontSize: 22,
 		fontWeight: "bold"
@@ -580,18 +578,18 @@ const styles = StyleSheet.create({
 		fontSize: 18
 	},
 	button: {
-        width: Dimensions.get('window').width * 0.9,
-        marginBottom: 20,
-        padding: 10,
-        backgroundColor: Colors.primaryColor,
-        borderRadius: 7,
+		width: Dimensions.get('window').width * 0.9,
+		marginBottom: 20,
+		padding: 10,
+		backgroundColor: Colors.primaryColor,
+		borderRadius: 7,
 		elevation: 3,
-    },
-    buttonText: {
-        fontSize: 20,
-        color: 'white',
-        textAlign: 'center'
-    },
+	},
+	buttonText: {
+		fontSize: 20,
+		color: 'white',
+		textAlign: 'center'
+	},
 	centeredModal: {
 		justifyContent: "center",
 		alignItems: "center",
@@ -615,31 +613,31 @@ const styles = StyleSheet.create({
 });
 
 export const screenOptions = navData => {
-    return {
+	return {
 		headerTitle: 'Home',
 		headerLeft: () => (
 			<HeaderButtons HeaderButtonComponent={HeaderButton}>
-				<Item 
+				<Item
 					title='Menu'
 					iconName={'md-menu'}
 					onPress={() => {
-					navData.navigation.toggleDrawer();
+						navData.navigation.toggleDrawer();
 					}}
 				/>
 			</HeaderButtons>
 		),
 		headerRight: () => (
 			<HeaderButtons HeaderButtonComponent={HeaderButton}>
-				<Item 
+				<Item
 					title={Traducao.t('smokedCigarettes')}
 					iconName={'md-add-circle'}
 					onPress={() => {
-					navData.navigation.navigate('Cigarros fumados');
+						navData.navigation.navigate('Cigarros fumados');
 					}}
 				/>
 			</HeaderButtons>
 		)
-    }
+	}
 };
 
 export default HomeScreen;
