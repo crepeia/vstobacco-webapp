@@ -16,7 +16,6 @@ import Traducao from '../components/Traducao/Traducao';
 
 import * as optionsActions from '../store/actions/options';
 
-import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 
 const mesPassado = moment().add(-31, 'days').format("MMMM");
@@ -135,14 +134,10 @@ const HomeScreen = props => {
 		// fim calculo tempo vida
 
 		if (Constants.isDevice) {
-			const { status: existingStatus } = await Permissions.getAsync(
-				Permissions.NOTIFICATIONS
-			);
+			const { status: existingStatus } = await Notifications.requestPermissionsAsync();
 			let finalStatus = existingStatus;
 			if (existingStatus !== "granted") {
-				const { status } = await Permissions.askAsync(
-					Permissions.NOTIFICATIONS
-				);
+				const { status } = await Notifications.requestPermissionsAsync();
 				finalStatus = status;
 			}
 

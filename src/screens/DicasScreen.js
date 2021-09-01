@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, Dimensions, ActivityIndicator, Button } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import NetInfo/* , { useNetInfo } */ from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as tipActions from '../store/actions/tips';
@@ -34,8 +34,6 @@ const DicasScreen = props => {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState();
     const [isOnline, setIsOnline] = useState(true);
-
-    //const netInfo = useNetInfo()
 
     const availableTips = useSelector(state => state.tips.availableTips);
     const tips = useSelector(state => state.tips.userTips);
@@ -74,7 +72,10 @@ const DicasScreen = props => {
     };
 
     useEffect(() => {
-        setIsOnline(NetInfo.fetch()._W.isConnected);
+        //Função para testar se o usuario esta conectado a internet
+        NetInfo.fetch().then(state => {
+            setIsOnline(state.isConnected);
+        });
     });
 
     if (error) {

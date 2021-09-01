@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import NetInfo/* , { useNetInfo } */ from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
@@ -17,7 +17,6 @@ import * as achievementActions from '../store/actions/achievement';
 import * as optionsActions from '../store/actions/options';
 
 import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 
 import Colors from '../constants/Colors';
@@ -32,8 +31,6 @@ Notifications.setNotificationHandler({
 });
 
 const AddCigarrosScreen = props => {
-
-    //const netInfo = useNetInfo();
 
     const dispatch = useDispatch();
     const dailyLogs = useSelector(state => state.record.dailyLogs);
@@ -79,7 +76,10 @@ const AddCigarrosScreen = props => {
     }, [dispatch, loadRecord, date]);
 
     useEffect(() => {
-        setIsOnline(NetInfo.fetch()._W.isConnected);
+        //Função para testar se o usuario esta conectado a internet
+        NetInfo.fetch().then(state => {
+            setIsOnline(state.isConnected);
+        });
     });
 
     const saveLogHandler = useCallback(async () => {

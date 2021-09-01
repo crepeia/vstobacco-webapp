@@ -18,7 +18,6 @@ import * as userActions from '../store/actions/user';
 import { useDispatch, useSelector } from "react-redux";
 
 import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
 
@@ -96,12 +95,12 @@ const OptionsScreen = props => {
 		setIsLoading(true);
 		if (cigarNotification || tipNotification || achievementsNotification) {
 			if (Constants.isDevice) {
-				const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+				const { status: existingStatus } = await Notifications.requestPermissionsAsync();
 				finalStatus = existingStatus;
 
 				if (existingStatus !== 'granted') {
 					alert(Traducao.t('notificationPermission'));
-					const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+					const { status } = await Notifications.requestPermissionsAsync();
 					finalStatus = status;
 				}
 				if (finalStatus !== 'granted') {

@@ -15,7 +15,6 @@ import Colors from '../constants/Colors';
 import Traducao from '../components/Traducao/Traducao';
 
 import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 import moment from "moment";
 
@@ -62,14 +61,10 @@ const RecordScreen = props => {
 
 	// const registerForPushNotificationsAsync = async () => {
 	// 	if (Constants.isDevice) {
-	// 		const { status: existingStatus } = await Permissions.getAsync(
-	// 			Permissions.NOTIFICATIONS
-	// 		);
+	// 		const { status: existingStatus } = await Notifications.requestPermissionsAsync();
 	// 		let finalStatus = existingStatus;
 	// 		if (existingStatus !== "granted") {
-	// 			const { status } = await Permissions.askAsync(
-	// 				Permissions.NOTIFICATIONS
-	// 			);
+	// 			const { status } = await Notifications.requestPermissionsAsync();
 	// 			finalStatus = status;
 	// 		}
 	// 		if (finalStatus !== "granted") {
