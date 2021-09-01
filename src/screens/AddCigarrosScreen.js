@@ -17,7 +17,6 @@ import * as achievementActions from '../store/actions/achievement';
 import * as optionsActions from '../store/actions/options';
 
 import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
 
 import Colors from '../constants/Colors';
 import Traducao from '../components/Traducao/Traducao';
