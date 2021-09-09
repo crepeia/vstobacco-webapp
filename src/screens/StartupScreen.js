@@ -9,11 +9,9 @@ import Colors from "../constants/Colors";
 const StartupScreen = (props) => {
 	const dispatch = useDispatch();
 
-	console.log("Dei logout vim para cá");
-
 	useEffect(() => {
 		const tryLogin = async () => {
-			
+
 			// AsyncStorage.removeItem("userData");
 			const userData = await AsyncStorage.getItem("userData");
 
@@ -29,9 +27,9 @@ const StartupScreen = (props) => {
 				return;
 			}
 
-			await dispatch(userActions.authenticate(token, userId, userName, 
+			await dispatch(userActions.authenticate(token, userId, userName,
 				userEmail, birthDate, gender, inRanking, nickname));
-				
+
 		};
 
 		tryLogin();

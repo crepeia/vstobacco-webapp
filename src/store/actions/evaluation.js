@@ -12,9 +12,7 @@ export const fetchEvaluation = () => {
     try {
         return async (dispatch, getState) => {
             const token = getState().user.token;
-            console.log(token);
             const userId = getState().user.currentUser.id;
-            console.log(userId);
             const response = await fetch(`http://${Localhost.localhost}/wati/webresources/prontoparaparar/find/${userId}`, {
                 method: 'GET',
                 headers: {
@@ -30,8 +28,6 @@ export const fetchEvaluation = () => {
 
 
             const resData = await response.json();
-            console.log("Response em JSON: ");
-            console.log(resData);
             dispatch({ type: FETCH_EVALUATION, evaluation: resData });
         }
 

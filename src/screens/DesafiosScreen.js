@@ -65,7 +65,6 @@ const fillData = (arr, days, format) => {
             acc[id].dateScore += curr.score;
             return acc;
         }, {});
-        //console.log(reducedLog)
         for (let i = 0; i < days; i++) {
             let index = moment(today).subtract(i, "days").format("YYYY-MM-DD");
             if (reducedLog[index]) {

@@ -47,7 +47,6 @@ export const fetchChallenges = () => {
         }
 
     } catch (err) {
-        console.log(err)
         throw err;
     };
 
@@ -114,7 +113,6 @@ export const completeLoginChallenge = () => {
             const userId = getState().user.currentUser.id;
             const challenge = (getState().challenges.availableChallenges).
                 find(c => c.id === 1);
-            //console.log(challenge)
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
             const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/completeCreateChallenge`, {
@@ -139,7 +137,6 @@ export const completeLoginChallenge = () => {
                 }
             } else {
                 const resData = await response.json();
-                //console.log(resData)
 
                 const newChUser = new ChallengeUser(resData.id, resData.challenge.id, resData.user.id,
                     resData.score, resData.dateCreated, resData.dateCompleted)
@@ -160,7 +157,6 @@ export const completePlanChallenge = () => {
             const userId = getState().user.currentUser.id;
             const challenge = (getState().challenges.availableChallenges).
                 find(c => c.id === 2);
-            //console.log(challenge)
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
             const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/completeCreateChallenge`, {
@@ -185,7 +181,6 @@ export const completePlanChallenge = () => {
                 }
             } else {
                 const resData = await response.json();
-                //console.log(resData)
 
                 const newChUser = new ChallengeUser(resData.id, resData.challenge.id, resData.user.id,
                     resData.score, resData.dateCreated, resData.dateCompleted)
@@ -210,13 +205,10 @@ export const completeTipChallenge = () => {
             const userChallenges = (getState().challenges.userChallenges).
                 filter(c => c.challengeId === 3).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted)) ?
                     -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted)) ? 0 : 1);
-            // console.log(userChallenges)
             const yesterday = moment().add(-1, 'days').format("YYYY-MM-DD");
 
             const lastDay = userChallenges.reduce((acc, curr) => {
                 let id = moment(curr.dateCompleted).format("YYYY-MM-DD");
-                //console.log(id)
-                //console.log(acc)
 
                 if (id === acc) {
                     return moment(acc).add(-1, 'days').format("YYYY-MM-DD");
@@ -226,10 +218,6 @@ export const completeTipChallenge = () => {
             }, yesterday);
 
             const streak = moment().diff(lastDay, 'days');
-            //console.log(streak);
-            //console.log(lastDay);
-            //console.log(yesterday);
-
 
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
@@ -255,7 +243,6 @@ export const completeTipChallenge = () => {
                 }
             } else {
                 const resData = await response.json();
-                console.log(resData)
 
                 const newChUser = new ChallengeUser(resData.id, resData.challenge.id, resData.user.id,
                     resData.score, resData.dateCreated, resData.dateCompleted)
@@ -280,13 +267,10 @@ export const completeDailyLogChallenge = () => {
             const userChallenges = (getState().challenges.userChallenges).
                 filter(c => c.challengeId === 4).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted)) ?
                     -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted)) ? 0 : 1);
-            // console.log(userChallenges)
             const yesterday = moment().add(-1, 'days').format("YYYY-MM-DD");
 
             const lastDay = userChallenges.reduce((acc, curr) => {
                 let id = moment(curr.dateCompleted).format("YYYY-MM-DD");
-                //console.log(id)
-                //console.log(acc)
 
                 if (id === acc) {
                     return moment(acc).add(-1, 'days').format("YYYY-MM-DD");
@@ -296,10 +280,6 @@ export const completeDailyLogChallenge = () => {
             }, yesterday);
 
             const streak = moment().diff(lastDay, 'days');
-            //console.log(streak);
-            //console.log(lastDay);
-            //console.log(yesterday);
-
 
             const currentDate = moment(new Date()).format("YYYY-MM-DD");
 
@@ -325,7 +305,6 @@ export const completeDailyLogChallenge = () => {
                 }
             } else {
                 const resData = await response.json();
-                console.log(resData)
 
                 const newChUser = new ChallengeUser(resData.id, resData.challenge.id, resData.user.id,
                     resData.score, resData.dateCreated, resData.dateCompleted)
@@ -350,13 +329,11 @@ export const completeDontSmokeChallenge = (date) => {
             const userChallenges = (getState().challenges.userChallenges).
                 filter(c => c.challengeId === 5).sort((a, b) => moment(a.dateCompleted).isAfter(moment(b.dateCompleted)) ?
                     -1 : moment(a.dateCompleted).isSame(moment(b.dateCompleted)) ? 0 : 1);
-            // console.log(userChallenges)
+
             const yesterday = moment(date).add(-1, 'days').format("YYYY-MM-DD");
 
             const lastDay = userChallenges.reduce((acc, curr) => {
                 let id = moment(curr.dateCompleted).format("YYYY-MM-DD");
-                //console.log(id)
-                //console.log(acc)
 
                 if (id === acc) {
                     return moment(acc).add(-1, 'days').format("YYYY-MM-DD");
@@ -366,10 +343,6 @@ export const completeDontSmokeChallenge = (date) => {
             }, yesterday);
 
             const streak = moment(date).diff(lastDay, 'days');
-            //console.log(streak);
-            //console.log(lastDay);
-            //console.log(yesterday);
-
 
             const currentDate = moment(date).format("YYYY-MM-DD");
 
@@ -395,7 +368,6 @@ export const completeDontSmokeChallenge = (date) => {
                 }
             } else {
                 const resData = await response.json();
-                console.log(resData)
 
                 const newChUser = new ChallengeUser(resData.id, resData.challenge.id, resData.user.id,
                     resData.score, resData.dateCreated, resData.dateCompleted)
@@ -419,12 +391,10 @@ export const checkDontSmokeChallenge = (date) => {
                 find(c => c.id === 5);
             const userChallenges = (getState().challenges.userChallenges).
                 filter(c => c.challengeId === 5).reverse();
-            // console.log(userChallenges)
 
             const challengeValue = userChallenges.find(c => c.dateCompleted === date)
-            // console.log(challengeValue)
+
             if (challengeValue) {
-                // console.log("aqui2?")
                 const currentDate = moment(date).format("YYYY-MM-DD");
 
                 const response = await fetch(`http://${Localhost.localhost}/wati/webresources/challengeuser/deleteChallenge/${challengeValue.id}`, {
@@ -435,7 +405,6 @@ export const checkDontSmokeChallenge = (date) => {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                console.log(response.body)
                 if (!response.ok) {
                     throw new Error('Algo deu errado ao conferir desafio de não fumar.');
                 }
@@ -488,7 +457,6 @@ export const fetchRanking = () => {
 
     try {
         return async (dispatch, getState) => {
-            // console.log("aqui")
             const token = getState().user.token;
             const today = moment().format("YYYY-MM-DD").toString();
 
@@ -500,7 +468,6 @@ export const fetchRanking = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            // console.log(response.data)
 
             if (!response.ok) {
                 throw new Error('Algo deu errado ao carregar ranking.');
@@ -508,7 +475,6 @@ export const fetchRanking = () => {
 
             const resData = await response.json();
 
-            console.log(resData)
             const { weeklyResult, monthlyResult, yearlyResult } = resData
 
             weeklyResult.sort((a, b) => b.score - a.score)

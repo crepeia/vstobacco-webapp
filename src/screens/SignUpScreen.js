@@ -115,8 +115,6 @@ const SignUpScreen = props => {
     }
 
     const onSubmit = async (values, actions) => {
-        console.log('values: ')
-        console.log(values);
         const registerValues = new RegisterUser(values.name, values.email, values.password, values.receiveEmails, values.phone, values.birthDate, values.gender, values.authorizeData, moment(), adjustedLanguage, values.app_signup);
 
         setLoading(true);
@@ -128,7 +126,6 @@ const SignUpScreen = props => {
         } catch (error) {
             setLoading(false);
             Alert.alert(Traducao.t('accountNotCreated'));
-            console.log(error);
         }
     };
 

@@ -5,8 +5,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { Ionicons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 //telas
 import AboutScreen, { screenOptions as aboutOptions } from '../screens/AboutScreen';
@@ -22,8 +22,8 @@ import PerfilScreen, { screenOptions as perfilOptions } from '../screens/PerfilS
 import RankingScreen, { screenOptions as rankingOptions } from '../screens/RankingScreen';
 import RankingJoinScreen, { screenOptions as rankingJoinOptions } from '../screens/RankingJoinScreen';
 import RecordScreen from '../screens/RecordScreen';
-import SignUpScreen from '../screens/SignUpScreen'; 
-import StartupLogin from '../screens/StartupLogin'; 
+import SignUpScreen from '../screens/SignUpScreen';
+import StartupLogin from '../screens/StartupLogin';
 import TermosUso from '../screens/TermosUso';
 import TermoConsentimento from '../screens/TermoConsetimento';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
@@ -85,7 +85,7 @@ export const LoginNavigator = () => {
                 options={{
                     title: Traducao.t('resetPassword')
                 }}
-            /> 
+            />
         </LoginStackNavigator.Navigator>
     )
 }
@@ -240,126 +240,126 @@ export const MenuNavigator = () => {
         <MenuDrawerNavigator.Navigator initialRouteName='Home' drawerContentOptions={{
             activeTintColor: Colors.primaryColor
         }}>
-            <MenuDrawerNavigator.Screen 
-                name='Home' 
+            <MenuDrawerNavigator.Screen
+                name='Home'
                 component={HomeNavigator}
                 options={{
                     drawerIcon: props => (
-                        <SimpleLineIcons 
-                        name={'graph'}
-                        size={24}
-                        color={Colors.primaryColor}
+                        <SimpleLineIcons
+                            name={'graph'}
+                            size={24}
+                            color={Colors.primaryColor}
                         />
                     )
                 }}
             />
-            <MenuDrawerNavigator.Screen 
-                name='Cigarros fumados' 
+            <MenuDrawerNavigator.Screen
+                name='Cigarros fumados'
                 component={AddCigarrosNavigator}
                 options={{
                     title: Traducao.t('addCigarrosScreen'),
                     drawerIcon: props => (
-                        <MaterialIcons 
-                        name={'smoke-free'}
-                        size={24}
-                        color={Colors.primaryColor}
+                        <MaterialIcons
+                            name={'smoke-free'}
+                            size={24}
+                            color={Colors.primaryColor}
                         />
                     )
                 }}
             />
-            <MenuDrawerNavigator.Screen 
-                name='Desafios' 
+            <MenuDrawerNavigator.Screen
+                name='Desafios'
                 component={DesafiosNavigator}
                 options={{
                     title: Traducao.t('desafiosScreen'),
                     drawerIcon: props => (
-                        <SimpleLineIcons 
-                        name={'trophy'}
-                        size={24}
-                        color={Colors.primaryColor}
+                        <SimpleLineIcons
+                            name={'trophy'}
+                            size={24}
+                            color={Colors.primaryColor}
                         />
                     )
                 }}
             />
-            <MenuDrawerNavigator.Screen 
-                name='Dicas' 
+            <MenuDrawerNavigator.Screen
+                name='Dicas'
                 component={DicasNavigator}
                 options={{
                     title: Traducao.t('dicasDetalheScreenTip'),
                     drawerIcon: props => (
-                        <MaterialCommunityIcons 
-                        name={'lightbulb-on-outline'}
-                        size={24}
-                        color={Colors.primaryColor}
+                        <MaterialCommunityIcons
+                            name={'lightbulb-on-outline'}
+                            size={24}
+                            color={Colors.primaryColor}
                         />
                     )
                 }}
             />
-            <MenuDrawerNavigator.Screen 
-                name=' Ranking' 
+            <MenuDrawerNavigator.Screen
+                name=' Ranking'
                 component={RankingNavigator}
                 options={{
                     drawerIcon: props => (
-                        <Ionicons 
-                        name={'md-medal'}
-                        size={24}
-                        color={Colors.primaryColor}
+                        <Ionicons
+                            name={'md-medal-outline'}
+                            size={24}
+                            color={Colors.primaryColor}
                         />
                     )
                 }}
             />
-            <MenuDrawerNavigator.Screen 
-                name=' Conquistas' 
+            <MenuDrawerNavigator.Screen
+                name=' Conquistas'
                 component={LifeAndMoneyNavigator}
                 options={{
                     title: Traducao.t('lifeAndMoneyScreen'),
                     drawerIcon: props => (
-                        <Ionicons 
-                        name={'md-heart-empty'}
-                        size={24}
-                        color={Colors.primaryColor}
+                        <Ionicons
+                            name={'md-heart-outline'}
+                            size={24}
+                            color={Colors.primaryColor}
                         />
                     )
                 }}
             />
-            <MenuDrawerNavigator.Screen 
-                name='Perfil' 
+            <MenuDrawerNavigator.Screen
+                name='Perfil'
                 component={PerfilNavigator}
                 options={{
                     title: Traducao.t('perfilScreen'),
                     drawerIcon: props => (
-                        <MaterialIcons 
-                        name={'person-outline'}
-                        size={24}
-                        color={Colors.primaryColor}
+                        <MaterialIcons
+                            name={'person-outline'}
+                            size={24}
+                            color={Colors.primaryColor}
                         />
                     )
                 }}
             />
-            <MenuDrawerNavigator.Screen 
-                name=' Sobre' 
+            <MenuDrawerNavigator.Screen
+                name=' Sobre'
                 component={AboutNavigator}
                 options={{
                     title: Traducao.t('aboutScreen'),
                     drawerIcon: props => (
-                        <Ionicons 
-                        name={'md-information-circle-outline'}
-                        size={24}
-                        color={Colors.primaryColor}
+                        <Ionicons
+                            name={'md-information-circle-outline'}
+                            size={24}
+                            color={Colors.primaryColor}
                         />
                     )
                 }}
             />
-            <MenuDrawerNavigator.Screen 
-                name='Opções' 
+            <MenuDrawerNavigator.Screen
+                name='Opções'
                 component={OptionsNavigator}
                 options={{
                     title: Traducao.t('optionsScreen'),
                     drawerIcon: props => (
-                        <Ionicons 
-                        name={'md-options'}
-                        size={24}
-                        color={Colors.primaryColor}
+                        <Ionicons
+                            name={'md-options'}
+                            size={24}
+                            color={Colors.primaryColor}
                         />
                     )
                 }}

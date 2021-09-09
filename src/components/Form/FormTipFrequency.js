@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 import DefaultText from '../DefaultText';
 import Colors from '../../constants/Colors';
 import Traducao from '../Traducao/Traducao';
 
 const TipButton = props => {
-    
+
     return (
         <TouchableOpacity
             style={styles.pickerData}
@@ -24,89 +24,89 @@ const FormTipFrequency = props => {
     const [isOpen, setIsOpen] = useState(false);
     const [chosenData, setChosenData] = useState();
 
-    
-    
+
+
     return (
         <View style={styles.pickerContainer}>
             <DefaultText style={styles.title}>{props.title}</DefaultText>
             <View style={props.error && props.touched ? styles.error : styles.picker}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.pickerContent}
                     activeOpacity={0.4}
                     onPress={() => setIsOpen(!isOpen)}
                 >
                     <DefaultText>{props.value === -1 ? Traducao.t('chooseAFrequency') : `${chosenData}`}</DefaultText>
-                    <Ionicons 
-                        name={isOpen ? 'md-arrow-dropup' : 'md-arrow-dropdown'}
-                        size={24}
+                    <FontAwesome
+                        name={isOpen ? 'chevron-up' : 'chevron-down'}
+                        size={20}
                         color={Colors.primaryColor}
                     />
                 </TouchableOpacity>
                 {isOpen &&
                     <View>
-                        <TipButton 
+                        <TipButton
                             onTouch={() => {
                                 props.onValueChange(props.tipsFrequencyData[0].id)
                                 setChosenData(props.tipsFrequencyData[0].frequency)
                                 setIsOpen(!isOpen)
-                            }} 
+                            }}
                             value={props.tipsFrequencyData[0].frequency}
                         />
-                        <TipButton 
+                        <TipButton
                             onTouch={() => {
                                 props.onValueChange(props.tipsFrequencyData[1].id)
                                 setChosenData(props.tipsFrequencyData[1].frequency)
                                 setIsOpen(!isOpen)
-                            }} 
-                            value={props.tipsFrequencyData[1].frequency} 
+                            }}
+                            value={props.tipsFrequencyData[1].frequency}
                         />
-                        <TipButton 
+                        <TipButton
                             onTouch={() => {
                                 props.onValueChange(props.tipsFrequencyData[2].id)
                                 setChosenData(props.tipsFrequencyData[2].frequency)
                                 setIsOpen(!isOpen)
-                            }} 
-                            value={props.tipsFrequencyData[2].frequency} 
+                            }}
+                            value={props.tipsFrequencyData[2].frequency}
                         />
-                        <TipButton 
+                        <TipButton
                             onTouch={() => {
                                 props.onValueChange(props.tipsFrequencyData[3].id)
                                 setChosenData(props.tipsFrequencyData[3].frequency)
                                 setIsOpen(!isOpen)
-                            }} 
-                            value={props.tipsFrequencyData[3].frequency} 
+                            }}
+                            value={props.tipsFrequencyData[3].frequency}
                         />
-                        <TipButton 
+                        <TipButton
                             onTouch={() => {
                                 props.onValueChange(props.tipsFrequencyData[4].id)
                                 setChosenData(props.tipsFrequencyData[4].frequency)
                                 setIsOpen(!isOpen)
-                            }} 
-                            value={props.tipsFrequencyData[4].frequency} 
+                            }}
+                            value={props.tipsFrequencyData[4].frequency}
                         />
-                        <TipButton 
+                        <TipButton
                             onTouch={() => {
                                 props.onValueChange(props.tipsFrequencyData[5].id)
                                 setChosenData(props.tipsFrequencyData[5].frequency)
                                 setIsOpen(!isOpen)
-                            }} 
-                            value={props.tipsFrequencyData[5].frequency} 
+                            }}
+                            value={props.tipsFrequencyData[5].frequency}
                         />
-                        <TipButton 
+                        <TipButton
                             onTouch={() => {
                                 props.onValueChange(props.tipsFrequencyData[6].id)
                                 setChosenData(props.tipsFrequencyData[6].frequency)
                                 setIsOpen(!isOpen)
-                            }} 
-                            value={props.tipsFrequencyData[6].frequency} 
+                            }}
+                            value={props.tipsFrequencyData[6].frequency}
                         />
                     </View>
                 }
             </View>
             {props.error && props.touched &&
-            <View style={styles.errorContainer}>
-                <DefaultText style={styles.errorText}>{props.error}</DefaultText>
-            </View>
+                <View style={styles.errorContainer}>
+                    <DefaultText style={styles.errorText}>{props.error}</DefaultText>
+                </View>
             }
         </View>
     )
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         width: '80%',
         marginBottom: 20,
     },
-    title: 
+    title:
     {
         alignSelf: 'flex-start',
         marginLeft: 4,

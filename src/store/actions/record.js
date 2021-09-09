@@ -33,7 +33,6 @@ export const loadDailyLogs = (dailyLogs) => {
 
 export const fetchRecord = () => {
 	return async (dispatch, getState) => {
-		console.log("Fetch record");
 		const token = getState().user.token;
 		const userId = getState().user.currentUser.id;
 
@@ -54,7 +53,6 @@ export const fetchRecord = () => {
 		}
 
 		let record = await responseRecord.json();
-		console.log(record);
 
 		dispatch({
 			type: FETCH_RECORD,
@@ -71,19 +69,8 @@ export const fetchRecord = () => {
 export const updateRecord = (cigarsDaily, packPrice, packAmount) => {
 	return async (dispatch, getState) => {
 		const recordId = getState().record.record.id;
-		console.log("recordId: ");
-		console.log(recordId);
 		const userId = getState().user.currentUser.id;
 		const token = getState().user.token;
-
-		console.log("updating record");
-		console.log("infos: ");
-		console.log(userId);
-		console.log(cigarsDaily);
-		console.log(packPrice);
-		console.log(packAmount);
-		console.log(token);
-		console.log("------------------------------");
 
 		const response = await fetch(
 			`http://${Localhost.localhost}/wati/webresources/record/edit/`,
@@ -192,12 +179,8 @@ export const fetchDailyLogs = () => {
 export const saveLog = (cigars, date) => {
 	return async (dispatch, getState) => {
 		const recordId = getState().record.record.id;
-		console.log("Id do record");
-		console.log(recordId);
 		const token = getState().user.token;
 		let log = getState().record.dailyLogs.find((dl) => dl.logDate === date);
-		console.log("log");
-		console.log(log);
 		let oldLog = null;
 		let action = "";
 		if (log) {
@@ -213,11 +196,7 @@ export const saveLog = (cigars, date) => {
 			action = "create";
 		}
 
-		console.log("log atualizado");
-		console.log(log);
-
 		let newDate = moment.utc(date).format();
-		console.log(newDate);
 
 		const response = await fetch(
 			`http://${Localhost.localhost}/wati/webresources/dailylog/editOrCreate`,

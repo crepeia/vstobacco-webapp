@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 import DefaultText from '../DefaultText';
 import Colors from '../../constants/Colors';
@@ -19,10 +19,10 @@ const gender = {
         value: 'N',
         placeholder: Traducao.t('dontReport'),
     }
-} 
+}
 
 const GenderButton = props => {
-    
+
     return (
         <TouchableOpacity
             style={styles.pickerData}
@@ -43,51 +43,51 @@ const FormPicker = props => {
         <View style={styles.pickerContainer}>
             <DefaultText style={styles.title}>{props.title}</DefaultText>
             <View style={props.error && props.touched ? styles.error : styles.picker}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.pickerContent}
                     activeOpacity={0.4}
                     onPress={() => setIsOpen(!isOpen)}
                 >
                     <DefaultText>{props.value === null ? Traducao.t('chooseGender') : `${chosenGender}`}</DefaultText>
-                    <Ionicons 
-                        name={isOpen ? 'md-arrow-dropup' : 'md-arrow-dropdown'}
-                        size={24}
+                    <FontAwesome
+                        name={isOpen ? 'chevron-up' : 'chevron-down'}
+                        size={20}
                         color={Colors.primaryColor}
                     />
                 </TouchableOpacity>
                 {isOpen &&
                     <View>
-                        <GenderButton 
+                        <GenderButton
                             onTouch={() => {
                                 props.onValueChange(gender.masc.value)
                                 setChosenGender(gender.masc.placeholder)
                                 setIsOpen(!isOpen)
-                            }} 
-                            value={gender.masc.placeholder} 
+                            }}
+                            value={gender.masc.placeholder}
                         />
-                        <GenderButton 
+                        <GenderButton
                             onTouch={() => {
                                 props.onValueChange(gender.fem.value)
                                 setChosenGender(gender.fem.placeholder)
                                 setIsOpen(!isOpen)
-                            }} 
-                            value={gender.fem.placeholder} 
+                            }}
+                            value={gender.fem.placeholder}
                         />
-                        <GenderButton 
+                        <GenderButton
                             onTouch={() => {
                                 props.onValueChange(gender.none.value)
                                 setChosenGender(gender.none.placeholder)
                                 setIsOpen(!isOpen)
-                            }} 
-                            value={gender.none.placeholder} 
+                            }}
+                            value={gender.none.placeholder}
                         />
                     </View>
                 }
             </View>
             {props.error && props.touched &&
-            <View style={styles.errorContainer}>
-                <DefaultText style={styles.errorText}>{props.error}</DefaultText>
-            </View>
+                <View style={styles.errorContainer}>
+                    <DefaultText style={styles.errorText}>{props.error}</DefaultText>
+                </View>
             }
         </View>
     )
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         width: '80%',
         marginBottom: 20,
     },
-    title: 
+    title:
     {
         alignSelf: 'flex-start',
         marginLeft: 4,

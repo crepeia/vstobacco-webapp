@@ -19,7 +19,7 @@ import DefaultText from '../components/DefaultText';
 
 const RankingScreen = props => {
     const dispatch = useDispatch();
-    
+
     const [isLoading, setIsLoading] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [currentRank, setCurrentRank] = useState([]);
@@ -34,16 +34,16 @@ const RankingScreen = props => {
     const weekly = useSelector((state) => state.challenges.weeklyRank);
     const monthly = useSelector((state) => state.challenges.monthlyRank);
     const yearly = useSelector((state) => state.challenges.yearlyRank);
-    
+
 
     const loadRanking = useCallback(async () => {
         setIsRefreshing(true);
         try {
             await dispatch(challengeActions.fetchRanking());
         } catch (e) {
-            console.log(e)
+            //console.log(e)
         }
-        
+
         setIsRefreshing(false);
 
     }, [dispatch]);
@@ -84,77 +84,77 @@ const RankingScreen = props => {
         );
     };
 
-    if(inRanking){
+    if (inRanking) {
         return (
-                <FlatList
-                    ListHeaderComponent={
-                        <View style={styles.container}>
-                            <View style={styles.filterContainer}>
-                                <TouchableOpacity 
-                                    style={styles.filterBox} 
-                                    activeOpacity={0.6} 
-                                    onPress={() => {
-                                        setCurrentRank(weekly);
-                                        setIsWeekly(true);
-                                        setIsMonthly(false);
-                                        setIsYearly(false);
-                                    }}
-                                >
-                                    <DefaultTitle style={isWeekly ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('weekly')}</DefaultTitle>
-                                </TouchableOpacity>
-                                <TouchableOpacity 
-                                    style={styles.filterBox}
-                                    activeOpacity={0.6} 
-                                    onPress={() => {
-                                        setCurrentRank(monthly);
-                                        setIsWeekly(false);
-                                        setIsMonthly(true);
-                                        setIsYearly(false);
-                                    }}
-                                >
-                                    <DefaultTitle style={isMonthly ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('monthly')}</DefaultTitle>
-                                </TouchableOpacity>
-                                <TouchableOpacity 
-                                    style={styles.filterBox}
-                                    activeOpacity={0.6} 
-                                    onPress={() => {
-                                        setCurrentRank(yearly);
-                                        setIsWeekly(false);
-                                        setIsMonthly(false);
-                                        setIsYearly(true);
-                                    }}
-                                >
-                                    <DefaultTitle style={isYearly ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('yearly')}</DefaultTitle>
-                                </TouchableOpacity>
-                            </View>
+            <FlatList
+                ListHeaderComponent={
+                    <View style={styles.container}>
+                        <View style={styles.filterContainer}>
+                            <TouchableOpacity
+                                style={styles.filterBox}
+                                activeOpacity={0.6}
+                                onPress={() => {
+                                    setCurrentRank(weekly);
+                                    setIsWeekly(true);
+                                    setIsMonthly(false);
+                                    setIsYearly(false);
+                                }}
+                            >
+                                <DefaultTitle style={isWeekly ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('weekly')}</DefaultTitle>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.filterBox}
+                                activeOpacity={0.6}
+                                onPress={() => {
+                                    setCurrentRank(monthly);
+                                    setIsWeekly(false);
+                                    setIsMonthly(true);
+                                    setIsYearly(false);
+                                }}
+                            >
+                                <DefaultTitle style={isMonthly ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('monthly')}</DefaultTitle>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.filterBox}
+                                activeOpacity={0.6}
+                                onPress={() => {
+                                    setCurrentRank(yearly);
+                                    setIsWeekly(false);
+                                    setIsMonthly(false);
+                                    setIsYearly(true);
+                                }}
+                            >
+                                <DefaultTitle style={isYearly ? styles.filterTitle : styles.filterTitleInactive}>{Traducao.t('yearly')}</DefaultTitle>
+                            </TouchableOpacity>
                         </View>
-                    }
-                    onRefresh={loadRanking}
-                    refreshing={isRefreshing}
-                    style={styles.listStyle}
-                    data={currentRank}
-                    keyExtractor={(item, index) => index+''}
-                    renderItem={itemData => {
-                        return (
-                            <View style={{
+                    </View>
+                }
+                onRefresh={loadRanking}
+                refreshing={isRefreshing}
+                style={styles.listStyle}
+                data={currentRank}
+                keyExtractor={(item, index) => index + ''}
+                renderItem={itemData => {
+                    return (
+                        <View style={{
                             marginHorizontal: Dimensions.get('window').width * 0.05,
                             marginVertical: 4
-                            }}>
-                                <RankingCard 
-                                    position={itemData.item.position}
-                                    nickname={itemData.item.nickname}
-                                    score={itemData.item.score}
-                                />
-                            </View>
-                        )
-                    }}
-                />
-            )
+                        }}>
+                            <RankingCard
+                                position={itemData.item.position}
+                                nickname={itemData.item.nickname}
+                                score={itemData.item.score}
+                            />
+                        </View>
+                    )
+                }}
+            />
+        )
     } else {
         return (
             <View style={styles.container}>
                 <DefaultText>{Traducao.t('withoutRanking')}</DefaultText>
-                <DefaultButton onPress={() => {props.navigation.goBack()}}>{Traducao.t('return')}</DefaultButton>
+                <DefaultButton onPress={() => { props.navigation.goBack() }}>{Traducao.t('return')}</DefaultButton>
             </View>
         )
     }
@@ -162,18 +162,18 @@ const RankingScreen = props => {
 
 export const screenOptions = navData => {
     return {
-      headerTitle: 'Ranking',
-      headerLeft: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item 
-            title='Menu'
-            iconName={'md-menu'}
-            onPress={() => {
-              navData.navigation.toggleDrawer();
-            }}
-          />
-        </HeaderButtons>
-      )
+        headerTitle: 'Ranking',
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title='Menu'
+                    iconName={'md-menu'}
+                    onPress={() => {
+                        navData.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        )
     }
 };
 
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     },
     bellowText: {
         fontSize: 18,
-        color: Colors.primaryColor, 
+        color: Colors.primaryColor,
         fontWeight: 'bold',
     },
     inputContainer: {
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     filterTitle: {
         color: 'white',
         fontSize: 18,
-        textDecorationLine:"underline"
+        textDecorationLine: "underline"
     },
     filterTitleInactive: {
         color: '#dcdcdc',
