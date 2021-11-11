@@ -162,9 +162,9 @@ const HomeScreen = props => {
 				return;
 			}
 
-			Alert.alert(Traducao.t('aboutNotifications'), Traducao.t('changeTime'), [
-				{ text: "Ok", style: "destructive" },
-			]);
+			//Alert.alert(Traducao.t('aboutNotifications'), Traducao.t('changeTime'), [
+			//	{ text: "Ok", style: "destructive" },
+			//]);
 
 			let token = (await Notifications.getExpoPushTokenAsync()).data;
 
@@ -275,6 +275,13 @@ const HomeScreen = props => {
 
 	}, [cigarsNotSmoken, lifeTimeSaved, moneySaved]);
 
+
+	useEffect(()=>{
+		Alert.alert(Traducao.t('aboutNotifications'), Traducao.t('changeTime'), [
+			{ text: "Ok", style: "destructive" },
+		]);
+	}, [])
+
 	// Para atualização das notificações de conquistas
 
 	// const handleNotification = (notification) => {
@@ -339,6 +346,7 @@ const HomeScreen = props => {
 		setIsRefreshing(false);
 	}, [dailyLogs, cigarsNotSmoken, lifeTimeSaved, moneySaved]);
 
+	
 	useEffect(() => {
 		const unsubscribe = props.navigation.addListener('focus', resetState);
 
@@ -492,7 +500,8 @@ const styles = StyleSheet.create({
 	background: {
 		flex: 1,
 		alignItems: 'center',
-		backgroundColor: 'white'
+		backgroundColor: 'white',
+		paddingBottom:30
 	},
 	containerTitle: {
 		marginVertical: 20

@@ -168,9 +168,9 @@ const en = {
     // DesafiosScreen:
     desafiosScreen: "Challenges",
     noChallenge: "You haven't received any challenges yet!",
-    daily: "Diaries",
+    daily: "Daily",
     unique: "Unique",
-    graphics: "Graphic",
+    graphics: "Graph",
     points: "Points:",
     lastWeekPoints: "Points in the last week",
 

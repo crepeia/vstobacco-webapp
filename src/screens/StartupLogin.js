@@ -221,15 +221,20 @@ const StartupLogin = (props) => {
 
 	const record = useSelector((state) => state.record.record);
 
+
+
 	useEffect(() => {
 		if (isLogging) {
 			// registerForPushNotificationsAsync();
 			if (record.filled === false) {
-				props.navigation.navigate("Record");
+				props.navigation.replace("Record");
 			} else {
-				props.navigation.navigate("Menu");
+				props.navigation.replace("Menu");
+
 			}
 		}
+
+
 	}, [dispatch, isLogging]);
 
 	return (

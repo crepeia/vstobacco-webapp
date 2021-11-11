@@ -32,14 +32,17 @@ const saveDataToStorage = (token, userId, userName, userEmail, birthDate, gender
 const encryptPassword = (senha) => {
 	var CryptoJS = require('crypto-js');
 	var pwhash = CryptoJS.enc.Utf8.parse(process.env.REACT_NATIVE_KEY);
+	//var pwhash = CryptoJS.enc.Utf8.parse("ekhilAitcapWarHy");
 	var key = CryptoJS.enc.Hex.parse(pwhash.toString(CryptoJS.enc.Hex).substr(0, 32));
 
+	
 	var encrypted = CryptoJS.AES.encrypt(senha, key, {
 		mode: CryptoJS.mode.ECB,
 		padding: CryptoJS.pad.Pkcs7,
 	});
 
 	var ciphertext = encrypted.ciphertext.toString(CryptoJS.enc.Hex);
+	console.log(ciphertext);
 
 	return ciphertext;
 };
