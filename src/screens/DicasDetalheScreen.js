@@ -19,6 +19,8 @@ import Traducao from '../components/Traducao/Traducao';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleDislikeTip, toggleLikeTip, readTip } from '../store/actions/tips';
 
+import Tips from "../constants/Tips";
+
 const DicasDetalheScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
@@ -27,6 +29,7 @@ const DicasDetalheScreen = props => {
     const tips = useSelector(state => state.tips.userTips);
     const { tipId } = props.route.params;
 
+    const translatedSelectedTip = Tips.find(tip => tip.id === tipId);
     const selectedTip = tips.find(tip => tip.id === tipId);
     const dispatch = useDispatch();
 
@@ -34,6 +37,7 @@ const DicasDetalheScreen = props => {
         if (!selectedTip.read) {
             dispatch(readTip(tipId));
         }
+        console.log(selectedTip)
     }, [dispatch]);
 
     const toggleLikedHandler = useCallback(async () => {
@@ -69,8 +73,8 @@ const DicasDetalheScreen = props => {
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
             <View style={styles.background}>
                 <Card style={styles.textContainer}>
-                    <DefaultTitle style={styles.title}>{selectedTip.title}</DefaultTitle>
-                    <DefaultText style={styles.descrip}>{selectedTip.description}</DefaultText>
+                    <DefaultTitle style={styles.title}>{translatedSelectedTip.title}</DefaultTitle>
+                    <DefaultText style={styles.descrip}>{translatedSelectedTip.description}</DefaultText>
                     <DefaultTitle style={styles.data}>{selectedTip.dateSent}</DefaultTitle>
                 </Card>
                 <View style={styles.toggleContainer} >

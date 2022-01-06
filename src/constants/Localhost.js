@@ -8,5 +8,5 @@ export default {
 	localhost: 'vivasemtabaco.com.br',
 
 	//server local
-	//localhost: '192.168.0.2:8080',
+	//localhost: '192.168.0.124:8080',
 };

@@ -2,6 +2,7 @@ import TipUser from '../../models/TipUser';
 import Tip from '../../models/Tip';
 import moment from 'moment';
 import Localhost from '../../constants/Localhost';
+import Tips from '../../constants/Tips';
 
 export const READ_TIP = 'READ_TIP';
 export const READ_TIP_ROLLBACK = 'READ_TIP_ROLLBACK';
@@ -250,20 +251,27 @@ export const fetchUserTips = () => {
 			const resData = await response.json();
 			const loadedTips = [];
 
-			for (const key in resData) {
+			for (const key in Tips) {
+				//console.log(Tips)
+				const fetchedTip = resData.find(t => t.id.tipId === Tips[key].id);
 				loadedTips.push(
 					new TipUser(
-						resData[key].id.tipId,
-						resData[key].id.userId,
-						resData[key].tip.title,
-						resData[key].tip.description,
-						resData[key].readByUser,
-						resData[key].liked,
-						moment(resData[key].dateCreated).format('YYYY-MM-DD')
+						//resData[key].id.tipId,
+						Tips[key].id,
+						//resData[key].id.userId,
+						userId,
+						//resData[key].tip.title,
+						Tips[key].title,
+						//resData[key].tip.description,
+						Tips[key].description,
+						//resData[key].readByUser,
+						Boolean(fetchedTip) ? fetchedTip.readByUser : false,
+						//resData[key].liked,
+						fetchedTip!=null? fetchedTip.liked : null,
+						fetchedTip!=null? moment(fetchedTip.dateCreated).format('YYYY-MM-DD'): null
 					)
 				);
 			}
-
 			dispatch({ type: FETCH_USER_TIPS, tips: loadedTips });
 		};
 	} catch (err) {
