@@ -33,7 +33,7 @@
       "permissions": [
         "USE_FINGERPRINT"
       ],
-      "versionCode": 5,
+      "versionCode": 6,
       "useNextNotificationsApi": true
     }
   }
